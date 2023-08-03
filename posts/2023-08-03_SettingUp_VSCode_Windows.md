@@ -7,11 +7,11 @@ Resources:
 - For a remote SSH host: https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_install_firstuse?tabs=gui  
 
 
-## Remote Development using SSH 
+# Remote Development using SSH 
 
 VSCode allows for a SSH extension but requires several set-up steps below. 
 
-### 01. Installation
+## 01. Installation
  
 1. Install [VSCode](https://code.visualstudio.com/).   
 2. Install [Remote SSH extension application](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh). This is an extension in VSCode that lets you work with an SSH server.    
@@ -19,7 +19,7 @@ VSCode allows for a SSH extension but requires several set-up steps below.
 
 OpenSSH compatible SSH client: Get started with OpenSSH for Windows
 
-#### Prerequisities  
+### 01a. Prerequisities  
 
 - **A device running at least Windows Server 2019 or Windows 10 (build 1809).** To check this, open Windows Powershell and use the command `winver.exe`. This will open a pop-up window with your computer's current software.    
 - **PowerShell 5.1 or later**. Run `$PSVersionTable.PSVersion` in Windows Powershell. Verify your major version is at least 5, and your minor version at least 1.   
@@ -29,7 +29,7 @@ OpenSSH compatible SSH client: Get started with OpenSSH for Windows
 
 If you need to download Windows Powershell, see [here](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.3). This program likely came already installed on your computer. 
 
-#### Install OpenSSH for Windows 
+### 01b. Install OpenSSH for Windows 
 
 GUI instructions outlined [here](https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_install_firstuse?tabs=powershell). Powershell instructions (from the same above link) are annotated below: 
 
