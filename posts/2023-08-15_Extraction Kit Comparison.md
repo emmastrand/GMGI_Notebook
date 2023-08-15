@@ -17,5 +17,7 @@ Sample selection (based on samples we are confident we need to extract):
 | 8.5             | Fall 2022   | 133639   | Mae-304 | 8.65       | 54.5   | F   | 50-55      | MN     | MN4           |
 | 9               | Spring 2023 | 17318    | Mae-475 | 9.2        | 55     | F   | 50-55      | MN     | MN5           |
 
-Fin clip selection: We are most likely proceeding with the end clipping of the pectoral fin 
+Fin clip selection: We are most likely proceeding with the end clipping of the pectoral fin. See image below 
+
+![](https://github.com/emmastrand/GMGI_Notebook/blob/main/images/fin%20clip%20area.png?raw=true)
 
