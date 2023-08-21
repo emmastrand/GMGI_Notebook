@@ -15,18 +15,16 @@ MN: up to 20-35 μg of pure genomic DNA with an A260/A280 ratio between 1.7 and 
 
 This is based on samples we are confident we need to extract. I don't expect any DNA extraction differences based on length, age, season, or sex. We have more than enough tissue from each sample for quality DNA. 
 
-| Age Bin   (yrs) | Season      | Trawl_ID | GMGI_ID | AgeRounded | Length | Sex | Length Bin | Kit    | Extraction ID |
-|-----------------|-------------|----------|---------|------------|--------|-----|------------|--------|---------------|
-| 5.5             | Fall 2022   | 129439   | Mae-295 | 5.65       | 47.5   | F   | 45-50      | Qiagen | Q1            |
-| 6               | Spring 2023 | 22980    | Mae-510 | 6.2        | 53.5   | F   | 50-55      | Qiagen | Q2            |
-| 8               | Spring 2023 | 31416    | Mae-535 | 8.2        | 51.5   | F   | 50-55      | Qiagen | Q3            |
-| 8.5             | Fall 2022   | 133639   | Mae-304 | 8.65       | 54.5   | F   | 50-55      | Qiagen | Q4            |
-| 9               | Spring 2023 | 17318    | Mae-475 | 9.2        | 55     | F   | 50-55      | Qiagen | Q5            |
-| 5.5             | Fall 2022   | 129439   | Mae-295 | 5.65       | 47.5   | F   | 45-50      | MN     | MN1           |
-| 6               | Spring 2023 | 22980    | Mae-510 | 6.2        | 53.5   | F   | 50-55      | MN     | MN2           |
-| 8               | Spring 2023 | 31416    | Mae-535 | 8.2        | 51.5   | F   | 50-55      | MN     | MN3           |
-| 8.5             | Fall 2022   | 133639   | Mae-304 | 8.65       | 54.5   | F   | 50-55      | MN     | MN4           |
-| 9               | Spring 2023 | 17318    | Mae-475 | 9.2        | 55     | F   | 50-55      | MN     | MN5           |
+| Age Bin   (yrs) | Season      | Trawl_ID | GMGI_ID | AgeRounded | Length | Sex | Length Bin | Kit     | Extraction ID |
+|-----------------|-------------|----------|---------|------------|--------|-----|------------|---------|---------------|
+| 0.5 yr          | Fall 2022   | 110359   | Mae-266 | 0.65       | 16.5   | F   | 15-20      | Qiagen  | Q1            |
+| 1 yr            | Spring 2023 | 10273    | Mae-443 | 1.2        | 23.5   | M   | 20-25      | Qiagen  | Q2            |
+| 1.5 yr          | Fall 2022   | 121539   | Mae-275 | 1.65       | 28.5   | F   | 25-30      | Qiagen  | Q3            |
+| 2 yr            | Spring 2023 | 23999    | Mae-512 | 2.2        | 36     | M   | 35-40      | Qiagen  | Q4            |
+| 0.5 yr          | Fall 2022   | 110359   | Mae-266 | 0.65       | 16.5   | F   | 15-20      | MN      | MN1           |
+| 1 yr            | Spring 2023 | 10273    | Mae-443 | 1.2        | 23.5   | M   | 20-25      | MN      | MN2           |
+| 1.5 yr          | Fall 2022   | 121539   | Mae-275 | 1.65       | 28.5   | F   | 25-30      | MN      | MN3           |
+| 2 yr            | Spring 2023 | 23999    | Mae-512 | 2.2        | 36     | M   | 35-40      | MN      | MN4           |
 
 Fin clip selection: We are most likely proceeding with the end clipping of the pectoral fin. See image below 
 
