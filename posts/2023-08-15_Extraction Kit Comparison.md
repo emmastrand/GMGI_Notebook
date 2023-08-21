@@ -88,7 +88,7 @@ Repeat as needed for each sample.
 11. Incubate at 56°C until tissue is completely lysed. Check after 2 hours. The recommended time period is 1-3 hr. Vortex occasionally during incubation to disperse the sample or place in a thermomixer, shaking water bath or on a rocking platform.  After incubation the lysate may appear viscous, but should not be gelatinous as it may
 clog the DNeasy Mini spin column.  
 
-*RNase step goes here in future protocol. Add 4 μl RNase A (100 mg/ml), mix by vortexing, and incubate for 2 min at room temperature (15–25°C* 
+*RNase step goes here in future protocol. Add 4 μl RNase A (100 mg/ml), mix by vortexing, and incubate for 2 min at room temperature (15–25°C)* 
 
 12. Vortex for 15 sec.   
 13. Add 200 μl Buffer AL to the sample.  
@@ -111,7 +111,7 @@ clog the DNeasy Mini spin column.
 the column does not come into contact with the flow-through, since this will result in carryover of ethanol. If carryover of ethanol occurs, empty the collection tube, then reuse it in another centrifugation for 1 min at 20,000 x g (14,000rpm).
 
 27. Discard flow-through and collection tube.  
-28. Place the DNeasy Mini spin column in a clean 1.5 ml or 2 ml microcentrifuge tube.  
+28. Place the DNeasy Mini spin column in a clean 1.5 ml or 2 ml microcentrifuge tube labeled with the appropriate organism ID.  
 29. Pipet 50 μl Buffer AE directly onto the DNeasy membrane (Elution 1).  
 30. Incubate at room temperature for 3 min.  
 31. Centrifuge for 1 min at ≥ 6000 x g (8000 rpm) to elute.  
@@ -180,7 +180,7 @@ Repeat as needed for each sample.
 17. For each sample, place one NucleoSpin® Tissue Column into a Collection Tube.  
 18. Pipet the entire sample onto the column.  
 19. Centrifuge for 1 min at 11,000 x g.  
-20. Discard Collection Tube with flowthrough and place the column in a new Collection Tube (povided).  
+20. Discard Collection Tube with flowthrough and place the column in a new Collection Tube (provided).  
 
 > If the sample is not drawn completely through the matrix, repeat the centrifugation step at 11,000 x g. Discard flowthrough.
 
