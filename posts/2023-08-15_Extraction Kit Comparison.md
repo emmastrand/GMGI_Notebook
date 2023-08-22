@@ -268,7 +268,7 @@ After confirming we do have DNA in our samples, this is to test the quality.
 
 ### Sample processing notes 
 
-![]()
+![](https://github.com/emmastrand/GMGI_Notebook/blob/main/lab%20work/2023%20Haddock%20ext%20kit%20test/2023-08-22%20extraction%20kit%20test.jpg?raw=true)
 
 
 
