@@ -1,6 +1,6 @@
 # DNA Extraction Kit Comparison
 
-We have two options for our epigenetic aging project with Haddock: [Qiagen DNeasy Blood & Tissue Kit](https://www.qiagen.com/us/products/discovery-and-translational-research/dna-rna-purification/dna-purification/genomic-dna/dneasy-blood-and-tissue-kit?catno=69506) and [Machery-Nagel NucleoSpin Tissue mini kit for DNA from cells and tissue](https://www.mn-net.com/us/nucleospin-tissue-mini-kit-for-dna-from-cells-and-tissue-740952.50?number=&c=5291). 
+We have two options for our epigenetic aging project with Haddock: [Qiagen DNeasy Blood & Tissue Kit](https://www.qiagen.com/us/products/discovery-and-translational-research/dna-rna-purification/dna-purification/genomic-dna/dneasy-blood-and-tissue-kit?catno=69506) and [Machery-Nagel NucleoSpin Tissue mini kit for DNA from cells and tissue](https://www.mn-net.com/us/nucleospin-tissue-mini-kit-for-dna-from-cells-and-tissue-740952.50?number=&c=5291). We already have a couple leftovers from previous projects so I'm testing a few. *Qiagen kit is EXPIRED as of 2021.* 
 
 Haddock epigenetic aging repo: https://github.com/emmastrand/Epigenetic_aging. Below lab work information is also in our BOX drive in Fisheries Epigenetic Aging project. 
 
