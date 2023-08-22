@@ -99,10 +99,10 @@ clog the DNeasy Mini spin column.
 > A white precipitate may form on addition of Buffer AL and ethanol. This precipitate does not interfere with the DNeasy procedure. Some tissue types (e.g., spleen, lung) may form a gelatinous lysate after addition of Buffer AL and ethanol. In this case, vigorously shaking or vortexing the preparation is recommended. 
 
 17. Pipet the entire mixture from previous step into DNeasy Mini spin column placed in a 2 mL collection tube.  
-18. Centrifuge at ≥6000 x g (8000 rpm) for 1 min.  
+18. Centrifuge at ≥6,000 x g (8,000 rpm) for 1 min.  
 19. Discard flow-through and collection tube and place the DNeasy Mini spin column in a new 2 ml collection tube.  
 21. Add 500 μl Buffer AW1.  
-22. Centrifuge for 1 min at ≥6000 x g (8000 rpm).  
+22. Centrifuge for 1 min at ≥6,000 x g (8,000 rpm).  
 23. Discard flow-through and collection tube and place the DNeasy Mini spin column in a new 2 ml collection tube.  
 25. Add 500 μl Buffer AW2.  
 26. Centrifuge for 3 min at 20,000 x g (14,000 rpm).  
@@ -114,10 +114,10 @@ the column does not come into contact with the flow-through, since this will res
 28. Place the DNeasy Mini spin column in a clean 1.5 ml or 2 ml microcentrifuge tube labeled with the appropriate organism ID.  
 29. Pipet 50 μl Buffer AE directly onto the DNeasy membrane (Elution 1).  
 30. Incubate at room temperature for 3 min.  
-31. Centrifuge for 1 min at ≥ 6000 x g (8000 rpm) to elute.  
+31. Centrifuge for 1 min at ≥ 6,000 x g (8,000 rpm) to elute.  
 32. Pipet 50 μl Buffer AE directly onto the DNeasy membrane (Elution 2).  
 33. Incubate at room temperature for 3 min.  
-34. Centrifuge for 1 min at ≥ 6000 x g (8000 rpm) to elute. 
+34. Centrifuge for 1 min at ≥ 6,000 x g (80,00 rpm) to elute. 
 
 > Elution with 100 μl (instead of 200 μl) increases the final DNA concentration in the eluate, but also decreases the overall DNA yield (see Figure 2, page 23 on DNeasy Blood and Tissue Handbook 2020). I'm not worried that we won't have enough yield, but higher concentrations will help us later on. Putnam Lab had previously done a test to optimize elution steps. We've always used 2 steps of 50 uL and got good results.  
 
@@ -198,3 +198,77 @@ Repeat as needed for each sample.
 32. Incubate at room temperature for 3 min. Centrifuge 1 min at 11,000 x g.  
 
 *The above elution steps were altered from standard protocol based on MN's recommendations and those matching my notes in the Qiagen protocol above.* 
+
+
+## Qubit 
+
+dsDNA BR kit 
+
+1. Determine qubit sample size (n). n = number of samples + 2 standards * 1.05 for error  
+
+8 samples from 2 ext kits + 2 standards * 1.05 = 10.5 uL
+
+2. Create master mix (working solution) of Qubit Buffer and Quant-IT Reagent 
+
+- n uL of Quant-IT Reagent  = 10.5 uL Reagent 
+- 199 * n uL of buffer = 2,089.5 uL of buffer
+
+3. Vortex and spin down master mix.   
+4. Pipet 199 uL of master mix (working solution) into thin walled Qubit tubes for each sample.  
+5. Pipet 190 uL of master mix (working solution) into thins walled Qubit tubes for each standard.  
+6. Allow tubes to incubate at room temperature for 2 minutes. 
+7. Vortex tubes for 10 seconds to mix.  
+8. Read standards and samples on Qubit 3.0 Fluorometer.  
+9. On home screen, select "RNA" or "DNA" (based on samples/kit used) and then select the appropriate kit assay type  
+10. Press "Read Standards" and follow prompts.  
+11. To read samples, press "Run samples", select the appropriate volume of sample used and desired concentration output, place sample tube in instrument, and press "Read tube".  
+12. Record standard and sample concentrations. 
+13. Read samples twice to ensure correct value. 
+
+### Results from this test 
+
+HS dsDNA kit 
+
+Standard 1:  46.18  
+Standard 2:  28,686.92  
+
+| GMGI_ID | Extraction ID | Read 1 (ng/uL) | Read 2 (ng/uL) | Average (ng/uL) |
+|:-------:|---------------|--------|--------|---------|
+| Mae-266 | Q1            | 35     | 35     | 35      |
+| Mae-443 | Q2            | 31.2   | 31.8   | 31.5    |
+| Mae-275 | Q3            | 56.4   | 56.2   | 56.3    |
+| Mae-512 | Q4            | 53.6   | 53.4   | 53.5    |
+| Mae-266 | MN1           | 78     | 77.8   | 77.9    |
+| Mae-443 | MN2           | 40.8   | 40.6   | 40.7    |
+| Mae-275 | MN3           | 90.2   | 90     | 90.1    |
+| Mae-512 | MN4           | 71.2   | 71     | 71.1    |
+
+## Gel 
+
+After confirming we do have DNA in our samples, this is to test the quality. 
+
+1% agarose gel, 70V, 2A, 45 minutes. 
+
+1. Measure 0.4 g agarose in a weigh boat. Place in small flask (reagent room in the back of lab).  
+2. Pour 40 mL of **new** 1X TAE in the flask (Fisheries bench).   
+3. Microwave for 1 minute in 30 second intervals (gel rig bench at the front of the lab).        
+4. Quick spin FastRed solution (shelf above the gel rig set-up).        
+5. Add 4 uL of FastRed (for a 40 mL mixture) and swirl to mix. *This value will change with size of gel.*    
+6. Insert gel tray into gel box sideways properly so that the rubber lines seal with the gel box.   
+7. Insert the appropriate size gel comb.  
+8. Pour mixture into the gel tray and let cool until the gel hardens.  
+9. Remove the gel comb slowly and careful to not tear any of the gel wells.  
+10. Fill the gel box with **used/old** TAE (shelf above the gel rig set-up) so that the gel itself is completely submerged.  
+11. Pipet 6 uL of DNA sample onto ____ wrap.  
+12. Add 1 uL of 6X loading dye to each sample. Slowly pipet up and down to mix.  
+13. Pipet 5 uL of loading dye directly into first well.  
+14. Pipet each sample into individual wells following the loading dye well. 
+15. Place the gel cover on top and make sure the red plug is at the bottom of the cover and gel (the samples should "run to red"). The black plug should be at the top of the gel on the same side as the wells.  
+
+
+### Sample processing notes 
+
+![]()
+
+
+
