@@ -259,11 +259,15 @@ After confirming we do have DNA in our samples, this is to test the quality.
 8. Pour mixture into the gel tray and let cool until the gel hardens.  
 9. Remove the gel comb slowly and careful to not tear any of the gel wells.  
 10. Fill the gel box with **used/old** TAE (shelf above the gel rig set-up) so that the gel itself is completely submerged.  
-11. Pipet 6 uL of DNA sample onto ____ wrap.  
+11. Pipet 6 uL of DNA sample onto parafilm.    
 12. Add 1 uL of 6X loading dye to each sample. Slowly pipet up and down to mix.  
 13. Pipet 5 uL of loading dye directly into first well.  
 14. Pipet each sample into individual wells following the loading dye well. 
 15. Place the gel cover on top and make sure the red plug is at the bottom of the cover and gel (the samples should "run to red"). The black plug should be at the top of the gel on the same side as the wells.  
+
+### Results from this test 
+
+
 
 
 ### Sample processing notes 
