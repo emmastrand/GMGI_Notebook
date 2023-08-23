@@ -279,6 +279,11 @@ One hour was plenty for the digestion. I can definitly decrease the amount of ti
 
 This time we added the RNase A step (although enzyme was from 2020 hopefully not degraded) and used a smaller amount of tissue. I found the tissue to be hard to cut a little piece without getting a lot. I did my best but probably even more room to decrease the amount of tissue for input. 
 
+### BR DNA Qubit results 
+
+DNA Standard 1: 211.06  
+DNA Standard 2: 23,875.06 
+
 | GMGI_ID | Extraction   ID | Qubit Read   1 | Qubit Read 2 | Average (ng/uL) |
 |:-------:|:---------------:|----------------|--------------|-----------------|
 | Mae-288 | Q5              | 66.6           | 66.4         | 66.5            |
@@ -288,3 +293,4 @@ This time we added the RNase A step (although enzyme was from 2020 hopefully not
 | Mae-331 | MN6             | 41.4           | 41.4         | 41.4            |
 | Mae-405 | MN7             | 38.8           | 38.8         | 38.8            |
 
+![](https://github.com/emmastrand/GMGI_Notebook/blob/main/lab%20work/2023%20Haddock%20ext%20kit%20test/2023-08-23%20extraction%20kit%20test%202.jpg?raw=true)
