@@ -294,3 +294,7 @@ DNA Standard 2: 23,875.06
 | Mae-405 | MN7             | 38.8           | 38.8         | 38.8            |
 
 ![](https://github.com/emmastrand/GMGI_Notebook/blob/main/lab%20work/2023%20Haddock%20ext%20kit%20test/2023-08-23%20extraction%20kit%20test%202.jpg?raw=true)
+
+### Gel results
+
+![](https://github.com/emmastrand/GMGI_Notebook/blob/main/lab%20work/2023%20Haddock%20ext%20kit%20test/20230823%20gel%20ext%20kit%20test%202.jpeg?raw=true)
