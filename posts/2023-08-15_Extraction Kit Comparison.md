@@ -273,5 +273,18 @@ After confirming we do have DNA in our samples, this is to test the quality.
 
 ![](https://github.com/emmastrand/GMGI_Notebook/blob/main/lab%20work/2023%20Haddock%20ext%20kit%20test/2023-08-22%20extraction%20kit%20test.jpg?raw=true)
 
+One hour was plenty for the digestion. I can definitly decrease the amount of tissue I'm putting in to increase the quality without sacrificing the quantity of DNA we get. 70+ is way more than needed and usually associated with more degraded DNA. 
 
+## 2023-08-23 Extraction Test Round 2
+
+This time we added the RNase A step (although enzyme was from 2020 hopefully not degraded) and used a smaller amount of tissue. I found the tissue to be hard to cut a little piece without getting a lot. I did my best but probably even more room to decrease the amount of tissue for input. 
+
+| GMGI_ID | Extraction   ID | Qubit Read   1 | Qubit Read 2 | Average (ng/uL) |
+|:-------:|:---------------:|----------------|--------------|-----------------|
+| Mae-288 | Q5              | 66.6           | 66.4         | 66.5            |
+| Mae-331 | Q6              | 24             | 23.8         | 23.9            |
+| Mae-405 | Q7              | 32.6           | 32.4         | 32.5            |
+| Mae-288 | MN5             | 66.4           | 66.2         | 66.3            |
+| Mae-331 | MN6             | 41.4           | 41.4         | 41.4            |
+| Mae-405 | MN7             | 38.8           | 38.8         | 38.8            |
 
