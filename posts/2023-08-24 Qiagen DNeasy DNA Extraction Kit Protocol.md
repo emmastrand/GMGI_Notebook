@@ -93,5 +93,6 @@ the column does not come into contact with the flow-through, since this will res
 33. Incubate at room temperature for 3 min.  
 34. Centrifuge for 1 min at ≥ 6,000 x g (80,00 rpm) to elute. 
 35. Aliquot 10 μl for subsequent gel electrophoresis (DNA quality) and qubit analysis (DNA quantity). 
+36. Store both aliquots and DNA extracts at -80C. 
 
 > Elution with 100 μl (instead of 200 μl) increases the final DNA concentration in the eluate, but also decreases the overall DNA yield (see Figure 2, page 23 on DNeasy Blood and Tissue Handbook 2020). I'm not worried that we won't have enough yield, but higher concentrations will help us later on. Putnam Lab had previously done a test to optimize elution steps. We've always used 2 steps of 50 uL and got good results.  
