@@ -108,7 +108,7 @@ clog the DNeasy Mini spin column.
 26. Centrifuge for 3 min at 20,000 x g (14,000 rpm).  
 
 > It is important to dry the membrane of the DNeasy Mini spin column, since residual ethanol may interfere with subsequent reactions. This centrifugation step ensures that no residual ethanol will be carried over during the following elution. Following the centrifugation step, remove the DNeasy Mini spin column carefully so that
-the column does not come into contact with the flow-through, since this will result in carryover of ethanol. If carryover of ethanol occurs, empty the collection tube, then reuse it in another centrifugation for 1 min at 20,000 x g (14,000rpm).
+the column does not come into contact with the flow-through, since this will result in carryover of ethanol. If carryover of ethanol occurs, empty the collection tube, then reuse it in another centrifugation for 1 min at 20,000 x g (14,000 rpm).
 
 27. Discard flow-through and collection tube.  
 28. Place the DNeasy Mini spin column in a clean 1.5 ml or 2 ml microcentrifuge tube labeled with the appropriate organism ID.  
