@@ -298,3 +298,5 @@ DNA Standard 2: 23,875.06
 ### Gel results
 
 ![](https://github.com/emmastrand/GMGI_Notebook/blob/main/lab%20work/2023%20Haddock%20ext%20kit%20test/20230823%20gel%20ext%20kit%20test%202.jpeg?raw=true)
+
+We will move forward with Qiagen DNeasy kit for this project with the RNase A step. 
