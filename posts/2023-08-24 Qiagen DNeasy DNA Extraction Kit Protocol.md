@@ -8,3 +8,6 @@ Based on the Qiagen DNeasy Extraction handbook found [here](https://www.qiagen.c
 **Storage**: DNeasy spin columns, DNeasy 96 plates and all buffers should be stored dry, at room temperature (15–25°C) and are stable for 1 year under these conditions, if not otherwise stated on the label.  DNeasy Blood & Tissue Kits contain a ready-to-use Proteinase K solution, which is supplied in a specially formulated storage
 buffer. Proteinase K is stable for at least 1 year after delivery when stored at room temperature. For storage longer than one year or if ambient temperatures often exceed 25°C, we suggest storing Proteinase K at 2–8°C.
 
+### Workflow 
+
+![](https://github.com/emmastrand/GMGI_Notebook/blob/main/images/Qiagen%20DNeasy%20workflow.png?raw=true)
