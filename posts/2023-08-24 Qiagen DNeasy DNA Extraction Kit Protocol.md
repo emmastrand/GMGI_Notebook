@@ -63,7 +63,7 @@ Repeat 6-8 as needed for each sample.
 9. Add 20 uL Proteinase K.  
 10. Vortex 5-10 seconds.  
 11. Incubate at 56°C for 1 hour until tissue is completely lysed. After incubation the lysate may appear viscous, but should not be gelatinous as it may clog the DNeasy Mini spin column.    
-12. Add 20 uL of 10 mg/mL RNase A (or 4 uL of 100 mg/mL).  
+12. Add 20 uL of 10 mg/mL RNase A (or 4 uL of 100 mg/mL) and incubate for 3 minutest at room temperature.    
 13. Vortex for 15 sec.   
 14. Add 200 μl Buffer AL to the sample.  
 15. Vortex for 15 sec.  
