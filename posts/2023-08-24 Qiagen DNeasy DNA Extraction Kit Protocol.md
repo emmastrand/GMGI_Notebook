@@ -64,17 +64,17 @@ Repeat 6-8 as needed for each sample.
 10. Vortex 5-10 seconds.  
 11. Incubate at 56°C for 1 hour until tissue is completely lysed. After incubation the lysate may appear viscous, but should not be gelatinous as it may clog the DNeasy Mini spin column.    
 12. Add 20 uL of 10 mg/mL RNase A (or 4 uL of 100 mg/mL).  
-12. Vortex for 15 sec.   
-13. Add 200 μl Buffer AL to the sample.  
-14. Vortex for 15 sec.  
-15. Add 200 μl ethanol (96–100%).  
-16. Vortex for 15 sec. It is essential that the sample, Buffer AL, and ethanol are mixed immediately and thoroughly by vortexing or pipetting to yield a homogeneous solution. Buffer AL and ethanol can be premixed and added together in one step to save time when processing multiple samples.      
+13. Vortex for 15 sec.   
+14. Add 200 μl Buffer AL to the sample.  
+15. Vortex for 15 sec.  
+16. Add 200 μl ethanol (96–100%).  
+17. Vortex for 15 sec. It is essential that the sample, Buffer AL, and ethanol are mixed immediately and thoroughly by vortexing or pipetting to yield a homogeneous solution. Buffer AL and ethanol can be premixed and added together in one step to save time when processing multiple samples.      
 
 > A white precipitate may form on addition of Buffer AL and ethanol. This precipitate does not interfere with the DNeasy procedure. Some tissue types (e.g., spleen, lung) may form a gelatinous lysate after addition of Buffer AL and ethanol. In this case, vigorously shaking or vortexing the preparation is recommended. 
 
-17. Pipet the entire mixture from previous step into DNeasy Mini spin column placed in a 2 mL collection tube.  
-18. Centrifuge at ≥6,000 x g (8,000 rpm) for 1 min.  
-19. Discard flow-through and collection tube and place the DNeasy Mini spin column in a new 2 ml collection tube.  
+18. Pipet the entire mixture from previous step into DNeasy Mini spin column placed in a 2 mL collection tube.  
+19. Centrifuge at ≥6,000 x g (8,000 rpm) for 1 min.  
+20. Discard flow-through and collection tube and place the DNeasy Mini spin column in a new 2 ml collection tube.  
 21. Add 500 μl Buffer AW1.  
 22. Centrifuge for 1 min at ≥6,000 x g (8,000 rpm).  
 23. Discard flow-through and collection tube and place the DNeasy Mini spin column in a new 2 ml collection tube.  
