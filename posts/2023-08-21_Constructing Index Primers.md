@@ -30,6 +30,8 @@ There are 96 UDI pairs listed on Illumina docs above. Each pair has a unique 8 l
 ### Ordering options 
 
 [Illumina](https://emea.illumina.com/products/by-type/sequencing-kits/library-prep-kits/truseq-dna-pcr-free.html) 96 set (only alternative is 12 set) = $650  
+
 [Zymo](https://www.zymoresearch.com/products/zymo-seq-udi-primer-sets) 96 set (only alternative is 12 set) = $495  
 - 4-5 uses out of the 10 uL (2 uL per time)  
+
 [IDT](https://www.idtdna.com/pages/products/next-generation-sequencing/workflow/xgen-ngs-library-preparation/ngs-adapters-indexing-primers) make our own = $68 per primer set (x 35 primers) $2,380  
