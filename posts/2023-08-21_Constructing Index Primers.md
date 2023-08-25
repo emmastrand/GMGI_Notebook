@@ -10,11 +10,11 @@ Illumina information:
 
 ![](https://298777846-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FGM9W2DuBTgEXv1ClCm8H%2Fuploads%2Fgit-blob-00b3b29c9f0da2e89fea3792fae389344e364f25%2Fimage1.png?alt=media)
 
-Shelly had previously contacted Zymo to ask about the compatible primers. See email exchange here: https://github.com/RobertsLab/resources/blob/master/protocols/Commercial_Protocols/ZymoResearch_PicoMethylseq_IndexAlternatives.pdf. 
-
-There are 6 that come with the Zymo Pico Methyl Seq kit - Page 8 of this document: https://files.zymoresearch.com/protocols/_d5455_d5456_picomethylseq.pdf. Zymo doesn't sell more than that but we can order from any custom oligo vendor. The primers that come with the kit are based on Illumina TruSeq index primers:
+Shelly had previously contacted Zymo to ask about the compatible primers. See email exchange here: https://github.com/RobertsLab/resources/blob/master/protocols/Commercial_Protocols/ZymoResearch_PicoMethylseq_IndexAlternatives.pdf. There are 6 that come with the Zymo Pico Methyl Seq kit - Page 8 of this document: https://files.zymoresearch.com/protocols/_d5455_d5456_picomethylseq.pdf. Zymo doesn't sell more than that but we can order from any custom oligo vendor. The primers that come with the kit are based on Illumina TruSeq single index primers:
 
 ![](https://github.com/emmastrand/GMGI_Notebook/blob/main/images/UDI%20oligo%20index%20primers.png?raw=true)
+
+For our project with so many samples and to avoid index hopping, we'll use Unique Dual Index primers. Each sample has a unique identifier for i5 AND i7 adapters instead of using a universal i5 adapter sequence. 
 
 ### Constructing our UDI (i5 and i7) primers 
 
