@@ -43,7 +43,7 @@ Handbook for the above kit found here: https://files.zymoresearch.com/protocols/
 Note about timing and planning this prep:
 - Calculate how much DNA you're going to use before you start the prep, ideally for all samples, getting the volumes ready before you start  
 - Plan how you will index your samples before starting the preps.     
-- It can make things easier on you do the prep over 1.5 days: start the prep in the afternoon by doing the DNA dilution and bisulfite conversion. The BS converted DNA can be stable at 4 degrees C for 20 hours. So you can take it out of the thermocycler after the conversion program and store it in the fridge for the next day  
+- It can make things easier on you do the prep over 1.5 days: start the prep in the afternoon by doing the DNA dilution and bisulfite conversion. The BS converted DNA can be stable at 4°C for 20 hours. So you can take it out of the thermocycler after the conversion program and store it in the fridge for the next day  
 - It will probably take you the entire second day if you do 10 or more samples (including the QC).    
 - While things are in the thermocycler, it can be helpful to start making the mixes for the next step and keep them on the ice bucket
 
@@ -77,11 +77,11 @@ I use 40 uL in the past so that my highest concentration DNA extractions don't r
 3. Add 130 uL of Lightning Conversion Reagent to each tube. Total volume should be 150 uL now.  
 4. Vortex for 10 seconds and spin down tubes.  
 5. Place tubes in thermocycler with the following PCR protocol:  
-- 98C for 8 minutes  
-- 54C for 1 hr  
-- 4C hold 
+- 98°C for 8 minutes  
+- 54°C for 1 hr  
+- 4°C hold 
 
-Once the program is done, samples can be stored in a 4C fridge for up to 20 hours so this is a good overnight stopping place. 
+Once the program is done, samples can be stored in a 4°C fridge for up to 20 hours so this is a good overnight stopping place. 
 
 Video example by the Putnam Lab: https://www.youtube.com/watch?v=4ar8d5NeSks&list=PLI8mZMNHcIVq9DFCOPksLhcch8UbJj4Pq&index=2 
 
@@ -114,7 +114,7 @@ Video example by the Putnam Lab: https://www.youtube.com/watch?v=4ar8d5NeSks&lis
 
 ### 03. Amplification with PrepAmp Primer
 
-> Here, the converted DNA is randomly primed with PCR primers that have degenerate bases so that amplification takes place all across the genome. Random priming and PCR of the fragmented DNA results in pieces of DNA 150-600bp long. The polymerase in this step is able to recognize Uracil and thus is more sensitive than other polymerases used in PCRs. This is why it needs to be added in twice, after the 98 degree step, because it would break down at that temperature.
+> Here, the converted DNA is randomly primed with PCR primers that have degenerate bases so that amplification takes place all across the genome. Random priming and PCR of the fragmented DNA results in pieces of DNA 150-600bp long. The polymerase in this step is able to recognize Uracil and thus is more sensitive than other polymerases used in PCRs. This is why it needs to be added in twice, after the 98°C step, because it would break down at that temperature.
 
 **Preparation** 
 
@@ -146,18 +146,18 @@ Make new strip tubes for each one of your samples.
 30. Vortex tubes, spin them down, and place them in the thermocyler with the following program (2 cycles): 
 
 Cycle 1: 
-- 98C for 2 minutes    
-- 8C for 1 minute   
-- 8C hold   
+- 98°C for 2 minutes    
+- 8°C for 1 minute   
+- 8°C hold   
 - During hold, open the machine and take out the tubes (don't press a button yet!) vortex and spin the tubes down, add 5.05 µl **PAMM** to each tube, vortex and spin the tubes down again, and place back in thermocycler and press enter on the machine  
-- 8C for 4 minutes  
-- 16C for 1 minute with 3% ramp rate  
-- 22C for 1 minute with 3% ramp rate  
-- 28C for 1 minute with 3% ramp rate  
-- 36C for 1 minute with 3% ramp rate  
-- 36.5C for 1 minute with 3% ramp rate  
-- 37C for 8 minutes  
-- At the end of cycle 2: 4C hold 
+- 8°C for 4 minutes  
+- 16°C for 1 minute with 3% ramp rate  
+- 22°C for 1 minute with 3% ramp rate  
+- 28°C for 1 minute with 3% ramp rate  
+- 36°C for 1 minute with 3% ramp rate  
+- 36.5°C for 1 minute with 3% ramp rate  
+- 37°C for 8 minutes  
+- At the end of cycle 2: 4°C hold 
 
 Cycle 2: exact same as above but during hold, again open the machine and take out the tubes without pressing a button, vortex and spin them down, then add 0.5 µl of the **diluted PrepAmp Polymerase** to each tube then, vortex and spin them down again, and place back into thermocycler and press enter on the program. It should take 20ish minutes between the two holds in the program. 
 
@@ -178,27 +178,126 @@ Cycle 2: exact same as above but during hold, again open the machine and take ou
 40. Discard the flowthough in the same waste beaker or container as above.  
 41. Add 200 µl of DNA Wash Buffer to each spin column.  
 42. Centrifuge the spin columns at 16,000 rcf for 30 seconds and discard the flow through.  
-43. Add 200 µl of DNA Wash Buffer to each spin column
-
-*left off here.* 
-
-
+43. Add 200 µl of DNA Wash Buffer to each spin column.  
+44. Centrifuge the spin columns at 16,000 rcf for **2 minutes**.  
+45. Make new 1.5 mL tubes for each sample.  
+46. Transfer spin column to new 1.5mL tube and discard the collection tube.  
+47. Add 12 µl of warmed DNA elution buffer directly by dripping to each spin column.  
+48. Incubate spin columns at room temp for 5 minutes.  
+49. Centrifuge spin columns at 16,000 rcf for 30 seconds.  
+50. Discard spin columns and keep elution tubes on ice.  
 
 ### 05. 1st Amplification with LibraryAmp Primers  
 
 > This step again amplifies the DNA and adds on the specific adapters that allow the DNA to anneal to the flow-cell during sequencing. It is also at this step that the Uracil is converted to Thymines (maybe, could be the previous step, Zymo is not transparent about the method).
 
+Thaw reagents needed on ice:
+- (2X) Library Amp Master Mix  
+- Library Amp Primers (10 uM)
+
+51. Make new strip tubes for each of the samples.  
+
+Make the 1st Amplification Master Mix (AMM) on ice. Vortex, spin down, and place AMM on ice:
+- 12.5 µl Library Amp Mix (2X) * n =  
+- 1 µl Library Amp Primers (10 uM) * n =  
+
+52. Add 13.5 µl of **AMM** to each of the new strip tubes on ice.  
+53. Add 11.5 µl of sample from the DCC elution to their respective strip tube.  
+54. Vortex and spin down tubes.  
+55. Place in the thermocycler and choose the program you need: 
+
+- 94°C for 30 seconds  
+8 cyles of:   
+[start of cycle]
+- 94°C for 30 seconds     
+- 45°C for 30 seconds  
+- 55°C for 30 seconds    
+- 68°C for 1 minute   
+[end of cycle]
+- 68°C for 5 minutes  
+- 4°C hold
+
+Once the program is done take out the tubes and place on ice. 
+
 ### 06. Purification with the DNA Clean & Concentrator™ (DCC™)  
 
 > This step removes leftover enzymes and buffers from the solution that would inhibit the next reaction.
+
+56. Make new 1.5 mL tubes for each of your samples.  
+57. Add 175 µl of DNA binding buffer to each of the new 1.5 mL tubes. This is a 7:1 ratio of the amount of liquid from the 1st Amplification reaction.  
+58. Set the thermomixer to 56°C and place the DNA Elution Buffer in to warm.  
+59. Add the total volume of the strip tubes from the PrepAmp Priming reaction to their respective 1.5 mL tube. This should be 25 µl.  
+60. Vortex and spin down the 1.5 mL tubes to mix.  
+61. Set up a spin column and a collection tube for each sample (same as before).  
+62. Add the total volume of the 1.5 mL tube to their respective spin column.  
+63. Centrifuge the spin columns at 16,000 rcf for 30 seconds.  
+64. Discard the flowthough in the same waste beaker or container as above.  
+65. Add 200 µl of DNA Wash Buffer to each spin column.  
+66. Centrifuge the spin columns at 16,000 rcf for 30 seconds and discard the flow through.  
+67. Add 200 µl of DNA Wash Buffer to each spin column.  
+68. Centrifuge the spin columns at 16,000 rcf for 2 minutes.  
+69. Make new 1.5 mL tubes for each sample.  
+70. Transfer spin column to new 1.5 mL tube and discard the collection tube.  
+71. Add 12.5 µl of warmed DNA elution buffer directly by dripping to each spin column.  
+72. Incubate spin columns at room temp for 5 minutes.  
+73. Centrifuge spin columns at 16,000 rcf for 30 seconds.  
+74. Discard spin columns and keep elution tubes on ice. 
 
 ### 07. 2nd Amplification with Index Primer
 
 > Another amplification is needed to add the barcoded indexes to the DNA, which allows for multiple samples to be pooled together for sequencing.
 
+Thaw reagents needed on ice:  
+- Library Amp Master Mix (2X) on ice. 
+- Planned paired indexing primers for your samples (UDI)
+
+75. Make new strip tubes for each of the samples.  
+76. 10.5 µl of DNA from the above DCC step  
+77. 12.5 µl of 2X Library Amp Master Mix.  
+78. 2 µl of the combined i7 and i5 primer pair (Zymo-Seq UDI Primer).    
+79. Vortex and spin down tubes after all components are added to each tube.  
+
+> The above mixture ratios are from Zymo suggestions based on the concentrations of the Zymo Seq UDI Primer (Cat #D3096). The concentration is smaller so we need a larger volume of each. 
+
+80. Incubate the mixture in a thermo cycler with the following program for a total of ten (10) amplification cycles: 
+
+- 94°C for 30 seconds  
+[cycle starts]
+- 94°C for 30 seconds  
+- 58°C for 30 seconds  
+- 68°C for 1 min  
+[cycle end]  
+- 68°C for 5 min  
+- 4°C hold 
+
+After the program is done, place the samples on ice. 
+
 ### 08. 1X Bead Cleanup 
 
 > This step removes leftover enzymes and buffers and any remaining primer from the solution. What is left is the purified libraries.
+
+Take KAPA Pure Beads out of the refrigerator ~30 minutes before use to get to room temperature. Swirl the bottle to mix the beads but don't vortex. 
+
+Make fresh 80% ethanol for the day, using 100% ethanol (in the flammable cabinet) and ultrapure water. 
+
+Locate the rotating shaker and magnetic plate. 
+
+81. When beads are at room temp, add 25 µl (equal volume) of beads to each strip tube. Pipette slowly because the bead solution is very viscous. Pipette mix the bead-sample mix at least 10 times until homogeneously brown.  
+82. Place the strip tubes on the rotating shaker, rotating at 200 rpm for 15 minutes.  
+83. At the 15 minutes on the shaker, place the tubes on the magnet rack and wait until the liquid goes clear and the beads have gone to the magnet.    
+84. Using a p200 pipette set to 45 µl, carefully remove the clear supernatant from each tube without disturbing the beads and discard in a waste trough.  
+85. Add 200 µl of 80% ethanol to each tube.  
+86. Remove the ethanol (200 µl) from each tube carefully, without disturbing the beads, and discard the liquid in the waste trough.  
+87. Add another 200 µl of 80% ethanol to each tube.   
+88. Remove the ethanol (200 µl) from each tube carefully, without disturbing the beads, and discard the liquid in the waste trough.  
+89. Use a p20 set to 20 µl to remove any residual liquid in each tube.  
+90. Let tubes air dry for ~1 more minute.  
+91. Take the tubes off the magnet.  
+92. Resuspend the beads in 15 µl of DNA elution buffer: Pipette directly onto the bead patch over and over until the beads go into solution.  
+93. Place the tubes back on the shaker at 200rpm for 5 minutes.  
+94. After the 5 minutes place the tubes back on the magnet plate and wait until the liquid goes clear and the beads are to the magnet.  
+95. Make new strip tubes (final tubes) that are well labeled for your libraries (sample name, date, "lib" initials).  
+96. Freeze at -20°C if not doing QC on the same day, if QCing next, place on ice. 
 
 ### 0.7 Validation and Quantification of Library
 
