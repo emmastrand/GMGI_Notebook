@@ -276,7 +276,7 @@ After the program is done, place the samples on ice.
 
 > This step removes leftover enzymes and buffers and any remaining primer from the solution. What is left is the purified libraries.
 
-Take KAPA Pure Beads out of the refrigerator ~30 minutes before use to get to room temperature. Swirl the bottle to mix the beads but don't vortex. 
+Take KAPA Pure Beads (or equivalent) out of the refrigerator ~30 minutes before use to get to room temperature. Swirl the bottle to mix the beads but don't vortex. 
 
 Make fresh 80% ethanol for the day, using 100% ethanol (in the flammable cabinet) and ultrapure water. 
 
