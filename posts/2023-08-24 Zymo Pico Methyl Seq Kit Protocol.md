@@ -34,7 +34,9 @@ Handbook for the above kit found here: https://files.zymoresearch.com/protocols/
 - Broad range dsDNA Qubit assay and tubes for Qubit use
 - TapeStation4200 or other fragment analyzer
 - D5000 Tapestation Supplies
-- UDI Index primers: see example spreadsheets from [Putnam Lab](https://github.com/Putnam-Lab/Lab_Management/blob/master/Lab_Resources/DNA_RNA-protocols/Indexes_and_Barcodes/UDI_Index_Primer_Pairs_for_Pico_WGBS.csv) and from [GMGI protocol](https://github.com/emmastrand/GMGI_Notebook/blob/main/posts/2023-08-21_Constructing%20Index%20Primers.md). 
+- UDI Index primers: see example spreadsheets from [Putnam Lab](https://github.com/Putnam-Lab/Lab_Management/blob/master/Lab_Resources/DNA_RNA-protocols/Indexes_and_Barcodes/UDI_Index_Primer_Pairs_for_Pico_WGBS.csv) and from [GMGI protocol](https://github.com/emmastrand/GMGI_Notebook/blob/main/posts/2023-08-21_Constructing%20Index%20Primers.md).     
+- E. coli Non-Methylated Genomic DNA from [Zymo](https://www.zymoresearch.com/products/e-coli-non-methylated-genomic-dna)
+
 
 ## Protocol 
 
@@ -46,6 +48,15 @@ Note about timing and planning this prep:
 - It can make things easier on you do the prep over 1.5 days: start the prep in the afternoon by doing the DNA dilution and bisulfite conversion. The BS converted DNA can be stable at 4°C for 20 hours. So you can take it out of the thermocycler after the conversion program and store it in the fridge for the next day  
 - It will probably take you the entire second day if you do 10 or more samples (including the QC).    
 - While things are in the thermocycler, it can be helpful to start making the mixes for the next step and keep them on the ice bucket
+
+**Spike-in sample**: We're using E. coli Non-Methylated Genomic DNA from [Zymo](https://www.zymoresearch.com/products/e-coli-non-methylated-genomic-dna) at 5 ug/20 uL concentration. For each sample, use 0.5% of E. coli DNA (e.g., 10 ng DNA input + 0.5 ng E. coli sample). 5 ug/20 uL = 0.25 ug/uL = 250 ng/uL.      
+- Dilution calculator: https://physiologyweb.com/calculators/dilution_calculator_mass_per_volume.html 
+
+Original stock: 0.25 ug/uL = 250 ng/uL    
+Dilution 1: 1.6 uL of 0.25 ug/uL stock + 38.4 uL of TE buffer (10 mM Tris-HCl, 1 mM EDTA, pH 8.0) = 40 uL of 10 ng/uL  
+Dilution 2: 2 uL of 10 ng/uL Dilution 1 + 38 uL of TE buffer (10 mM Tris-HCl, 1 mM EDTA, pH 8.0) = 40 uL of 0.5 ng/uL 
+
+I'll take 1 uL of Dilution 2 for 0.5 ng input. *Vortex these really well while making to ensure concentrations are as accurate as possible.* 
 
 ### Reagent Preparation 
 
@@ -72,10 +83,11 @@ I use 40 uL in the past so that my highest concentration DNA extractions don't r
 
 ![](https://raw.githubusercontent.com/meschedl/MESPutnam_Open_Lab_Notebook/master/images/Screen%20Shot%202021-04-25%20at%2011.25.48%20AM.png)
 
-1. Add 18 uL (to get total volume up to 20 uL with DNA below) of 10 mM Tris HCl (or Qiagen Buffer AE) or nuclease free water.  
-2. For each sample add 10 ng (2 uL of 5ng/uL) of DNA into a 0.2 mL PCR strip tube.  
-3. Add 130 uL of Lightning Conversion Reagent to each tube. Total volume should be 150 uL now.  
-4. Vortex for 10 seconds and spin down tubes.  
+1. Add 17 uL (to get total volume up to 20 uL with DNA below) of 10 mM Tris HCl (or Qiagen Buffer AE) or nuclease free water into 0.2 mL PCR strip tube.        
+2. For each sample add 10 ng (2 uL of 5ng/uL) of DNA into 0.2 mL PCR strip tube.    
+3. For each sample add 0.5 ng (1 uL of 0.5 ng/uL Dilution 2 tube) of E. coli DNA into 0.2 mL PCR strip tube.  
+3. Add 130 uL of Lightning Conversion Reagent to each tube. Total volume should be 150 uL now.    
+4. Vortex for 10 seconds and spin down tubes.    
 5. Place tubes in thermocycler with the following PCR protocol:  
 - 98°C for 8 minutes  
 - 54°C for 1 hr  
