@@ -33,7 +33,6 @@ Handbook for the above kit found here: https://files.zymoresearch.com/protocols/
 - Filter pipette tips
 - Broad range dsDNA Qubit assay and tubes for Qubit use
 - TapeStation4200 or other fragment analyzer
-- D5000 Tapestation Supplies
 - UDI Index primers: see example spreadsheets from [Putnam Lab](https://github.com/Putnam-Lab/Lab_Management/blob/master/Lab_Resources/DNA_RNA-protocols/Indexes_and_Barcodes/UDI_Index_Primer_Pairs_for_Pico_WGBS.csv) and from [GMGI protocol](https://github.com/emmastrand/GMGI_Notebook/blob/main/posts/2023-08-21_Constructing%20Index%20Primers.md).     
 - E. coli Non-Methylated Genomic DNA from [Zymo](https://www.zymoresearch.com/products/e-coli-non-methylated-genomic-dna)
 
@@ -89,6 +88,9 @@ I use 40 uL in the past so that my highest concentration DNA extractions don't r
 3. Add 130 uL of Lightning Conversion Reagent to each tube. Total volume should be 150 uL now.    
 4. Vortex for 10 seconds and spin down tubes.    
 5. Place tubes in thermocycler with the following PCR protocol:  
+
+NAMED "PICO BC" ON THERMOCYCLER AT GMGI IN EPIAGE FOLDER (~1 hr) 
+
 - 98°C for 8 minutes  
 - 54°C for 1 hr  
 - 4°C hold 
@@ -112,6 +114,7 @@ Video example by the Putnam Lab: https://www.youtube.com/watch?v=4ar8d5NeSks&lis
 14. Add 200 μl L-Desulphonation Buffer to the column and let stand at room temperature (20°C-30°C) for 15 minutes.  
 15. During the above 15 minutes, warm the tube of DNA Elution Buffer in the thermomixer to 56°C.  
 16. Label new 1.5mL tubes, 1 for each sample with the Extraction ID.  
+17. Grab the reagents needed from Section 03. to start thawing.   
 17. After the incubation, centrifuge at 16,000 rcf for 30 seconds and discard the flow-through.  
 18. Add 200 μl M-Wash Buffer to the column (Wash Step 1).  
 19. Centrifuge spin columns at 16,000 rcf for 30 seconds.  
@@ -138,6 +141,10 @@ Thaw needed reagents:
 
 Determine n number: number of samples + % error (~5%)
 
+> I've had success using 5% error and also not using this extra buffer. The reagents in the kit should have extra in them, but we've had issues in the past with the 2X Library Amp Master Mix running out. Zymo does not sell this separately so be mindful with use of the materials stored at -20C.
+
+Labeling scheme for tiny tubes: PMM = "A"; PAMM = "B"; dPAP = "C"; AMM = "D". 
+
 Create **Priming Master Mix (PMM)** on ice (Vortex and spin down PMM and keep on ice):  
 - 2 μl 5X PrepAmp Buffer * n =  
 - 1 μl 40uM PrepAmp Primer * n =  
@@ -147,7 +154,7 @@ Create **PrepAmp Master Mix (PAMM)** on ice (Vortex and spin down PAMM and keep 
 - 3.75 μl PrepAmp Pre Mix * n =  
 - 0.3 μl PrepAmp Polymerase * n =  
 
-Create **"diluted" PrepAmp Polymerase mix** to avoid adding less than 0.5ul during protocol (original protocol asks you to add 0.3ul to the tubes in the thermocycler, sometimes that small of an amount does not come out of the tip so you can add DNA elution buffer to the enzyme to pipette 0.5ul). Make this on ice (Pipette mix and spin down the diluted polymerase and keep on ice):
+Create **"diluted" PrepAmp Polymerase mix (dPAP)** to avoid adding less than 0.5ul during protocol (original protocol asks you to add 0.3ul to the tubes in the thermocycler, sometimes that small of an amount does not come out of the tip so you can add DNA elution buffer to the enzyme to pipette 0.5ul). Make this on ice (Pipette mix and spin down the diluted polymerase and keep on ice):
 - 0.3 μl PrepAmp Polymerase * n =  
 - 0.2 μl DNA Elution Buffer * n =
 
@@ -157,27 +164,31 @@ Make new strip tubes for each one of your samples.
 29. Add 3ul of **PMM** to each tube.  
 30. Vortex tubes, spin them down, and place them in the thermocyler with the following program (2 cycles): 
 
-Cycle 1: 
-- 98°C for 2 minutes    
-- 8°C for 1 minute   
-- 8°C hold   
-- During hold, open the machine and take out the tubes (don't press a button yet!) vortex and spin the tubes down, add 5.05 µl **PAMM** to each tube, vortex and spin the tubes down again, and place back in thermocycler and press enter on the machine  
-- 8°C for 4 minutes  
-- 16°C for 1 minute with 3% ramp rate  
-- 22°C for 1 minute with 3% ramp rate  
-- 28°C for 1 minute with 3% ramp rate  
-- 36°C for 1 minute with 3% ramp rate  
-- 36.5°C for 1 minute with 3% ramp rate  
-- 37°C for 8 minutes  
-- At the end of cycle 2: 4°C hold 
+NAMED "PICO 1" ON THERMOCYCLER AT GMGI IN EPIAGE FOLDER (~1 hr)
 
-Cycle 2: exact same as above but during hold, again open the machine and take out the tubes without pressing a button, vortex and spin them down, then add 0.5 µl of the **diluted PrepAmp Polymerase** to each tube then, vortex and spin them down again, and place back into thermocycler and press enter on the program. It should take 20ish minutes between the two holds in the program. 
+- 98°C for 2 minutes  
+- 8°C for 1 minute  
+- 8°C hold    
+**[cycle starts]**  
+Cycle 1: During hold, open the machine and take out the tubes (don't press a button yet!) vortex and spin the tubes down, add 5.05 µl **PAMM** to each tube, vortex and spin the tubes down again, and place back in thermocycler and press enter on the machine  
+Cycle 2: exact same as above but during hold, again open the machine and take out the tubes without pressing a button, vortex and spin them down, then add 0.5 µl of the **diluted PrepAmp Polymerase (dPAP)** to each tube then, vortex and spin them down again, and place back into thermocycler and press enter on the program. It should take 20ish minutes between the two holds in the program.  
+- 8°C for 4 minutes  
+- 16°C for 1 minute with 3% ramp rate (0.1°C s-1)  
+- 22°C for 1 minute with 3% ramp rate (0.1°C s-1)  
+- 28°C for 1 minute with 3% ramp rate (0.1°C s-1)  
+- 36°C for 1 minute with 3% ramp rate (0.1°C s-1)  
+- 36.5°C for 1 minute with 3% ramp rate (0.1°C s-1)  
+- 37°C for 8 minutes  
+**[cycle ends]**   
+- At the end of cycle 2: 4°C hold  
 
 31. When the program is done take out the tubes and place them on ice. 
 
 ### 04. Purification with the DNA Clean & Concentrator™ (DCC™)  
 
 > This step removes leftover enzymes and buffers from the solution that would inhibit the next reaction.
+
+Before starting this step, pull reagents for Section 05. out of the freezer to thaw. 
 
 32. Make new 1.5 mL tubes for each of your samples.  
 33. Add 108.85 µl of DNA binding buffer to each of the new 1.5 mL tubes. This is a 7:1 ratio of the amount of liquid from the PrepAmp Priming reaction.  
@@ -209,7 +220,7 @@ Thaw reagents needed on ice:
 
 51. Make new strip tubes for each of the samples.  
 
-Make the 1st Amplification Master Mix (AMM) on ice. Vortex, spin down, and place AMM on ice:
+Make the 1st **Amplification Master Mix (AMM)** on ice. Vortex, spin down, and place AMM on ice:
 - 12.5 µl Library Amp Mix (2X) * n =  
 - 1 µl Library Amp Primers (10 uM) * n =  
 
@@ -217,6 +228,8 @@ Make the 1st Amplification Master Mix (AMM) on ice. Vortex, spin down, and place
 53. Add 11.5 µl of sample from the DCC elution to their respective strip tube.  
 54. Vortex and spin down tubes.  
 55. Place in the thermocycler and choose the program you need: 
+
+NAMED "PICO 2" ON THERMOCYCLER AT GMGI IN EPIAGE FOLDER (~40 min)
 
 - 94°C for 30 seconds  
 8 cyles of:   
@@ -273,24 +286,27 @@ Thaw reagents needed on ice:
 
 80. Incubate the mixture in a thermo cycler with the following program for a total of ten (10) amplification cycles: 
 
+NAMED "PICO 3" ON THERMOCYCLER AT GMGI IN EPIAGE FOLDER (~40 min)
+
 - 94°C for 30 seconds  
-[cycle starts]
+**[cycle starts]**
 - 94°C for 30 seconds  
 - 58°C for 30 seconds  
 - 68°C for 1 min  
-[cycle end]  
+**[cycle end]**
 - 68°C for 5 min  
 - 4°C hold 
 
+After starting program, pull beads out of the 4°C fridge to thaw for Section 08.  
 After the program is done, place the samples on ice. 
 
 ### 08. 1X Bead Cleanup 
 
 > This step removes leftover enzymes and buffers and any remaining primer from the solution. What is left is the purified libraries.
 
-Take KAPA Pure Beads (or equivalent) out of the refrigerator ~30 minutes before use to get to room temperature. Swirl the bottle to mix the beads but don't vortex. 
+Take Line Biosciences PCR Clean DX beads out of the refrigerator ~30 minutes before use to get to room temperature. Swirl the bottle to mix the beads but don't vortex.
 
-Make fresh 80% ethanol for the day, using 100% ethanol (in the flammable cabinet) and ultrapure water. 
+Make fresh 80% ethanol for the day, using 100% ethanol (in the flammable cabinet) and ultrapure water. 400 uL of 80% ethanol is required per sample. 
 
 Locate the rotating shaker and magnetic plate. 
 
@@ -311,7 +327,7 @@ Locate the rotating shaker and magnetic plate.
 95. Make new strip tubes (final tubes) that are well labeled for your libraries (sample name, date, "lib" initials).  
 96. Freeze at -20°C if not doing QC on the same day, if QCing next, place on ice. 
 
-### 0.7 Validation and Quantification of Library
+### 09. Validation and Quantification of Library
 
 **Broad Range dsDNA Qubit Assay**: The libraries need to be quantified before sequencing, previous sequencing has shown that libraries with concentrations below 7ng/ul have not sequenced well and have been removed from the analysis. If you have a library with a low quant, it might be advantageous to re-do the library.
 
