@@ -38,13 +38,26 @@ The fragment analyzer needs to use gel for 48 samples worth even if there are on
 - ≥20 mL of 1X Capillary Conditioning Solution. This stock comes in 5X concentration so dilute as needed.  
 - "Gel1" is used gel solution. No action required.    
 - "Gel2" is new gel solution made in subsequent steps. Empty this 50 mL falcon tube if there is any remaining.  
-- 
 3. Mix fresh Intercalating dye (kept at -20°C) and NGS Separation Gel (kept at 4°C) in a 50 mL falcon tube. Either 25 mL or 18 mL solutions will be enough for the analyzer.  
 - 2.5 ul dye + 25 mL gel for 48 samples    
 - 1.8 ul dye + 18 mL gel for 48 samples    
 - 3.6 ul dye + 36 mL gel for 96 samples  
 4. Place falcon tube in the "Gel 2" location on the Fragment Analyzer (FA), behind the right door (open in the image below).   
-5. 
-
+5. Dilute 5X 930 dsDNA Inlet Buffer to 1X. Fill all wells in rows A-D of a deep well plate with 1X Inlet Buffer and place it in the Drawer "B" on the FA. At GMGI we re-use this plate so double check the plate is full and in Drawer "B".  
+6. Fill all wells in rows A-D of a semi-skirted 0.2 mL PCR plate with 200 ul 0.25X TE Rinse Buffer. Place in Drawer "M". At GMGI we re-use this plate so double check the plate is full and in Drawer "M".  
+7. Mix 2 ul samples/ladder with 22 ul NGS diluent marker in a semi-skirted PCR plate. Ladder (kept at -20°C) must go in well D12 (H12 if running lower half of plate). Add 24 ul BF 2000 Blank solution (kept at -20°C) to unused wells. Place the plate in Drawer "1". It's encouraged to use 2 ladders in case 1 fails.  
+8. Turn on the Fragment Analyzer. Switch is located in the back bottom center of the machine.  
+9. Open Fragment Analyzer software. The machine should automatically "park" the plates but this may need to be done prior running a program.   
+10. If bottles were refilled, at the top menu bar, select "Utilities" -> "Solution Levels" and adjust the solution levels as necessary.  
+11. Select tray and Group to run (typically Tray 1, A-D for 48).  
+12. Enter sample ID/tray ID (optional).  
+13. Under "Run Selected Group", Select Add to Queue.  
+14. Select "DNF-473-33 - SS NGS Fragment 1-6000 bp" from method dropdown menu. (or HS option).  
+15. Change "Gel 1" to "Gel 2".  
+16. Select OK to add method to queue.  
+17. Start run (green arrow button) 
+18. Open results in ProSize software. 
+19. It may be necessary to adjust Upper Marker (UM) or Lower Marker (LM) peaks: It may be necessary to adjust Upper Marker (UM) or Lower Marker (LM) peaks.  
+20. Save results as a PDF.  
 
 ![](https://www.biolabtech.com.ua/media/shop/images/f63e20a0-7d73-11ea-92b7-a2df97e5de28.JPG)
