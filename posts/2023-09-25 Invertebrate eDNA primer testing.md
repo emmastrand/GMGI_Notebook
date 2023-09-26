@@ -92,6 +92,8 @@ I downloaded the [Snap Gene](https://www.snapgene.com/) software to test insilic
 
 I crowd sourced invertebrate DNA or tissue samples from around the lab to test: longfin squid, shortfin squid, atlantic sea scallop, urchin, american lobster, soft shell clams, tunicate, clam worms, and sponges. The soft shell clams were collected by Dylan **[add field sampling details here]**. The long and short fin squid and scallops were collected by the DMF bottom trawl in September 2023. I extracted the clams, squid, and scallops in late September/early October 2023 for optimizing these primers.
 
+20230925: scallop and both squid species sub-sampled.
+
 | Organism   Scientific Name | Organism Common Name | Source                  | Sample ID | Extraction ID | Extraction Notes | Qubit (ng/uL) | 5ng/uL Dilution: DNA (uL) | 5ng/uL Dilution: Tris (uL) AE   Buffer |
 |----------------------------|----------------------|-------------------------|-----------|---------------|------------------|---------------|---------------------------|----------------------------------------|
 | Loligo pealeii             | Long-fin squid       | DMF trawl station 1     | Lpe-001   | Lpe-001       |                  |               | #DIV/0!                   | #DIV/0!                                |

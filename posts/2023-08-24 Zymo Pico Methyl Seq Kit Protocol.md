@@ -64,7 +64,7 @@ I'll take 1 uL of Dilution 2 for 0.5 ng input. *Vortex these really well while m
 
 ### DNA Dilution 
 
-First you dilute your extracted DNA to a total amount of 1 or 10ng. This kit takes a very low input of DNA. Previous usage of this kit in the Putnam Lab optimized the protocol to work with 10 ng and some alterations to the manufacturer's protocol. Dilute extracted DNA to appropriate concentration so 10ng of DNA can be used to start the protocol without pipetting below 1ul and the input volume is no more than 20ul. Use the same buffer that the extracted DNA is in (ex. 10mM Tris HCl). 
+First you dilute your extracted DNA to a total input amount of 1 or 10ng (or higher like 20 ng). This kit takes a very low input of DNA. Previous usage of this kit in the Putnam Lab optimized the protocol to work with 10 ng and some alterations to the manufacturer's protocol. Dilute extracted DNA to appropriate concentration so 10ng of DNA can be used to start the protocol without pipetting below 1ul and the input volume is no more than 20ul. Use the same buffer that the extracted DNA is in (ex. 10mM Tris HCl).
 
 Putnam Lab video on how to do this: https://www.youtube.com/watch?v=byipduTsFmc&list=PLI8mZMNHcIVq9DFCOPksLhcch8UbJj4Pq&index=2. 
 
@@ -75,6 +75,12 @@ If we want 5 ng/uL in 40 uL total (200 ng in 20 uL):
 - Tris HCl (Buffer AE from Qiagen) = 40-DNA input 
 
 I use 40 uL in the past so that my highest concentration DNA extractions don't result in pipetting less than 1 uL of DNA into the dilution. 
+
+If we want 10 ng/uL in 20 uL total (200 ng): 
+- DNA input = 200/Qubit value   
+- Tris HCl (Buffer AE from Qiagen) = 20-DNA input  
+
+20 ng as input has also worked well for me (GMGI Epigenetic Aging Project). I would recommend moving forward with 20 ng.
 
 ### 01. Bisulfite Conversion of Genomic DNA 
 
