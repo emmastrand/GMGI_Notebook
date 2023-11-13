@@ -1,0 +1,87 @@
+---
+title: "Sea Urchin CpG O/E Calculations"
+author: "Author: Emma Strand; emma.strand@gmgi.org"
+output:
+  github_document: default
+  pdf_document:
+    keep_tex: yes
+  html_document:
+    toc: yes
+    toc_depth: 6
+    toc_float: yes
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load libraries 
+
+```{r}
+library(plyr)
+library(dplyr)
+library(ggplot2)
+library(mixtools)
+library(fitdistrplus)
+```
+
+## Load data 
+
+```{r}
+cpg_anno <- read.delim("../MRF_CpG.txt", header=FALSE) %>%
+  dplyr::rename(Gene = V1) %>% dplyr::rename(CpG_ratio = V2)
+
+set.seed(101)
+```
+
+## Choosing cut-offs 
+
+```{r}
+range(cpg_anno$CpG_ratio) ## 0.00000 1.82588
+hist(cpg_anno$CpG_ratio)
+
+cpg_anno <- cpg_anno %>% 
+  filter(CpG_ratio >= 0.001) %>% # setting minimum
+  filter(CpG_ratio <= 1.5) # setting maximum 
+
+range(cpg_anno$CpG_ratio) ## 0.00990199 1.49170000
+hist(cpg_anno$CpG_ratio) 
+```
+
+## Fitting mixture model with mixtools normalmixEM
+
+https://dozenoaks.twelvetreeslab.co.uk/2019/06/mixture-models/
+
+`normalmixEM` functions is telling it to find two gaussians in the observations
+
+```{r}
+mixmodel <- normalmixEM(cpg_anno$CpG_ratio, k = 2)
+
+plot(mixmodel, which = 2)
+```
+### Plotting the above model
+
+```{r}
+cpg_anno %>% 
+  ggplot(., aes(x=CpG_ratio)) + theme_classic() + 
+  geom_histogram(binwidth=0.1, fill = "white", color="darkgrey", alpha=0.9) + 
+  ylab("Number of genes") + xlab("CpG Observed/Expected") +
+  mapply(
+    function(mean, sd, lambda, n, binwidth) {
+      stat_function(
+        fun = function(x) {
+          (dnorm(x, mean = mean, sd = sd)) * n * binwidth * lambda
+        }
+      )
+    },
+    mean = mixmodel[["mu"]], #mean
+    sd = mixmodel[["sigma"]], #standard deviation
+    lambda = mixmodel[["lambda"]], #amplitude
+    n = length(cpg_anno$CpG_ratio), #sample size
+    binwidth = 0.1 #binwidth used for histogram; needs to match the above binwidth 
+  )
+```
+
+
