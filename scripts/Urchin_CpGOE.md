@@ -108,8 +108,9 @@ mixmodel <- normalmixEM(cpg_anno$CpG_ratio, k = 2)
 plot(mixmodel, which = 2)
 ```
 
-![](Urchin_CpGOE_files/figure-gfm/unnamed-chunk-4-1.png)<!-- --> \###
-Plotting the above model
+![](Urchin_CpGOE_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+
+### Plotting the above model
 
 ``` r
 cpg_anno %>% 

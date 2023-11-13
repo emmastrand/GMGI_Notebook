@@ -61,6 +61,7 @@ mixmodel <- normalmixEM(cpg_anno$CpG_ratio, k = 2)
 
 plot(mixmodel, which = 2)
 ```
+
 ### Plotting the above model
 
 ```{r}
