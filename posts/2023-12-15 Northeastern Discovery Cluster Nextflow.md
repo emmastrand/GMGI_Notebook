@@ -41,20 +41,24 @@ We did Whole Genome Bisulfite Sequencing across four lanes of a NovaSeq run. The
 
 ### slurm script 
 
+`methyseq.sh`: 
+
 ```
 #!/bin/bash
-#SBATCH --error="script_error_fastqc" #if your job fails, the error report will be put in this file
-#SBATCH --output="output_script_fastqc" #once your job is completed, any final job report comments will be put in this file
+#SBATCH --error=output_messages/"%x_error.%j" #if your job fails, the error report will be put in this file
+#SBATCH --output=output_messages/"%x_output.%j" #once your job is completed, any final job report comments will be put in this file
 
 cd /work/gmgi/Fisheries/epiage/haddock
 
-module load Nextflow/21.03.0 ##try newest version first
+module load nextflow/v23.04.4
 
 nextflow -log ./ run nf-core/methylseq -resume \
+-profile docker \
     --input metadata/samplesheet.csv \
     --outdir ./results \
     --email emma.strand@gmgi.org \
     --multiqc_title haddockrun1 \
+    --igenomes_ignore \
     --fasta ./OLKM01.fasta.gz \
     --save_reference \
     --clip_r1 10 \
