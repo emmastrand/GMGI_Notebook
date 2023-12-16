@@ -29,8 +29,21 @@ library(fitdistrplus)
 
 ## Load data 
 
+MRF = long-lived red sea urchin (Mesocentrotus franciscanus)  
+LPI = short-lived green sea urchin (Lytechinus variegatus)
+
+
 ```{r}
-cpg_anno <- read.delim("../MRF_CpG.txt", header=FALSE) %>%
+MRF <- read.delim("../MRF_CpG.txt", header=FALSE) %>%
+  dplyr::rename(Gene = V1) %>% dplyr::rename(CpG_ratio = V2)
+
+LVA <- read.delim("../LVA_CpG.txt", header=FALSE) %>%
+  dplyr::rename(Gene = V1) %>% dplyr::rename(CpG_ratio = V2)
+
+SPU <- read.delim("../SPU_CpG.txt", header=FALSE) %>%
+  dplyr::rename(Gene = V1) %>% dplyr::rename(CpG_ratio = V2)
+
+LPICTUS <- read.delim("../LPICTUS_CpG.txt", header=FALSE) %>%
   dplyr::rename(Gene = V1) %>% dplyr::rename(CpG_ratio = V2)
 
 set.seed(101)
@@ -39,16 +52,67 @@ set.seed(101)
 ## Choosing cut-offs 
 
 ```{r}
-range(cpg_anno$CpG_ratio) ## 0.00000 1.82588
-hist(cpg_anno$CpG_ratio)
+range(MRF$CpG_ratio) ## 0.00000 1.82588
+hist(MRF$CpG_ratio)
 
-cpg_anno <- cpg_anno %>% 
+MRF_filtered <- MRF %>% 
   filter(CpG_ratio >= 0.001) %>% # setting minimum
   filter(CpG_ratio <= 1.5) # setting maximum 
 
-range(cpg_anno$CpG_ratio) ## 0.00990199 1.49170000
-hist(cpg_anno$CpG_ratio) 
+range(MRF_filtered$CpG_ratio) ## 0.00990199 1.49170000
+hist(MRF_filtered$CpG_ratio) 
 ```
+
+
+```{r}
+range(LVA$CpG_ratio) ## 0.00000 2.41394
+hist(LVA$CpG_ratio)
+
+LVA_filtered <- LVA %>% 
+  filter(CpG_ratio >= 0.001) %>% # setting minimum
+  filter(CpG_ratio <= 1.5) # setting maximum 
+
+range(LVA_filtered$CpG_ratio) ## 0.0249947 1.4963300
+hist(LVA_filtered$CpG_ratio) 
+```
+
+
+```{r}
+range(SPU$CpG_ratio) ## 0.0296791 3.2727300
+hist(SPU$CpG_ratio)
+
+SPU_filtered <- SPU %>% 
+  filter(CpG_ratio >= 0.001) %>% # setting minimum
+  filter(CpG_ratio <= 1.5) # setting maximum 
+
+range(SPU_filtered$CpG_ratio) ## 0.0296791 1.4894400
+hist(SPU_filtered$CpG_ratio) 
+```
+
+
+```{r}
+range(LPICTUS$CpG_ratio) ## 0.00000 2.41394
+hist(LPICTUS$CpG_ratio)
+
+LPICTUS_filtered <- LPICTUS %>% 
+  filter(CpG_ratio >= 0.001) %>% # setting minimum
+  filter(CpG_ratio <= 1.5) # setting maximum 
+
+range(LPICTUS_filtered$CpG_ratio) ## 0.0249947 1.4963300
+hist(LPICTUS_filtered$CpG_ratio) 
+```
+Calculating number of rows for filtered df
+
+```{r}
+MRF_filtered ##22,183
+LVA_filtered ##20,562
+SPU_filtered ##20,875
+LPICTUS_filtered ##28,534
+
+MRF_filtered %>% write.csv("lab work/CpG_MRF_filtered.csv")
+```
+
+
 
 ## Fitting mixture model with mixtools normalmixEM
 
@@ -57,17 +121,47 @@ https://dozenoaks.twelvetreeslab.co.uk/2019/06/mixture-models/
 `normalmixEM` functions is telling it to find two gaussians in the observations
 
 ```{r}
-mixmodel <- normalmixEM(cpg_anno$CpG_ratio, k = 2)
+mixmodel_MRF <- normalmixEM(MRF_filtered$CpG_ratio, k = 2)
+summary(mixmodel_MRF) ## 481.04
 
-plot(mixmodel, which = 2)
+mixmodel_LVA <- normalmixEM(LVA_filtered$CpG_ratio, k = 2)
+summary(mixmodel_LVA) ## 318.14
+
+mixmodel_SPU <- normalmixEM(SPU_filtered$CpG_ratio, k = 2)
+summary(mixmodel_SPU) ## 561.98
+
+mixmodel_LPICTUS <- normalmixEM(LPICTUS_filtered$CpG_ratio, k = 2)
+summary(mixmodel_LPICTUS) ## 740.62
+
+plot(mixmodel_MRF, which = 2, col2=c("darkred","darkgreen"), ylab1 = c(0, 1.5))
+plot(mixmodel_LVA, which = 2, col2=c("darkgreen","darkred"), ylab1 = c(0, 1.5))
+plot(mixmodel_SPU, which = 2, col2=c("darkred","darkgreen"), ylab2 = c(0, 1.5))
+plot(mixmodel_LPICTUS, which = 2, col2=c("darkred","darkgreen"), ylab2 = c(0, 1.5))
+
+
 ```
 
 ### Plotting the above model
 
+Defining function 
+
 ```{r}
-cpg_anno %>% 
+fxn = function(mean, sd, lambda, n, binwidth) {
+      stat_function(
+        fun = function(x) {
+          (dnorm(x, mean = mean, sd = sd)) * n * binwidth * lambda
+        }
+      )
+    }
+```
+
+
+Plotting
+
+```{r}
+MRF_filtered %>% 
   ggplot(., aes(x=CpG_ratio)) + theme_classic() + 
-  geom_histogram(binwidth=0.1, fill = "white", color="darkgrey", alpha=0.9) + 
+  geom_histogram(binwidth=0.1, fill = "white", color="darkgrey", alpha=0.9) + ylim(0,5000) +
   ylab("Number of genes") + xlab("CpG Observed/Expected") +
   mapply(
     function(mean, sd, lambda, n, binwidth) {
@@ -77,12 +171,160 @@ cpg_anno %>%
         }
       )
     },
-    mean = mixmodel[["mu"]], #mean
-    sd = mixmodel[["sigma"]], #standard deviation
-    lambda = mixmodel[["lambda"]], #amplitude
-    n = length(cpg_anno$CpG_ratio), #sample size
+    mean = mixmodel_MRF[["mu"]], #mean
+    sd = mixmodel_MRF[["sigma"]], #standard deviation
+    lambda = mixmodel_MRF[["lambda"]], #amplitude
+    n = length(MRF_filtered$CpG_ratio), #sample size
+    binwidth = 0.1 #binwidth used for histogram; needs to match the above binwidth 
+  )
+
+LVA_filtered %>% 
+  ggplot(., aes(x=CpG_ratio)) + theme_classic() + 
+  geom_histogram(binwidth=0.1, fill = "white", color="darkgrey", alpha=0.9) + ylim(0,5000) +
+  ylab("Number of genes") + xlab("CpG Observed/Expected") +
+  mapply(
+    function(mean, sd, lambda, n, binwidth) {
+      stat_function(
+        fun = function(x) {
+          (dnorm(x, mean = mean, sd = sd)) * n * binwidth * lambda
+        }
+      )
+    },
+    mean = mixmodel_LVA[["mu"]], #mean
+    sd = mixmodel_LVA[["sigma"]], #standard deviation
+    lambda = mixmodel_LVA[["lambda"]], #amplitude
+    n = length(LVA_filtered$CpG_ratio), #sample size
+    binwidth = 0.1 #binwidth used for histogram; needs to match the above binwidth 
+  )
+
+SPU_filtered %>% 
+  ggplot(., aes(x=CpG_ratio)) + theme_classic() + 
+  geom_histogram(binwidth=0.1, fill = "white", color="darkgrey", alpha=0.9) + ylim(0,5000) +
+  ylab("Number of genes") + xlab("CpG Observed/Expected") +
+  mapply(
+    function(mean, sd, lambda, n, binwidth) {
+      stat_function(
+        fun = function(x) {
+          (dnorm(x, mean = mean, sd = sd)) * n * binwidth * lambda
+        }
+      )
+    },
+    mean = mixmodel_SPU[["mu"]], #mean
+    sd = mixmodel_SPU[["sigma"]], #standard deviation
+    lambda = mixmodel_SPU[["lambda"]], #amplitude
+    n = length(SPU_filtered$CpG_ratio), #sample size
+    binwidth = 0.1 #binwidth used for histogram; needs to match the above binwidth 
+  )
+
+LPICTUS_filtered %>% 
+  ggplot(., aes(x=CpG_ratio)) + theme_classic() + 
+  geom_histogram(binwidth=0.1, fill = "white", color="darkgrey", alpha=0.9) + ylim(0,5000) +
+  ylab("Number of genes") + xlab("CpG Observed/Expected") +
+  mapply(
+    function(mean, sd, lambda, n, binwidth) {
+      stat_function(
+        fun = function(x) {
+          (dnorm(x, mean = mean, sd = sd)) * n * binwidth * lambda
+        }
+      )
+    },
+    mean = mixmodel_LPICTUS[["mu"]], #mean
+    sd = mixmodel_LPICTUS[["sigma"]], #standard deviation
+    lambda = mixmodel_LPICTUS[["lambda"]], #amplitude
+    n = length(LPICTUS_filtered$CpG_ratio), #sample size
     binwidth = 0.1 #binwidth used for histogram; needs to match the above binwidth 
   )
 ```
+
+## Finds intersection point of two component model
+
+```{r}
+intersect <- function(m1, s1, m2, s2, prop1, prop2){
+  
+  B <- (m1/s1^2 - m2/s2^2)
+  A <- 0.5*(1/s2^2 - 1/s1^2)
+  C <- 0.5*(m2^2/s2^2 - m1^2/s1^2) - log((s1/s2)*(prop2/prop1))
+  
+  (-B + c(1,-1)*sqrt(B^2 - 4*A*C))/(2*A)
+}
+
+mixmodel_MRF[["mu"]] #means
+mixmodel_MRF[["sigma"]] #standard deviations
+mixmodel_MRF[["lambda"]] #amplitudes
+
+intersect_pt_MRF <- intersect(mixmodel_MRF[["mu"]][1], mixmodel_MRF[["sigma"]][1], 
+                          mixmodel_MRF[["mu"]][2], mixmodel_MRF[["sigma"]][2], 
+                          mixmodel_MRF[["lambda"]][1], mixmodel_MRF[["lambda"]][2])
+
+
+mixmodel_LVA[["mu"]] #means
+mixmodel_LVA[["sigma"]] #standard deviations
+mixmodel_LVA[["lambda"]] #amplitudes
+
+intersect_pt_LVA <- intersect(mixmodel_LVA[["mu"]][1], mixmodel_LVA[["sigma"]][1], 
+                          mixmodel_LVA[["mu"]][2], mixmodel_LVA[["sigma"]][2], 
+                          mixmodel_LVA[["lambda"]][1], mixmodel_LVA[["lambda"]][2])
+
+mixmodel_SPU[["mu"]] #means
+mixmodel_SPU[["sigma"]] #standard deviations
+mixmodel_SPU[["lambda"]] #amplitudes
+
+intersect_pt_SPU <- intersect(mixmodel_SPU[["mu"]][1], mixmodel_SPU[["sigma"]][1], 
+                          mixmodel_SPU[["mu"]][2], mixmodel_SPU[["sigma"]][2], 
+                          mixmodel_SPU[["lambda"]][1], mixmodel_SPU[["lambda"]][2])
+
+mixmodel_LPICTUS[["mu"]] #means
+mixmodel_LPICTUS[["sigma"]] #standard deviations
+mixmodel_LPICTUS[["lambda"]] #amplitudes
+
+intersect_pt_LPICTUS <- intersect(mixmodel_LPICTUS[["mu"]][1], mixmodel_LPICTUS[["sigma"]][1], 
+                          mixmodel_LPICTUS[["mu"]][2], mixmodel_LPICTUS[["sigma"]][2], 
+                          mixmodel_LPICTUS[["lambda"]][1], mixmodel_LPICTUS[["lambda"]][2])
+```
+
+## Tests fit of single component model
+
+```{r}
+fitdistr(MRF_filtered$CpG_ratio, "normal")
+fitdistr(LVA_filtered$CpG_ratio, "normal")
+fitdistr(SPU_filtered$CpG_ratio, "normal")
+fitdistr(LPICTUS_filtered$CpG_ratio, "normal")
+```
+
+## Weakly and heavily methylated genes 
+
+```{r}
+MRF_filtered <- MRF_filtered %>%
+  mutate(status = if_else(CpG_ratio >= intersect_pt_MRF[2], "weakly", "heavily"))
+
+nrow(MRF_filtered) # 22,183
+nrow(MRF_filtered[MRF_filtered$status == "weakly",]) # 12,891
+nrow(MRF_filtered[MRF_filtered$status == "heavily",])# 9,292
+
+LVA_filtered <- LVA_filtered %>%
+  mutate(status = if_else(CpG_ratio >= intersect_pt_LVA[1], "weakly", "heavily"))
+
+nrow(LVA_filtered) # 20,562
+nrow(LVA_filtered[LVA_filtered$status == "weakly",]) # 13,045
+nrow(LVA_filtered[LVA_filtered$status == "heavily",])# 7,517
+
+SPU_filtered <- SPU_filtered %>%
+  mutate(status = if_else(CpG_ratio >= intersect_pt_SPU[2], "weakly", "heavily"))
+
+nrow(SPU_filtered) # 20,875
+nrow(SPU_filtered[SPU_filtered$status == "weakly",]) # 14,218
+nrow(SPU_filtered[SPU_filtered$status == "heavily",])# 6,657
+
+LPICTUS_filtered <- LPICTUS_filtered %>%
+  mutate(status = if_else(CpG_ratio >= intersect_pt_LPICTUS[2], "weakly", "heavily"))
+
+nrow(LPICTUS_filtered) # 28,534
+nrow(LPICTUS_filtered[LPICTUS_filtered$status == "weakly",]) # 16,590
+nrow(LPICTUS_filtered[LPICTUS_filtered$status == "heavily",])# 11,944
+```
+
+
+
+
 
 

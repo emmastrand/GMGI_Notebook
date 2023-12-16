@@ -1,0 +1,230 @@
+---
+title: "Epigenetic machinery expression"
+author: "Author: Emma Strand; emma.strand@gmgi.org"
+output:
+  github_document: default
+  pdf_document:
+    keep_tex: yes
+  html_document:
+    toc: yes
+    toc_depth: 6
+    toc_float: yes
+editor_options: 
+  chunk_output_type: inline
+---
+
+## Load libraries 
+
+```{r}
+library(plyr)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(readxl)
+library(gghighlight)
+library(tidyverse)
+library(stringr)
+library(gplots)
+library(readr)
+library(hrbrthemes)
+```
+
+## Load data 
+
+MRF = long-lived red sea urchin (Mesocentrotus franciscanus). Supplemental table 2 from Polinski in review.
+"C:\Users\EmmaStrand\OneDrive - Gloucester Marine Genomics Institute\Desktop\GMGI Documents\Project ideas\Urchin DNA methylation\Table S2_Mf Gene Model Annotations and Expression.xlsx"
+
+```{r, warning=FALSE}
+## expression data 22,240 rows (1 per gene)
+expressiondf <- read_excel("C:/Users/EmmaStrand/MyProjects/Table S2_Mf Gene Model Annotations and Expression ES.xlsx")
+
+## CpG O/E data 22,183 rows (1 per gene)
+cpgdf <- read.csv("lab work/CpG_MRF_filtered.csv") %>% 
+  # rename columns and remove extra column
+  dplyr::select(-X) %>% dplyr::rename(GeneID = Gene) 
+  # removing the space after gene names in CpG file
+cpgdf$GeneID <- gsub(" ", "", cpgdf$GeneID)
+
+## df = 22,240 rows 
+df <- left_join(expressiondf, cpgdf, by = "GeneID")
+tissue_df <- df %>% select(1,9,12,16,20,24,36:43)
+lifestage_df <- df %>% select(1,9,12,16,20,24,29:36,42:43)
+
+gene_anno <- df %>% select(1,9,12,16,20,24)
+
+## calculating degree of change for all genes
+## filtering out rows that contained counts of 0 in all tissue types/ages
+tissue_df <- tissue_df %>%
+  mutate(ALM=`ALM \r\n[old]` - `ALM [young]`,
+         ESO = `esophagus [old]` - `esophagus [young]`,
+         RAD=`radial nerve \r\n[old]` - `radial nerve \r\n[young]`) %>% filter(rowSums(across(where(is.numeric)))!=0)
+
+## select only RAD tissue 
+RAD_df <- tissue_df %>% select(1:6, 17)
+```
+
+Filtering to particular functions: methyltranferases 
+
+```{r}
+RAD_methyl <- RAD_df %>%
+  filter(str_detect(`Swissprot Best Hit (Annotation)`, "methyltransferase") | 
+         str_detect(`RefSeq Best Hit (Annotation)`, "methyltransferase") |
+         str_detect(`EGGNOG Description`, "methyltransferase") |
+         str_detect(`KEGG KO description`, "methyltransferase")) 
+
+RAD_methyl_filtered <- RAD_methyl %>% filter(RAD < -3 | RAD > 3)
+
+RAD_methyl_filtered <- RAD_methyl_filtered %>% gather("source", "annotation", 2:6)
+```
+
+## DNA Methylation machinery
+
+DNA methyltransferases
+
+```{r}
+RAD_methyltransferase_DNA <- ggplot(RAD_methyl_filtered, aes(x=GeneID, y=RAD)) + theme_bw() +
+  coord_flip() +
+  theme(axis.text.y=element_blank()) + 
+  ylab("Gene expression (TPM) change") + ggtitle("Methyltransferases") +
+  geom_segment(
+    aes(x=GeneID, xend=GeneID, y=0, yend=RAD), 
+    color=ifelse(grepl("DNA", RAD_methyl_filtered$annotation), "orange", "grey"), 
+    size=ifelse(grepl("DNA", RAD_methyl_filtered$annotation), 1.3, 0.4)
+  ) +
+  geom_point(
+    color=ifelse(grepl("DNA", RAD_methyl_filtered$annotation), "orange", "grey"), 
+    size=ifelse(grepl("DNA", RAD_methyl_filtered$annotation), 3, 1)
+  ) +
+  geom_text(aes(label=ifelse(grepl("DNA", RAD_methyl_filtered$annotation), as.character(RAD_methyl_filtered$GeneID),'')), hjust=1, vjust=0)
+
+ggsave(RAD_methyltransferase, file="images/RAD_methyltransferase_DNA.png")
+```
+
+Filtering for other DNA methylation proteins
+
+```{r}
+RAD_dnameth <- RAD_df %>%
+  filter(str_detect(`Swissprot Best Hit (Annotation)`, "MBD|TET|RING|C2H2") | 
+         str_detect(`RefSeq Best Hit (Annotation)`, "MBD|TET|RING|C2H2") |
+         str_detect(`EGGNOG Description`, "MBD|TET|RING|C2H2") |
+         str_detect(`KEGG KO description`, "MBD|TET|RING|C2H2")) %>%
+  gather("source", "annotation", 2:6)
+
+
+RAD_DNA_methylation <- ggplot(RAD_dnameth, aes(x=GeneID, y=RAD)) + theme_bw() +
+  coord_flip() +
+  theme(axis.text.y=element_blank()) + 
+  ylab("Gene expression (TPM) change") + ggtitle("DNA methylation machinery") +
+  geom_segment(
+    aes(x=GeneID, xend=GeneID, y=0, yend=RAD), 
+    color=ifelse(grepl("TET|MBD", RAD_dnameth$annotation), "orange", "grey"), 
+    size=ifelse(grepl("TET|MBD", RAD_dnameth$annotation), 1.3, 0.4)
+  ) +
+  geom_point(
+    color=ifelse(grepl("TET|MBD", RAD_dnameth$annotation), "orange", "grey"), 
+    size=ifelse(grepl("TET|MBD", RAD_dnameth$annotation), 3, 1)
+  ) #+
+  #geom_text(aes(label=ifelse(grepl("TET", RAD_dnameth$annotation), as.character(RAD_dnameth$GeneID),'')), hjust=1, vjust=0)
+
+ggsave(RAD_DNA_methylation, file="images/RAD_methylation_TET-MBD.png")
+```
+
+
+
+## Histone modifications
+
+Histones methyltransferases
+
+```{r}
+RAD_methyltransferase_histone <- ggplot(RAD_methyl_filtered, aes(x=GeneID, y=RAD)) + theme_bw() +
+  coord_flip() +
+  theme(axis.text.y=element_blank()) + 
+  ylab("Gene expression (TPM) change") + ggtitle("Methyltransferases - histones") +
+  geom_segment(
+    aes(x=GeneID, xend=GeneID, y=0, yend=RAD), 
+    color=ifelse(grepl("Histone", RAD_methyl_filtered$annotation, ignore.case=TRUE), "orange", "grey"), 
+    size=ifelse(grepl("Histone", RAD_methyl_filtered$annotation, ignore.case=TRUE), 1.3, 0.4)
+  ) +
+  geom_point(
+    color=ifelse(grepl("Histone", RAD_methyl_filtered$annotation, ignore.case=TRUE), "orange", "grey"), 
+    size=ifelse(grepl("Histone", RAD_methyl_filtered$annotation, ignore.case=TRUE), 3, 1))
+  # +
+  #geom_text(aes(label=ifelse(grepl("histone", RAD_methyl_filtered$annotation), as.character(RAD_methyl_filtered$GeneID),'')), hjust=1, vjust=0)
+
+ggsave(RAD_methyltransferase_histone, file="images/RAD_methyltransferase_histone.png")
+```
+
+Acetylases 
+
+```{r}
+RAD_histone_deacetylase <- RAD_df %>%
+  filter(str_detect(`Swissprot Best Hit (Annotation)`, "histone deacetylase") | 
+         str_detect(`RefSeq Best Hit (Annotation)`, "histone deacetylase") |
+         str_detect(`EGGNOG Description`, "histone deacetylase") |
+         str_detect(`KEGG KO description`, "histone deacetylase")) %>%
+  gather("source", "annotation", 2:6)
+
+ggplot(RAD_histone_deacetylase, aes(x=GeneID, y=RAD)) + theme_bw() +
+  coord_flip() +
+  theme(axis.text.y=element_blank()) + 
+  ylab("Gene expression (TPM) change") + ggtitle("histone deacetylases") +
+  geom_segment(
+    aes(x=GeneID, xend=GeneID, y=0, yend=RAD), 
+    color="grey", size=1) +
+  geom_point(color="grey", size=2)
+```
+Histone readers
+
+```{r}
+RAD_histone_readers <- RAD_df %>%
+  filter(str_detect(`Swissprot Best Hit (Annotation)`, "bromodomain|chromodomain|PHD finger|WD40 repeat") | 
+         str_detect(`RefSeq Best Hit (Annotation)`, "bromodomain|chromodomain|PHD finger|WD40 repeat") |
+         str_detect(`EGGNOG Description`, "bromodomain|chromodomain|PHD finger|WD40 repeat") |
+         str_detect(`KEGG KO description`, "bromodomain|chromodomain|PHD finger|WD40 repeat")) %>%
+  gather("source", "annotation", 2:6)
+
+ggplot(RAD_histone_readers, aes(x=GeneID, y=RAD)) + theme_bw() +
+  coord_flip() +
+  theme(axis.text.y=element_blank()) + 
+  ylab("Gene expression (TPM) change") + ggtitle("histone readers") +
+  geom_segment(
+    aes(x=GeneID, xend=GeneID, y=0, yend=RAD), 
+    color="grey", size=1) +
+  geom_point(color="grey", size=2)
+```
+
+
+## Small noncoding RNA 
+
+```{r}
+RAD_miRNA <- RAD_df %>%
+  filter(str_detect(`Swissprot Best Hit (Annotation)`, "DGCR8|drosha|exportin-5") | 
+         str_detect(`RefSeq Best Hit (Annotation)`, "DGCR8|drosha|exportin-5") |
+         str_detect(`EGGNOG Description`, "DGCR8|drosha|exportin-5") |
+         str_detect(`KEGG KO description`, "DGCR8|drosha|exportin-5")) %>%
+  gather("source", "annotation", 2:6)
+
+ggplot(RAD_miRNA, aes(x=GeneID, y=RAD)) + theme_bw() +
+  coord_flip() +
+  theme(axis.text.y=element_blank()) + 
+  ylab("Gene expression (TPM) change") + ggtitle("microRNAs") +
+  geom_segment(
+    aes(x=GeneID, xend=GeneID, y=0, yend=RAD), 
+    color="grey", size=1) +
+  geom_point(color="grey", size=2)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
