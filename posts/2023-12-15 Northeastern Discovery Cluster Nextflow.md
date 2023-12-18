@@ -37,7 +37,7 @@ Dependencies that should be loaded by nextflow module:
 
 ### Raw data information 
 
-We did Whole Genome Bisulfite Sequencing across four lanes of a NovaSeq run. The biggest challenge so far for us is the amount of data to work with and the processing speed. In total there are 68 samples, each with R1,R2 reads. Which comes to ~1.91 TB worth of data.
+We did Whole Genome Bisulfite Sequencing across four lanes of a NovaSeq run. The biggest challenge so far for us is the amount of data to work with and the processing speed. In total there are 68 samples, each with R1,R2 reads. Which comes to ~1.9 TB worth of data.
 
 ### slurm script 
 
@@ -54,7 +54,7 @@ module load nextflow/v23.04.4
 
 nextflow -log ./ run nf-core/methylseq -resume \
 -profile docker \
-    --input metadata/samplesheet.csv \
+    --input metadata/samplesheet_NU_full.csv \
     --outdir ./results \
     --email emma.strand@gmgi.org \
     --multiqc_title haddockrun1 \
