@@ -1,6 +1,6 @@
 # Nextflow: nf-core methylseq 
 
-nf-core Methylseq pipeline (https://nf-co.re/methylseq/2.5.0) with the container set to Docker. 
+nf-core Methylseq pipeline (https://nf-co.re/methylseq/2.5.0) with the container set to Singularity. 
 
 ### General information from nf-core webpage
 
