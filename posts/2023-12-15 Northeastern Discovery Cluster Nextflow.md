@@ -53,16 +53,16 @@ Subset samplesheet: metadata/samplesheet_NU_subset.csv
 
 cd /work/gmgi/Fisheries/epiage/haddock
 
-module load nextflow/v23.04.4
+module load singularity/3.10.3
 
-nextflow -log ./ run nf-core/methylseq -resume \
+singularity run -B "/work:/work,/scratch:/scratch" /shared/container_repository/nextflow/nextflow.23.10.0.sif nextflow \
+-log ./ run nf-core/methylseq -resume \
 -profile singularity \
     --input metadata/samplesheet_NU_full.csv \
     --outdir ./results \
-    --email emma.strand@gmgi.org \
     --multiqc_title haddockrun1 \
     --igenomes_ignore \
-    --fasta ./OLKM01.fasta.gz \
+    --fasta ./OLKM01.fasta \
     --save_reference \
     --clip_r1 10 \
     --clip_r2 10 \
@@ -72,5 +72,5 @@ nextflow -log ./ run nf-core/methylseq -resume \
     --cytosine_report \
     --non_directional \
     --relax_mismatches \
-    --num_mismatches 0.6 \
+    --num_mismatches 0.6
 ```
