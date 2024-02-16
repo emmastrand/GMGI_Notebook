@@ -55,7 +55,7 @@ cd /work/gmgi/Fisheries/epiage/haddock
 
 module load singularity/3.10.3
 
-singularity run -B "/work:/work,/scratch:/scratch" /shared/container_repository/nextflow/nextflow.23.10.0.sif nextflow \
+singularity exec -B "/work:/work,/scratch:/scratch" /shared/container_repository/nextflow/nextflow.23.10.0.sif nextflow \
 -log ./ run nf-core/methylseq -resume \
 -profile singularity \
     --input metadata/samplesheet_NU_full.csv \
