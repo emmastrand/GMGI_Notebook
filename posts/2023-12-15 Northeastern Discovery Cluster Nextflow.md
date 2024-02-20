@@ -50,19 +50,30 @@ Subset samplesheet: metadata/samplesheet_NU_subset.csv
 #!/bin/bash
 #SBATCH --error=output_messages/"%x_error.%j" #if your job fails, the error report will be put in this file
 #SBATCH --output=output_messages/"%x_output.%j" #once your job is completed, any final job report comments will be put in this file
+#SBATCH --partition=long
+#SBATCH --nodes=1
+#SBATCH --time=120:00:00
+#SBATCH --job-name=methylseq_subset
+#SBATCH --mem=30GB
+#SBATCH --ntasks=24
+#SBATCH --cpus-per-task=2
 
 cd /work/gmgi/Fisheries/epiage/haddock
 
+# singularity module version 3.10.3
 module load singularity/3.10.3
 
-singularity exec -B "/work:/work,/scratch:/scratch" /shared/container_repository/nextflow/nextflow.23.10.0.sif nextflow \
--log ./ run nf-core/methylseq -resume \
+# nextflow module loaded on NU cluster is v23.10.1
+module load nextflow/23.10.1
+
+nextflow -log ./ run nf-core/methylseq -resume \
 -profile singularity \
-    --input metadata/samplesheet_NU_full.csv \
+    --max_cpus 24 \
+    --input metadata/samplesheet_NU_subset.csv \
     --outdir ./results \
     --multiqc_title haddockrun1 \
-    --igenomes_ignore \
     --fasta ./OLKM01.fasta \
+    --igenomes_ignore \
     --save_reference \
     --clip_r1 10 \
     --clip_r2 10 \
@@ -74,3 +85,24 @@ singularity exec -B "/work:/work,/scratch:/scratch" /shared/container_repository
     --relax_mismatches \
     --num_mismatches 0.6
 ```
+
+Issues during run:  
+- The sym link to the fasta file within the work folder doesn't work.. I'm able to copy the .fasta into the work folder: `cp OLKM01.fasta /work/gmgi/Fisheries/epiage/haddock/work/62/6c6e7cbb7e8590677d7d4425e45e39/BismarkIndex/OLKM01.fasta`. This allows the program to resume running but is going to be annyoing to do every time.. This is post TrimGalore! before Bismark Align (~2 hours after the run starts for 6 files).
+
+To see how efficient the script parameters (CPUs, mem, etc.): `seff [insert job ID]`. Example (stats from reference genome prep and TrimGalore! which take less resources than the Bismark align functions): 
+
+```
+Job ID: ## information removed 
+Cluster: ## information removed 
+User/Group: ## information removed 
+State: FAILED (exit code 1)
+Nodes: 1
+Cores per node: 48
+CPU Utilized: 1-16:24:21
+CPU Efficiency: 39.23% of 4-06:59:12 core-walltime
+Job Wall-clock time: 02:08:44
+Memory Utilized: 21.00 GB
+Memory Efficiency: 70.01% of 30.00 GB
+```
+
+Within `results/pipeline_info`, there are several execution reports: `execution_report_2024-02-16_15-52-36.html` and `execution_timeline_2024-02-16_15-52-36.html` that give more detailed information. Scp to desktop and open with a web browser. 
