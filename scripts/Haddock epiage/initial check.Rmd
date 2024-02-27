@@ -1,0 +1,57 @@
+---
+title: "Methylation_initialcheck"
+output: html_document
+date: "2023-11-30"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load libraries 
+
+```{r, results='hide', error=FALSE, warning=FALSE, message=FALSE}
+library(plyr) ## needs to be loaded before dplyr 
+library(dplyr)
+library(tidyverse)
+library(ggplot2)
+library(vroom)
+library(readtext)
+```
+
+## Load data
+
+https://stackoverflow.com/questions/3397885/how-do-you-read-multiple-txt-files-into-r
+
+```{r}
+M266 <- read.table("data/WGBS/Mae-266_S2_R1_001_val_1_bismark_bt2_pe._10x_sorted.tab", header = F, sep = "\t", fill = TRUE)
+M266$sample <- "M266"
+M274 <- read.table("data/WGBS/Mae-274_S3_R1_001_val_1_bismark_bt2_pe._10x_sorted.tab", header = F, sep = "\t", fill = TRUE)
+M274$sample <- "M274"
+M281 <- read.table("data/WGBS/Mae-281_S5_R1_001_val_1_bismark_bt2_pe._10x_sorted.tab", header = F, sep = "\t", fill = TRUE)
+M281$sample <- "M281"
+
+df <- rbind(M266, M274, M281)
+
+load("data/WGBS/df_all_20231220.RData")
+head(df)
+```
+
+## Plot data 
+
+```{r}
+percent_meth_histogram <- df %>% ggplot(., aes(x=percent.meth)) +
+  geom_histogram(bins = 10, alpha=0.8, color="black", fill="white") +  
+  #facet_wrap(~sample) + 
+  xlab("CpG % methylated") + 
+  ylab("Number of CpG sites") +
+  theme(panel.background=element_rect(fill='white', colour='black'),
+        strip.background=element_rect(fill='white', colour='black'),
+        strip.text = element_text(size = 12, face="bold"),
+        legend.position="none",
+        axis.title.y = element_text(margin = margin(t = 0, r = 12, b = 0, l = 0), size=12, face="bold"),
+        axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0), size=12, face="bold"))
+
+ggsave(percent_meth_histogram, file="data/output/percent-methylation-histogram.png", width=7, height=5, units=c("in"))
+```
+

@@ -13,6 +13,7 @@ The pipeline is built using Nextflow, a workflow tool to run tasks across multip
 The pipeline is built using Nextflow and processes data using the following steps:  
 - FastQC - Raw read QC  
 - TrimGalore - Adapter trimming  
+- Genome Preparation - Bisulfite converting reference genome  
 - Alignment - Aligning reads to reference genome  
 - Deduplication - Deduplicating reads  
 - Methylation Extraction - Calling cytosine methylation steps  
