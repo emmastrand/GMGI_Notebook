@@ -27,9 +27,9 @@ sample_list$reverseReads <- gsub("R1", "R2", sample_list$reverseReads)
 sample_list <- sample_list[,c(2,1,3)]
 
 # adding file path
-sample_list$forwardReads <- paste("/work/gmgi/Fisheries/ampliseq_tutorial/",
+sample_list$forwardReads <- paste("/work/gmgi/Fisheries/ampliseq_tutorial/raw_data",
                              sample_list$forwardReads, sep = "")
-sample_list$reverseReads <- paste("/work/gmgi/Fisheries/ampliseq_tutorial/",
+sample_list$reverseReads <- paste("/work/gmgi/Fisheries/ampliseq_tutorial/raw_data",
                                   sample_list$reverseReads, sep = "")
 
 sample_list %>% write.csv("/work/gmgi/Fisheries/ampliseq_tutorial/metadata/samplesheet.csv", row.names=FALSE)

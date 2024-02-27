@@ -51,14 +51,13 @@ nf-core's ampliseq pipeline uses the following steps and programs. All programs 
 - Pipeline QC summaries (MultiQC)  
 - Pipeline summary report (R Markdown)  
 
-### Container information 
+#### Container information 
 
 Singularity is the container loaded onto NU's cluster: https://sylabs.io/docs/. 
 
-### Databases 
+#### Databases 
 
 Multiple database comparisons are allowed but only one is forwarded to QIIME2 steps. The default on ampliseq is the SILVA reference taxonomy database.
-
 
 ## Ampliseq
 
@@ -81,8 +80,8 @@ nextflow pull nf-core/ampliseq
 #SBATCH --output=output_messages/"%x_output.%j" #once your job is completed, any final job report comments will be put in this file
 #SBATCH --partition=short
 #SBATCH --nodes=1
-#SBATCH --time=40:00:00
-#SBATCH --job-name=methylseq_ecoli
+#SBATCH --time=20:00:00
+#SBATCH --job-name=ampliseq
 #SBATCH --mem=40GB
 #SBATCH --ntasks=24
 #SBATCH --cpus-per-task=2
@@ -101,14 +100,31 @@ cd /work/gmgi/Fisheries/ampliseq_tutorial
 nextflow run nf-core/ampliseq -resume \
    -profile singularity \
    --input ${metadata}/samplesheet.csv \
-   --FW_primer "" \
-   --RV_primer "" \
-   --outdir results \
-   --metadata ${metadata}/<file> \
-   --trunclenf 100 \ 
-   --trunclenr 100 \ 
-   --trunc_qmin 2
+   --FW_primer "ACTGGGATTAGATACCCC...CTAGAGGAGCCTGTTCTA" \
+   --RV_primer "TAGAACAGGCTCCTCTAG...GGGGTATCTAATCCCAGT" \
+   --outdir ./results \
+   --trunclenf 100 \
+   --trunclenr 100 \
+   --trunc_qmin 2 \
+   --max_len 200 \
+   --sample_inference pseudo \
+   --skip_taxonomy TRUE \
+   --skip_dada_taxonomy TRUE \
+   --maxN 0 \
+   --minOverlap 106 \
+   --TrimOverhang TRUE
+
+
+
 ```
+
+Spaces are not allowed after each \ otherwise nf-core will not read the parameter. 
+
+**Notes**  
+- `--max_ee` default is already 2 so I left out of script above. 
+- Add max_len to make up for M=200 missing from cutadapt?  this should probably be less than 200 if it's after the trimming and trunc?
+- Truncqmin is 2? Default is 25.. why so low?  
+- Not sure if those databases will work b/c of the format of the header..
 
 ### Parameters  
 
@@ -125,7 +141,37 @@ Read Trimming and Quality Filtering
 - `--trunclenf` / `-trunclenr`: DADA2 read truncation value for forward (f) / reverse (r) strand, set this to 0 for no truncation.  
 - `--trunc_qmin`: If `--trunclenf` and `--trunclenr` are not set, these values will be automatically determined using this median quality score. Default is 25.  
 - `--trun_rmin`: Assures that values chosen with `--trunc_qmin` will retain a fraction of reads. Default is 0.75.  
-- `--max_ee`:  Default is 2. 
-- `--min_len`:  
-- `--max_len`:  
+- `--max_ee`: DADA2 read filtering option - After truncation, reads with higher than maxEE "expected errors" will be discarded. Expected errors are calculated from the nominal definition of the quality score: EE = sum(10^(-Q/10))). Default is 2. 
+- `--min_len`: Remove reads with length less than min_len after trimming and truncation. Default is 50. 
+- `--max_len`: Remove reads with length greater than max_len after trimming and truncation. Must be a positive integer. No default. 
 - `--ignore_failted_filtering`: Ignore files with too few reads after quality filtering. 
+
+Amplicon Sequence Variants (ASV) calculation  
+- `--sample_inference`: Mode of sample inference: "independent", "pooled" or "pseudo". Default is independent.   
+- `--concenatenate_reads`: Not recommended: When paired end reads are not sufficiently overlapping for merging. 
+
+ASV post processing 
+- `--vsearch_cluster`: Post-cluster ASVs with VSEARCH. T/F  
+- `--vserach_cluster_id`: Pairwise Identity value used when post-clustering ASVs if `--vsearch_cluster` option is used (default: 0.97).  
+- `--filter_ssu`: Enable SSU filtering. Comma separated list of kingdoms (domains) in Barrnap, a combination (or one) of "bac", "arc", "mito", and "euk". ASVs that have their lowest evalue in that kingdoms are kept.  
+- `--min_len_asv`: Minimal ASV length  
+- `--max_len_asv`: Maximum ASV length  
+- `--filter_codons`: Filter ASVs based on codon usage  
+- `--orf_start`: Starting position of codon tripletts  
+- `--orf_end`: Ending position of codon tripletts  
+- `--stop_codons`: Define stop codons
+
+Taxonomic database 
+- `--dada_ref_taxonomy`: Name of supported database, and optionally also version number. (e.g. silva=138). See https://nf-co.re/ampliseq/2.8.0/parameters#dada_ref_taxonomy for full list.  
+- `--dada_ref_tax_custom`: Path to a custom DADA2 reference taxonomy database. Either `--skip_dada_addspecies` (no species annotation) or `--dada_ref_tax_custom_sp` (species annotation) is additionally required. Must be compatible to DADA2's assignTaxonomy function: 'Can be compressed. This reference fasta file should be formatted so that the id lines correspond to the taxonomy (or classification) of the associated sequence, and each taxonomic level is separated by a semicolon.' See also https://rdrr.io/bioc/dada2/man/assignTaxonomy.html 
+- `--data_ref_tax_custom_sp`: Path to a custom DADA2 reference taxonomy database for species assignment. Must be compatible to DADA2's addSpecies function: 'Can be compressed. This reference fasta file should be formatted so that the id lines correspond to the genus-species binomial of the associated sequence.' See also https://rdrr.io/bioc/dada2/man/addSpecies.html.  
+- `--dada_assign_taxlevels`: Comma separated list of taxonomic levels used in DADA2's assignTaxonomy function. Typically useful when providing a custom DADA2 reference taxonomy database with --dada_ref_tax_custom. If DADA2's addSpecies is used (default), the last element(s) of the comma separated string must be 'Genus' or 'Genus,Species'.    
+- `--cut_dada_ref_taxonomy`: Expected amplified sequences are extracted from the DADA2 reference taxonomy using the primer sequences, that might improve classification. This is not applied to species classification (assignSpecies) but only for lower taxonomic levels (assignTaxonomy).  
+- `--dada_addspecies_allowmultiple`: Defines the behavior when multiple exact matches against different species are returned. By default only unambiguous identifications are returned. If TRUE, a concatenated string of all exactly matched species is returned.  
+- `--dada_taxonomy_rc`: If reverse-complement of each sequences will be also tested for classification.  
+- `--pplace_tree`: Newick file with reference phylogenetic tree. Requires also --pplace_aln and --pplace_model.  
+- `--pplace_aln`: File with reference sequences. Requires also --pplace_tree and --pplace_model.  
+- `--pplace_model`: Phylogenetic model to use in placement, e.g. 'LG+F' or 'GTR+I+F'. Requires also --pplace_tree and --pplace_aln.  
+- `--pplace_alnmethod`: Method used for alignment, "hmmer" or "mafft". Default is hmmer.   
+- `--pplace_taxonomy`: Tab-separated file with taxonomy assignments of reference sequences.  
+- `--qiime_ref_taxonomy`: Name of supported database, and optionally also version number. 
