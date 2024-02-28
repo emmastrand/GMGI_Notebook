@@ -183,7 +183,6 @@ Multiple database comparisons are allowed but only one is forwarded to QIIME2 st
 
 I took Mitofish to test this. Each header looked like: `>Genus_sp` which wasn't compatible with QIIME2 so I used `sed 's/_/;/g' Mitofish.fasta > Mitofish_edited.fasta` to change this to `>Genus;sp` format. I then downloaded all fish taxonomic identifiers from fishbaseR (R_fishbase.R) to create a dataframe 
 
-
 GMGIVertRef.fasta from RHEL to QIIME2 read-able version. There is more commentary in the headers for this file than I realized. Ditching this and going back to Mito.
 
 ```
@@ -212,7 +211,7 @@ cut -d| -f3
 
 ## Contribution to ampliseq 
 
-### 
+### converting reference database to DADA2 format
 
 
 
@@ -220,6 +219,7 @@ cut -d| -f3
 
 https://github.com/nf-core/ampliseq/blob/master/conf/ref_databases.config
 
+```
 'mitofish' {
    title = "MitoFish: Mitochondrial Genome Database of Fish from 12S amplicon sequencing"
    file = [ "https://mitofish.aori.u-tokyo.ac.jp/species/detail/download/?filename=download%2F/complete_partial_mitogenomes.zip" ]
@@ -228,4 +228,5 @@ https://github.com/nf-core/ampliseq/blob/master/conf/ref_databases.config
    dbversion = "unversioned"
    taxlevels = "Order,Family,Genus,Species"
 }
+```
 
