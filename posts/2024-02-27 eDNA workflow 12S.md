@@ -68,6 +68,100 @@ Singularity is the container loaded onto NU's cluster: https://sylabs.io/docs/.
 
 #### Databases 
 
+Coming soon.
+
+#### Pipeline updates
+
+> When you run the above command, Nextflow automatically pulls the pipeline code from GitHub and stores it as a cached version. When running the pipeline after this, it will always use the cached version if available - even if the pipeline has been updated since. To make sure that you’re running the latest version of the pipeline, make sure that you regularly update the cached version of the pipeline:
+
+```
+module load nextflow/23.10.1
+nextflow pull nf-core/ampliseq
+```
+
+### Slurm script 
+
+`ampliseq_notax.sh`:
+
+```
+#!/bin/bash
+#SBATCH --error=output_messages/"%x_error.%j" #if your job fails, the error report will be put in this file
+#SBATCH --output=output_messages/"%x_output.%j" #once your job is completed, any final job report comments will be put in this file
+#SBATCH --partition=short
+#SBATCH --nodes=1
+#SBATCH --time=20:00:00
+#SBATCH --job-name=ampliseq_notax
+#SBATCH --mem=40GB
+#SBATCH --ntasks=24
+#SBATCH --cpus-per-task=2
+
+# singularity module version 3.10.3
+module load singularity/3.10.3
+
+# nextflow module loaded on NU cluster is v23.10.1
+module load nextflow/23.10.1
+
+#set paths 
+metadata="/work/gmgi/Fisheries/ampliseq_tutorial/metadata" 
+
+cd /work/gmgi/Fisheries/ampliseq_tutorial
+
+nextflow run nf-core/ampliseq -resume \
+   -profile singularity \
+   --input ${metadata}/samplesheet.csv \
+   --metadata ${metadata}/metadata.tsv \
+   --FW_primer "ACTGGGATTAGATACCCC...CTAGAGGAGCCTGTTCTA" \
+   --RV_primer "TAGAACAGGCTCCTCTAG...GGGGTATCTAATCCCAGT" \
+   --outdir ./results_notax \
+   --trunclenf 100 \
+   --trunclenr 100 \
+   --trunc_qmin 25 \
+   --max_len 200 \
+   --max_ee 2 \
+   --sample_inference pseudo \
+   --maxN 0 \
+   --minOverlap 106 \
+   --TrimOverhang TRUE \
+   --skip_taxonomy
+```
+
+Spaces are not allowed after each \ otherwise nf-core will not read the parameter. 
+
+**Notes**  
+- Add max_len to make up for M=200 missing from cutadapt?  this should probably be less than 200 if it's after the trimming and trunc?
+- Truncqmin is 2 in our script? Default is 25.. why so low?  
+- Not sure if our databases will work b/c of the format of the header.. 
+
+Adding in a custom database:
+
+```
+   --dada_ref_tax_custom ${metadata}/references/xx \
+   --dada_ref_tax_custom_sp ${metadata}/references/xx
+```
+
+### Parameters  
+
+Comprehensive list of parameters: https://nf-co.re/ampliseq/2.8.0/parameters 
+
+Parameters included in this script:  
+- `--trunclenf` / `--trunclenr`: DADA2 read truncation value for forward (f) / reverse strand (r), set this to 0 for no truncation. If not set, these cutoffs will be determined automatically for the position before the mean quality score drops below --trunc_qmin.  
+- `--trunc_qmin`: Automatically determine --trunclenf and --trunclenr before the median quality score drops below --trunc_qmin. The fraction of reads retained is defined by --trunc_rmin, which might override the quality cutoff. A minimum value of 25 is recommended. However, high quality data with a large paired sequence overlap might justify a higher value (e.g. 35). Also, very low quality data might require a lower value. 
+- `--max_len`: Remove reads with length greater than max_len after trimming and truncation. Must be a positive integer.  
+- `--sample_inference`: If samples are treated independent (lowest sensitivity and lowest resources), pooled (highest sensitivity and resources) or pseudo-pooled (balance between required resources and sensitivity).   
+
+### Output 
+
+Quality Reporting files:  
+- MultiQC Report: example; `multiqc/multiqc_report.html`.  
+- Execution Report: example; `path`.  
+- Summary Report: example; `summary_report/summary_report.html`. 
+
+Filtering summary: 
+- CutAdapt and DADA2: `overall_summary.tsv` 
+
+
+## Custom database 
+
 To use custom databases within DADA2 assignTaxonomy() and assignSpecies() functions (https://benjjneb.github.io/dada2/training.html), 2 different databases are needed: 
 
 For `--dada_ref_tax_custom`, each header needs follow this format: `>Level1;Level2;Level3;Level4;Level5;Level6;`. 
@@ -134,94 +228,4 @@ https://github.com/nf-core/ampliseq/blob/master/conf/ref_databases.config
    dbversion = "unversioned"
    taxlevels = "Order,Family,Genus,Species"
 }
-
-
-
-#### Pipeline updates
-
-> When you run the above command, Nextflow automatically pulls the pipeline code from GitHub and stores it as a cached version. When running the pipeline after this, it will always use the cached version if available - even if the pipeline has been updated since. To make sure that you’re running the latest version of the pipeline, make sure that you regularly update the cached version of the pipeline:
-
-```
-module load nextflow/23.10.1
-nextflow pull nf-core/ampliseq
-```
-
-### Slurm script 
-
-`ampliseq.sh`:
-
-```
-#!/bin/bash
-#SBATCH --error=output_messages/"%x_error.%j" #if your job fails, the error report will be put in this file
-#SBATCH --output=output_messages/"%x_output.%j" #once your job is completed, any final job report comments will be put in this file
-#SBATCH --partition=short
-#SBATCH --nodes=1
-#SBATCH --time=20:00:00
-#SBATCH --job-name=ampliseq
-#SBATCH --mem=40GB
-#SBATCH --ntasks=24
-#SBATCH --cpus-per-task=2
-
-# singularity module version 3.10.3
-module load singularity/3.10.3
-
-# nextflow module loaded on NU cluster is v23.10.1
-module load nextflow/23.10.1
-
-#set paths 
-metadata="/work/gmgi/Fisheries/ampliseq_tutorial/metadata" 
-
-cd /work/gmgi/Fisheries/ampliseq_tutorial
-
-nextflow run nf-core/ampliseq -resume \
-   -profile singularity \
-   --input ${metadata}/samplesheet.csv \
-   --metadata ${metadata}/metadata.tsv \
-   --FW_primer "ACTGGGATTAGATACCCC...CTAGAGGAGCCTGTTCTA" \
-   --RV_primer "TAGAACAGGCTCCTCTAG...GGGGTATCTAATCCCAGT" \
-   --outdir ./results \
-   --trunclenf 100 \
-   --trunclenr 100 \
-   --trunc_qmin 25 \
-   --max_len 200 \
-   --max_ee 2 \
-   --sample_inference pseudo \
-   --maxN 0 \
-   --minOverlap 106 \
-   --TrimOverhang TRUE \
-   --dada_ref_tax_custom ${metadata}/references/xx \
-   --dada_ref_tax_custom_sp ${metadata}/references/xx
-```
-
-Spaces are not allowed after each \ otherwise nf-core will not read the parameter. 
-
-**Notes**  
-- Add max_len to make up for M=200 missing from cutadapt?  this should probably be less than 200 if it's after the trimming and trunc?
-- Truncqmin is 2 in our script? Default is 25.. why so low?  
-- Not sure if our databases will work b/c of the format of the header.. 
-
-Adding in a custom database:
-
-
-
-
-### Parameters  
-
-Comprehensive list of parameters: https://nf-co.re/ampliseq/2.8.0/parameters 
-
-Parameters included in this script:  
-- `--trunclenf` / `--trunclenr`: DADA2 read truncation value for forward (f) / reverse strand (r), set this to 0 for no truncation. If not set, these cutoffs will be determined automatically for the position before the mean quality score drops below --trunc_qmin.  
-- `--trunc_qmin`: Automatically determine --trunclenf and --trunclenr before the median quality score drops below --trunc_qmin. The fraction of reads retained is defined by --trunc_rmin, which might override the quality cutoff. A minimum value of 25 is recommended. However, high quality data with a large paired sequence overlap might justify a higher value (e.g. 35). Also, very low quality data might require a lower value. 
-- `--max_len`: Remove reads with length greater than max_len after trimming and truncation. Must be a positive integer.  
-- `--sample_inference`: If samples are treated independent (lowest sensitivity and lowest resources), pooled (highest sensitivity and resources) or pseudo-pooled (balance between required resources and sensitivity).   
-
-### Output 
-
-Quality Reporting files:  
-- MultiQC Report: example; `multiqc/multiqc_report.html`.  
-- Execution Report: example; `path`.  
-- Summary Report: example; `summary_report/summary_report.html`. 
-
-Filtering summary: 
-- CutAdapt and DADA2: `overall_summary.tsv` 
 
