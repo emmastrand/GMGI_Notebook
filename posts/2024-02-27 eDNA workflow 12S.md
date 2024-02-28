@@ -2,7 +2,7 @@
 
 ### Workflow steps 
 
-1. Nf-core Ampliseq: Implements CutAdapt and DADA2 pipelines.  
+1. Nf-core Ampliseq: Implements CutAdapt and DADA2 pipelines (`ampliseq.sh`).   
 2. 
 
 ## 01. Nf-core ampliseq pipeline 
@@ -22,11 +22,13 @@ MiFish 12S amplicon R: TAGAACAGGCTCCTCTAG...GGGGTATCTAATCCCAGT
 
 #### Metadata sheet (optional) 
 
-The metadata file has to follow the QIIME2 specifications (https://docs.qiime2.org/2021.2/tutorials/metadata/). Below is a preview of the sample sheet used for this test. Keep the column headers the same for future use. 
+The metadata file has to follow the QIIME2 specifications (https://docs.qiime2.org/2021.2/tutorials/metadata/). Below is a preview of the sample sheet used for this test. Keep the column headers the same for future use. The first column needs to be "ID" and can only contain numbers, letters, or "-". This is different than the sample sheet. NAs should be empty cells rather than "NA". 
+
+
 
 #### Samplesheet information (required)
 
-This file indicates the sample ID and the path to R1 and R2 files. Below is a preview of the sample sheet used in this test. 
+This file indicates the sample ID and the path to R1 and R2 files. Below is a preview of the sample sheet used in this test. File created on RStudio Interactive on Discovery Cluster using (`create_metadatasheets.R`).  
 
 - sampleID (required): Unique sample IDs, must start with a letter, and can only contain letters, numbers or underscores.  
 - forwardReads (required): Paths to (forward) reads zipped FastQ files  
@@ -39,8 +41,6 @@ This file indicates the sample ID and the path to R1 and R2 files. Below is a pr
 | Riaz_501_1_Bottom   | /work/gmgi/Fisheries/ampliseq_tutorial/raw_data/501-1BottomRiaz_R1.fastq.gz   | /work/gmgi/Fisheries/ampliseq_tutorial/raw_data/501-1BottomRiaz_R2.fastq.gz   | 1   |
 | Degen_501_1_Surface | /work/gmgi/Fisheries/ampliseq_tutorial/raw_data/501-1SurfaceDegen_R1.fastq.gz | /work/gmgi/Fisheries/ampliseq_tutorial/raw_data/501-1SurfaceDegen_R2.fastq.gz | 1   |
 
-
-File created on RStudio Interactive on Discovery Cluster using (`create_metadatasheets.R`). 
 
 ### Workflow Overview 
 
@@ -68,7 +68,74 @@ Singularity is the container loaded onto NU's cluster: https://sylabs.io/docs/.
 
 #### Databases 
 
+To use custom databases within DADA2 assignTaxonomy() and assignSpecies() functions (https://benjjneb.github.io/dada2/training.html), 2 different databases are needed: 
+
+For `--dada_ref_tax_custom`, each header needs follow this format: `>Level1;Level2;Level3;Level4;Level5;Level6;`. 
+
+```
+
+```
+
+For `--dada_ref_tax_custom_sp`, each header needs to follow this format: `>ID Genus species`. 
+
+```
+
+```
+
+
 Multiple database comparisons are allowed but only one is forwarded to QIIME2 steps. The default on ampliseq is the SILVA reference taxonomy database.
+
+**Testing** 
+
+I took Mitofish to test this. Each header looked like: `>Genus_sp` which wasn't compatible with QIIME2 so I used `sed 's/_/;/g' Mitofish.fasta > Mitofish_edited.fasta` to change this to `>Genus;sp` format. I then downloaded all fish taxonomic identifiers from fishbaseR (R_fishbase.R) to create a dataframe 
+
+
+GMGIVertRef.fasta from RHEL to QIIME2 read-able version. There is more commentary in the headers for this file than I realized. Ditching this and going back to Mito.
+
+```
+## Remove all text before species name 
+cut -d_ -f 4-6 GMGIVertRef.fasta > GMGIVertRef_sppID.fasta
+
+## Add > header to every other row 
+sed -i '1~2s/^/>/' GMGIVertRef_sppID.fasta
+
+## Replace _ with a space 
+sed -i 's/_/ /g' GMGIVertRef_sppID.fasta
+
+## Create a list of all headers by grep ">" rows, print content after > and replace > with nothing to create new list
+grep '>' GMGIVertRef_sppID.fasta | sed 's/^.*> //' | sed 's/>//g' > GMGIVertRef_headers.txt
+```
+
+Testing download from MitoFish website download 
+
+Example of header:
+
+>gb|KY172980|Canthophrys_gongota (["Cypriniformes;"] ["Cobitidae;"])
+
+Order, family, genus_species
+
+cut -d| -f3 
+
+## Contribution to ampliseq 
+
+### 
+
+
+
+### ref_database.config
+
+https://github.com/nf-core/ampliseq/blob/master/conf/ref_databases.config
+
+'mitofish' {
+   title = "MitoFish: Mitochondrial Genome Database of Fish from 12S amplicon sequencing"
+   file = [ "https://mitofish.aori.u-tokyo.ac.jp/species/detail/download/?filename=download%2F/complete_partial_mitogenomes.zip" ]
+   citation = "Zhu T, Sato Y, Sado T, Miya M, and Iwasaki W. 2023. MitoFish, MitoAnnotator, and MiFish Pipeline: Updates in ten years. Mol Biol Evol, 40:msad035. doi:10.1093/molbev/msad035"
+   fmtscript = "taxref_reformat_mitofish.sh"
+   dbversion = "unversioned"
+   taxlevels = "Order,Family,Genus,Species"
+}
+
+
 
 #### Pipeline updates
 
@@ -109,6 +176,7 @@ cd /work/gmgi/Fisheries/ampliseq_tutorial
 nextflow run nf-core/ampliseq -resume \
    -profile singularity \
    --input ${metadata}/samplesheet.csv \
+   --metadata ${metadata}/metadata.tsv \
    --FW_primer "ACTGGGATTAGATACCCC...CTAGAGGAGCCTGTTCTA" \
    --RV_primer "TAGAACAGGCTCCTCTAG...GGGGTATCTAATCCCAGT" \
    --outdir ./results \
@@ -116,21 +184,26 @@ nextflow run nf-core/ampliseq -resume \
    --trunclenr 100 \
    --trunc_qmin 25 \
    --max_len 200 \
+   --max_ee 2 \
    --sample_inference pseudo \
-   --skip_taxonomy TRUE \
-   --skip_dada_taxonomy TRUE \
    --maxN 0 \
    --minOverlap 106 \
-   --TrimOverhang TRUE
+   --TrimOverhang TRUE \
+   --dada_ref_tax_custom ${metadata}/references/xx \
+   --dada_ref_tax_custom_sp ${metadata}/references/xx
 ```
 
 Spaces are not allowed after each \ otherwise nf-core will not read the parameter. 
 
 **Notes**  
-- `--max_ee` default is already 2 so I left out of script above. 
 - Add max_len to make up for M=200 missing from cutadapt?  this should probably be less than 200 if it's after the trimming and trunc?
 - Truncqmin is 2 in our script? Default is 25.. why so low?  
 - Not sure if our databases will work b/c of the format of the header.. 
+
+Adding in a custom database:
+
+
+
 
 ### Parameters  
 
@@ -145,6 +218,10 @@ Parameters included in this script:
 ### Output 
 
 Quality Reporting files:  
-- MultiQC Report: example.  
-- Execution Report: example.  
+- MultiQC Report: example; `multiqc/multiqc_report.html`.  
+- Execution Report: example; `path`.  
+- Summary Report: example; `summary_report/summary_report.html`. 
+
+Filtering summary: 
+- CutAdapt and DADA2: `overall_summary.tsv` 
 
