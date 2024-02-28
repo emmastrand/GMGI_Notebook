@@ -1,13 +1,15 @@
 # Environmental DNA (eDNA) workflow 
 
-I'm testing nf-core's ampliseq to be used with environmental DNA data generated with 12s amplicon sequencing (Offshore wind files that start with 501 (32 fastqc files)). 
+I'm testing nf-core's ampliseq to be used with environmental DNA data generated with 12s amplicon sequencing (Offshore wind vertebrate test). 
 
 > nfcore/ampliseq is a bioinformatics analysis pipeline used for amplicon sequencing, supporting denoising of any amplicon and supports a variety of taxonomic databases for taxonomic assignment including 16S, ITS, CO1 and 18S. Phylogenetic placement is also possible. Supported is paired-end Illumina or single-end Illumina, PacBio and IonTorrent data. Default is the analysis of 16S rRNA gene amplicons sequenced paired-end with Illumina.
 
 ### 12S 
 
-MiFish 12S amplicon F:    
-MiFish 12S amplicon R:    
+Below is what we used for 
+
+MiFish 12S amplicon F: ACTGGGATTAGATACCCC...CTAGAGGAGCCTGTTCTA      
+MiFish 12S amplicon R: TAGAACAGGCTCCTCTAG...GGGGTATCTAATCCCAGT     
 
 ### Metadata information 
 
