@@ -24,8 +24,6 @@ MiFish 12S amplicon R: TAGAACAGGCTCCTCTAG...GGGGTATCTAATCCCAGT
 
 The metadata file has to follow the QIIME2 specifications (https://docs.qiime2.org/2021.2/tutorials/metadata/). Below is a preview of the sample sheet used for this test. Keep the column headers the same for future use. The first column needs to be "ID" and can only contain numbers, letters, or "-". This is different than the sample sheet. NAs should be empty cells rather than "NA". 
 
-
-
 #### Samplesheet information (required)
 
 This file indicates the sample ID and the path to R1 and R2 files. Below is a preview of the sample sheet used in this test. File created on RStudio Interactive on Discovery Cluster using (`create_metadatasheets.R`).  
@@ -81,6 +79,31 @@ nextflow pull nf-core/ampliseq
 
 ### Slurm script 
 
+I created another config file that includes these changes: `--minOverlap 106` and `--TrimOverhang TRUE`. This content came from the modules.config. I only need to include the portion that I want to change because nextflow uses a hierarchy format for config files. This config file will be read in before modules.config so these parameters will trump the original in the modules.config file. 
+
+`ampliseqtutorial/fisheries12s.config`
+
+```
+process {
+    withName: DADA2_DENOISING {
+        // standard setting can be inspected with getDadaOpt(option = NULL)
+        ext.args = [
+            'selfConsist = FALSE, priors = character(0), DETECT_SINGLETONS = FALSE, GAPLESS = TRUE, GAP_PENALTY = -8, GREEDY = TRUE, KDIST_CUTOFF = 0.42, MATCH = 5, MAX_CLUST = 0, MAX_CONSIST = 10, MIN_ABUNDANCE = 1, MIN_FOL$
+            params.iontorrent ? "BAND_SIZE = 32, HOMOPOLYMER_GAP_PENALTY = -1" : "BAND_SIZE = 16, HOMOPOLYMER_GAP_PENALTY = NULL",
+            params.sample_inference == "pseudo" ? "pool = \"pseudo\"" :
+                params.sample_inference == "pooled" ? "pool = TRUE" : "pool = FALSE"
+        ].join(',').replaceAll('(,)*$', "")
+        // setting from https://rdrr.io/bioc/dada2/man/mergePairs.html & https://rdrr.io/bioc/dada2/man/nwalign.html & match = getDadaOpt("MATCH"), mismatch = getDadaOpt("MISMATCH"), gap = getDadaOpt("GAP_PENALTY"), missing $
+        ext.args2 = [
+            'minOverlap = 106, maxMismatch = 0, returnRejects = FALSE, propagateCol = character(0), trimOverhang = TRUE, match = 1, mismatch = -64, gap = -64, homo_gap = NULL, endsfree = TRUE, vec = FALSE',
+            params.concatenate_reads ? "justConcatenate = TRUE" : "justConcatenate = FALSE"
+        ].join(',').replaceAll('(,)*$', "")
+    }
+}
+```
+
+Slurm script to run: 
+
 `ampliseq_notax.sh`:
 
 ```
@@ -108,6 +131,7 @@ cd /work/gmgi/Fisheries/ampliseq_tutorial
 
 nextflow run nf-core/ampliseq -resume \
    -profile singularity \
+   -c fisheries12s.config \
    --input ${metadata}/samplesheet.csv \
    --metadata ${metadata}/metadata.tsv \
    --FW_primer "ACTGGGATTAGATACCCC...CTAGAGGAGCCTGTTCTA" \
@@ -119,18 +143,12 @@ nextflow run nf-core/ampliseq -resume \
    --max_len 200 \
    --max_ee 2 \
    --sample_inference pseudo \
-   --maxN 0 \
-   --minOverlap 106 \
-   --TrimOverhang TRUE \
    --skip_taxonomy
 ```
 
 Spaces are not allowed after each \ otherwise nf-core will not read the parameter. 
 
 **Notes**  
-- Add max_len to make up for M=200 missing from cutadapt?  this should probably be less than 200 if it's after the trimming and trunc?
-- Truncqmin is 2 in our script? Default is 25.. why so low?  
-- Not sure if our databases will work b/c of the format of the header.. 
 
 Adding in a custom database:
 
@@ -203,11 +221,20 @@ Testing download from MitoFish website download
 
 Example of header:
 
->gb|KY172980|Canthophrys_gongota (["Cypriniformes;"] ["Cobitidae;"])
+> >gb|KY172980|Canthophrys_gongota (["Cypriniformes;"] ["Cobitidae;"])
 
 Order, family, genus_species
 
 cut -d| -f3 
+
+
+**With GMGIVertRef 
+
+--dada_ref_tax_custom <path>
+--skip_dada_addspecies
+--dada_assign_taxlevels Genus,species
+--dada_addspecies_multiple TRUE
+
 
 ## Contribution to ampliseq 
 
