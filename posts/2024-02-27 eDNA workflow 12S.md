@@ -85,20 +85,13 @@ I created another config file that includes these changes: `--minOverlap 106` an
 
 ```
 process {
-    withName: DADA2_DENOISING {
-        // standard setting can be inspected with getDadaOpt(option = NULL)
-        ext.args = [
-            'selfConsist = FALSE, priors = character(0), DETECT_SINGLETONS = FALSE, GAPLESS = TRUE, GAP_PENALTY = -8, GREEDY = TRUE, KDIST_CUTOFF = 0.42, MATCH = 5, MAX_CLUST = 0, MAX_CONSIST = 10, MIN_ABUNDANCE = 1, MIN_FOL$
-            params.iontorrent ? "BAND_SIZE = 32, HOMOPOLYMER_GAP_PENALTY = -1" : "BAND_SIZE = 16, HOMOPOLYMER_GAP_PENALTY = NULL",
-            params.sample_inference == "pseudo" ? "pool = \"pseudo\"" :
-                params.sample_inference == "pooled" ? "pool = TRUE" : "pool = FALSE"
-        ].join(',').replaceAll('(,)*$', "")
-        // setting from https://rdrr.io/bioc/dada2/man/mergePairs.html & https://rdrr.io/bioc/dada2/man/nwalign.html & match = getDadaOpt("MATCH"), mismatch = getDadaOpt("MISMATCH"), gap = getDadaOpt("GAP_PENALTY"), missing $
-        ext.args2 = [
-            'minOverlap = 106, maxMismatch = 0, returnRejects = FALSE, propagateCol = character(0), trimOverhang = TRUE, match = 1, mismatch = -64, gap = -64, homo_gap = NULL, endsfree = TRUE, vec = FALSE',
-            params.concatenate_reads ? "justConcatenate = TRUE" : "justConcatenate = FALSE"
-        ].join(',').replaceAll('(,)*$', "")
-    }
+   withName: DADA2_DENOISING {
+      ext.args2 = [
+         'minOverlap = 106, maxMismatch = 0, returnRejects = FALSE, propagateCol = character(0), 
+         trimOverhang = TRUE, match = 1, mismatch = -64, gap = -64, homo_gap = NULL, endsfree = TRUE, vec = FALSE',
+         { params.concatenate_reads ? "justConcatenate = TRUE" : "justConcatenate = FALSE" }
+      ].join(',').replaceAll('(,)*$', "")
+   }
 }
 ```
 
