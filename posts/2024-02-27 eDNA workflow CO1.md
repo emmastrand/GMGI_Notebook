@@ -63,8 +63,15 @@ nextflow run nf-core/ampliseq -resume \
    --trunclenf 215 \
    --max_ee 2 \
    --sample_inference pseudo \
-   --skip_taxonomy
+   
 ```
+
+Flags to complete with taxonomy: 
+- `--skip_taxonomy`: only performs CutAdapt and DADA2 workflows.  
+
+Flags to complete taxonomy using DADA2 (vs. QIIME2) for COI:  
+- ``: 
+
 
 Spaces are not allowed after each \ otherwise nf-core will not read the parameter. 
 
@@ -76,6 +83,4 @@ Spaces are not allowed after each \ otherwise nf-core will not read the paramete
 
 Flags from Fisheries team pipeline that I need to fold in:
 - trimOverhang=TRUE, minOverlap=106 in merge step as these deviate from the defaults. Asked in the Slack group, if no response then create issue on github. 
-
-Need to edit the config file here instead of adding flag?
-
+- use separate config to add in
