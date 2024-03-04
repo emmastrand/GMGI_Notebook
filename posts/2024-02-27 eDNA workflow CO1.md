@@ -63,14 +63,15 @@ nextflow run nf-core/ampliseq -resume \
    --trunclenf 215 \
    --max_ee 2 \
    --sample_inference pseudo \
+   --dada_ref_taxonomy coidb
    
 ```
 
 Flags to complete with taxonomy: 
-- `--skip_taxonomy`: only performs CutAdapt and DADA2 workflows.  
+- `--skip_taxonomy TRUE`: only performs CutAdapt and DADA2 workflows.  
 
 Flags to complete taxonomy using DADA2 (vs. QIIME2) for COI:  
-- ``: 
+- `--dada_ref_taxonomy coidb`: COIDB - eukaryotic Cytochrome Oxidase I (COI) from The Barcode of Life Data System (BOLD). This takes the most updated version. 
 
 
 Spaces are not allowed after each \ otherwise nf-core will not read the parameter. 
@@ -84,3 +85,21 @@ Spaces are not allowed after each \ otherwise nf-core will not read the paramete
 Flags from Fisheries team pipeline that I need to fold in:
 - trimOverhang=TRUE, minOverlap=106 in merge step as these deviate from the defaults. Asked in the Slack group, if no response then create issue on github. 
 - use separate config to add in
+
+COIDB qiime2 process is stalling? Transfer seqs and tables to RHEL for blastn database that is already downloaded. Just for this answer. 
+
+### RHEL blastn
+
+File: `ASV_seqs.fasta` 
+
+```
+tmux new -s COIcontaminationBlast
+module load blast/v2.14.1
+blastn -query ASV_seqs.fasta -db /data/resources/databases/blastdb/nt -out BLASTResults_COIcontamination.txt -max_target_seqs 10 -perc_identity 100 -qcov_hsp_perc 95 -outfmt 6
+```
+
+Check usage: `top` or `top -u estrand`. 
+Ctrl+B then release and click D to detach out of tmux session 
+`tmux attach-session -t COIcontaminationBlast` to get back in.
+
+Output = `BLASTResults_COIcontamination.txt`. 

@@ -85,13 +85,12 @@ I created another config file that includes these changes: `--minOverlap 106` an
 
 ```
 process {
-   withName: DADA2_DENOISING {
-      ext.args2 = [
-         'minOverlap = 106, maxMismatch = 0, returnRejects = FALSE, propagateCol = character(0), 
-         trimOverhang = TRUE, match = 1, mismatch = -64, gap = -64, homo_gap = NULL, endsfree = TRUE, vec = FALSE',
-         { params.concatenate_reads ? "justConcatenate = TRUE" : "justConcatenate = FALSE" }
-      ].join(',').replaceAll('(,)*$', "")
-   }
+    withName: DADA2_DENOISING {
+        ext.args2 = [
+            'minOverlap = 106, maxMismatch = 0, returnRejects = FALSE, propagateCol = character(0), trimOverhang = TRUE, match = 1, mismatch = -64, gap = -64, homo_gap = NULL, endsfree = TRUE, vec = FALSE',
+            { params.concatenate_reads ? "justConcatenate = TRUE" : "justConcatenate = FALSE" }
+        ].join(',').replaceAll('(,)*$', "")
+    }
 }
 ```
 
