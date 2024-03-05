@@ -64,7 +64,6 @@ nextflow run nf-core/ampliseq -resume \
    --max_ee 2 \
    --sample_inference pseudo \
    --dada_ref_taxonomy coidb
-   
 ```
 
 Flags to complete with taxonomy: 
@@ -96,6 +95,8 @@ File: `ASV_seqs.fasta`
 tmux new -s COIcontaminationBlast
 module load blast/v2.14.1
 blastn -query ASV_seqs.fasta -db /data/resources/databases/blastdb/nt -out BLASTResults_COIcontamination.txt -max_target_seqs 10 -perc_identity 100 -qcov_hsp_perc 95 -outfmt 6
+
+blastn -query ASV_seqs.fasta -db /data/resources/databases/blastdb/nt -out BLASTResults_COIcontamination99.txt -max_target_seqs 10 -perc_identity 99 -qcov_hsp_perc 95 -outfmt 6
 ```
 
 Check usage: `top` or `top -u estrand`. 

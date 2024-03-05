@@ -79,21 +79,6 @@ nextflow pull nf-core/ampliseq
 
 ### Slurm script 
 
-I created another config file that includes these changes: `--minOverlap 106` and `--TrimOverhang TRUE`. This content came from the modules.config. I only need to include the portion that I want to change because nextflow uses a hierarchy format for config files. This config file will be read in before modules.config so these parameters will trump the original in the modules.config file. 
-
-`ampliseqtutorial/fisheries12s.config`
-
-```
-process {
-    withName: DADA2_DENOISING {
-        ext.args2 = [
-            'minOverlap = 106, maxMismatch = 0, returnRejects = FALSE, propagateCol = character(0), trimOverhang = TRUE, match = 1, mismatch = -64, gap = -64, homo_gap = NULL, endsfree = TRUE, vec = FALSE',
-            { params.concatenate_reads ? "justConcatenate = TRUE" : "justConcatenate = FALSE" }
-        ].join(',').replaceAll('(,)*$', "")
-    }
-}
-```
-
 Slurm script to run: 
 
 `ampliseq_notax.sh`:
@@ -123,7 +108,6 @@ cd /work/gmgi/Fisheries/ampliseq_tutorial
 
 nextflow run nf-core/ampliseq -resume \
    -profile singularity \
-   -c fisheries12s.config \
    --input ${metadata}/samplesheet.csv \
    --metadata ${metadata}/metadata.tsv \
    --FW_primer "ACTGGGATTAGATACCCC...CTAGAGGAGCCTGTTCTA" \
@@ -169,6 +153,21 @@ Quality Reporting files:
 Filtering summary: 
 - CutAdapt and DADA2: `overall_summary.tsv` 
 
+## Custom config 
+
+If a custom config file is needed, follow the below format with `process {withName: DADA2_FILTNTRIM {ext.args2 = "YOUR SETTINGS"}}`. Replace DADA2_FILTNTRIM with program step and your settings with values needed.
+
+`ampliseqtutorial/fisheries12s.config`
+
+```
+process {
+    withName: DADA2_DENOISING {
+        ext.args2 = 'minOverlap = 106, maxMismatch = 0, returnRejects = FALSE, propagateCol = character(0), trimOverhang = TRUE, match = 1, mismatch = -64, gap = -64, homo_gap = NULL, endsfree = TRUE, vec = FALSE'
+    }
+}
+```
+
+To read in the config file, use `-c ./fisheries12.config` within the slurm script. 
 
 ## Custom database 
 
