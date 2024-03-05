@@ -30,12 +30,12 @@ library(naniar)
 Load data
 
 ``` r
-seq <- read.delim2(file="scripts/eDNA ampliseq test/BLASTResults_COIcontamination.txt", header=F) %>%
+seq <- read.delim2(file="scripts/eDNA ampliseq test/COI/BLASToutput/BLASTResults_COIcontamination99.txt", header=F) %>%
   dplyr::rename(ASV_ID = V1) %>% arrange(ASV_ID)
-length(unique(seq$ASV_ID)) ## 52
+length(unique(seq$ASV_ID)) ## 100% = 52; 99% = 121
 ```
 
-    ## [1] 52
+    ## [1] 121
 
 ``` r
 counts <- read_tsv(file = "scripts/eDNA ampliseq test/COI/ASV_table.tsv")  
@@ -62,13 +62,13 @@ data <- full_join(seq, counts, by = "ASV_ID")
 
 data_annotated <- data %>% filter(!is.na(V2)) %>% arrange(desc(Total)) 
 
-data_annotated %>% write_xlsx("scripts/eDNA ampliseq test/COI/BLASToutput.xlsx")
+data_annotated %>% write_xlsx("scripts/eDNA ampliseq test/COI/BLASToutput/BLASToutput99.xlsx")
 ```
 
 Edited with NCBI annotation of species and common names.
 
 ``` r
-names <- read_xlsx("scripts/eDNA ampliseq test/COI/BLASToutput_annotated.xlsx") %>%
+names <- read_xlsx("scripts/eDNA ampliseq test/COI/BLASToutput/BLASToutput99_annotated.xlsx") %>%
   dplyr::select(1,3:4) %>% distinct()
 
 df2 <- data %>% dplyr::select(1,13:21) %>%
@@ -93,7 +93,7 @@ df2 %>% dplyr::select(-Total, -Species) %>% distinct() %>%
   labs(fill = "Reads") + 
   xlab("Sample") +
   scale_fill_distiller(type = "seq", na.value = "white", 
-                       palette = "Blues", direction=1) +
+                       palette = "Reds", direction=1) + 
   theme(axis.text.x = element_text(angle = 45, size=8, color="black", hjust = 1),
         legend.text = element_text(size = 8, color="black"),
         legend.title = element_text(margin = margin(t = 0, r = 0, b = 5, l = 0), size=10, color="black", face="bold"),
@@ -103,3 +103,24 @@ df2 %>% dplyr::select(-Total, -Species) %>% distinct() %>%
 ```
 
 ![](ASV_ID_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+
+``` r
+head(
+  df2 %>% dplyr::select(-Total, -Species) %>% distinct() %>%
+  gather(., "sample", "value", 2:9) %>%
+  group_by(`ASV_ID`) %>%
+  mutate(total = sum(value)) %>% dplyr::select(-value, -sample) %>% distinct() %>%
+  subset(`Common name` == "unclassified") 
+)
+```
+
+    ## # A tibble: 6 × 3
+    ## # Groups:   ASV_ID [6]
+    ##   ASV_ID                           `Common name` total
+    ##   <chr>                            <chr>         <dbl>
+    ## 1 f782b5c934941bc568e67597233f762b unclassified  93335
+    ## 2 41c6c4e4b8ce8c1b6e5a6fda372db79c unclassified  13164
+    ## 3 ac2a039ac3fc7780e8e3eb3e58374df1 unclassified  11327
+    ## 4 4e7b375554fd7ba631d9af95e2ccad5d unclassified   8187
+    ## 5 c74fe75b309859664502215266b64bad unclassified   7198
+    ## 6 32ddbf2304602d7d57c12b59a47bc0cd unclassified   4890

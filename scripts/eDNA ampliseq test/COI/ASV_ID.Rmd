@@ -28,9 +28,9 @@ library(naniar)
 Load data
 
 ```{r}
-seq <- read.delim2(file="scripts/eDNA ampliseq test/BLASTResults_COIcontamination.txt", header=F) %>%
+seq <- read.delim2(file="scripts/eDNA ampliseq test/COI/BLASToutput/BLASTResults_COIcontamination99.txt", header=F) %>%
   dplyr::rename(ASV_ID = V1) %>% arrange(ASV_ID)
-length(unique(seq$ASV_ID)) ## 52
+length(unique(seq$ASV_ID)) ## 100% = 52; 99% = 121
 
 counts <- read_tsv(file = "scripts/eDNA ampliseq test/COI/ASV_table.tsv")  
 counts <- counts %>% mutate(Total = rowSums(.[2:9]))
@@ -40,13 +40,13 @@ data <- full_join(seq, counts, by = "ASV_ID")
 
 data_annotated <- data %>% filter(!is.na(V2)) %>% arrange(desc(Total)) 
 
-data_annotated %>% write_xlsx("scripts/eDNA ampliseq test/COI/BLASToutput.xlsx")
+data_annotated %>% write_xlsx("scripts/eDNA ampliseq test/COI/BLASToutput/BLASToutput99.xlsx")
 ```
 
 Edited with NCBI annotation of species and common names. 
 
 ```{r}
-names <- read_xlsx("scripts/eDNA ampliseq test/COI/BLASToutput_annotated.xlsx") %>%
+names <- read_xlsx("scripts/eDNA ampliseq test/COI/BLASToutput/BLASToutput99_annotated.xlsx") %>%
   dplyr::select(1,3:4) %>% distinct()
 
 df2 <- data %>% dplyr::select(1,13:21) %>%
@@ -71,7 +71,7 @@ df2 %>% dplyr::select(-Total, -Species) %>% distinct() %>%
   labs(fill = "Reads") + 
   xlab("Sample") +
   scale_fill_distiller(type = "seq", na.value = "white", 
-                       palette = "Blues", direction=1) +
+                       palette = "Reds", direction=1) + 
   theme(axis.text.x = element_text(angle = 45, size=8, color="black", hjust = 1),
         legend.text = element_text(size = 8, color="black"),
         legend.title = element_text(margin = margin(t = 0, r = 0, b = 5, l = 0), size=10, color="black", face="bold"),
@@ -82,6 +82,15 @@ df2 %>% dplyr::select(-Total, -Species) %>% distinct() %>%
 ```
 
 
+```{r}
+head(
+  df2 %>% dplyr::select(-Total, -Species) %>% distinct() %>%
+  gather(., "sample", "value", 2:9) %>%
+  group_by(`ASV_ID`) %>%
+  mutate(total = sum(value)) %>% dplyr::select(-value, -sample) %>% distinct() %>%
+  subset(`Common name` == "unclassified") 
+)
+```
 
 
 

@@ -34,7 +34,7 @@ This file indicates the sample ID and the path to R1 and R2 files. Below is a pr
 #SBATCH --nodes=1
 #SBATCH --time=20:00:00
 #SBATCH --job-name=ampliseq_co1_negatives
-#SBATCH --mem=40GB
+#SBATCH --mem=70GB
 #SBATCH --ntasks=24
 #SBATCH --cpus-per-task=2
 
