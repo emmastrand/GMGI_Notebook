@@ -24,8 +24,6 @@ This file indicates the sample ID and the path to R1 and R2 files. Below is a pr
 
 ### Slurm script 
 
-I wrote a custom config file to change some default parameters for the Fisheries team. From the original modules.config file, I changed `
-
 `ampliseq.sh`:
 
 ```
