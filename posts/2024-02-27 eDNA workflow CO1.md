@@ -2,6 +2,8 @@
 
 See eDNA workflow 12S for details on ampliseq. 
 
+# 1. Filtering and ASV identification
+
 ### Metadata 
 
 #### CO1 primer sequences (required)
@@ -23,6 +25,8 @@ File created on RStudio Interactive on Discovery Cluster using (`create_metadata
 This file indicates the sample ID and the path to R1 and R2 files. Below is a preview of the sample sheet used in this test. File created on RStudio Interactive on Discovery Cluster using (`create_metadatasheets.R`).  
 
 ### Slurm script 
+
+Spaces are not allowed after each \ otherwise nf-core will not read the parameter. 
 
 `ampliseq.sh`:
 
@@ -61,7 +65,9 @@ nextflow run nf-core/ampliseq -resume \
    --trunclenf 220 \
    --max_ee 2 \
    --sample_inference pseudo \
-   --dada_ref_taxonomy coidb
+   --min_len_asv 300 \
+   --max_len_asv 340 \
+   --skip_taxonomy TRUE
 ```
 
 Flags to complete with taxonomy: 
@@ -70,8 +76,10 @@ Flags to complete with taxonomy:
 Flags to complete taxonomy using DADA2 (vs. QIIME2) for COI:  
 - `--dada_ref_taxonomy coidb`: COIDB - eukaryotic Cytochrome Oxidase I (COI) from The Barcode of Life Data System (BOLD). This takes the most updated version. 
 
+Reverse compliment information:  
+- `--FW_primer "GGWACWGGWTGAACWGTWTAYCCYCC...TGRTTYTTYGGNCAYCCNGARGTNTA`  
+- `--RV_primer "TANACYTCNGGRTGNCCRAARAAYCA...GGRGGRTAWACWGTTCAWCCWGTWCC"`
 
-Spaces are not allowed after each \ otherwise nf-core will not read the parameter. 
 
 **Notes**  
 - COIDB - eukaryotic Cytochrome Oxidase I (COI) from The Barcode of Life Data System (BOLD) - COI
@@ -89,16 +97,26 @@ COIDB qiime2 process is stalling? Transfer seqs and tables to RHEL for blastn da
 
 File: `ASV_seqs.fasta` 
 
+https://www.ncbi.nlm.nih.gov/books/NBK279684/table/appendices.T.options_common_to_all_blast/
+
+https://open.oregonstate.education/computationalbiology/chapter/command-line-blast/
+
 ```
 tmux new -s COIcontaminationBlast
 module load blast/v2.14.1
 blastn -query ASV_seqs.fasta -db /data/resources/databases/blastdb/nt -out BLASTResults_COIcontamination.txt -max_target_seqs 10 -perc_identity 100 -qcov_hsp_perc 95 -outfmt 6
 
-blastn -query ASV_seqs.fasta -db /data/resources/databases/blastdb/nt -out BLASTResults_COIcontamination99.txt -max_target_seqs 10 -perc_identity 99 -qcov_hsp_perc 95 -outfmt 6
+blastn -query ASV_seqs.fasta \
+   -db /data/resources/databases/blastdb/nt \
+   -out BLASTResults_COIcontamination99_v2.txt \
+   -max_target_seqs 10 -perc_identity 99 -qcov_hsp_perc 95 \
+   -outfmt "6  qseqid   sseqid   pident   length   mismatch gapopen  qstart   qend  sstart   send  evalue   bitscore staxid   sscinames   scomnames"
 ```
 
 Check usage: `top` or `top -u estrand`. 
 Ctrl+B then release and click D to detach out of tmux session 
 `tmux attach-session -t COIcontaminationBlast` to get back in.
 
-Output = `BLASTResults_COIcontamination.txt`. 
+Output = `BLASTResults_COIcontamination99_v2.txt`. 
+
+`-outfmt`: Creating query sequence ID, subject sequence ID, HSP alignment length, percentage identity of the alignment, subject sequence length, query sequence length, start and end positions in the query and subject, and the E value.

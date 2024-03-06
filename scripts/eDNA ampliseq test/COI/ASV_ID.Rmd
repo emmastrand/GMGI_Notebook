@@ -28,9 +28,9 @@ library(naniar)
 Load data
 
 ```{r}
-seq <- read.delim2(file="scripts/eDNA ampliseq test/COI/BLASToutput/BLASTResults_COIcontamination99.txt", header=F) %>%
+seq <- read.delim2(file="scripts/eDNA ampliseq test/COI/no taxonomy/version2_trunc_ASVlen/BLASTResults_COIcontamination99_v2.txt", header=F) %>%
   dplyr::rename(ASV_ID = V1) %>% arrange(ASV_ID)
-length(unique(seq$ASV_ID)) ## 100% = 52; 99% = 121
+length(unique(seq$ASV_ID)) ## 100% = 52; 99% = 121; 99% v2 = 117
 
 counts <- read_tsv(file = "scripts/eDNA ampliseq test/COI/ASV_table.tsv")  
 counts <- counts %>% mutate(Total = rowSums(.[2:9]))
@@ -40,16 +40,16 @@ data <- full_join(seq, counts, by = "ASV_ID")
 
 data_annotated <- data %>% filter(!is.na(V2)) %>% arrange(desc(Total)) 
 
-data_annotated %>% write_xlsx("scripts/eDNA ampliseq test/COI/BLASToutput/BLASToutput99.xlsx")
+data_annotated %>% write_xlsx("scripts/eDNA ampliseq test/COI/no taxonomy/version2_trunc_ASVlen/BLASToutput99_v2.xlsx")
 ```
 
 Edited with NCBI annotation of species and common names. 
 
 ```{r}
-names <- read_xlsx("scripts/eDNA ampliseq test/COI/BLASToutput/BLASToutput99_annotated.xlsx") %>%
+names <- read_xlsx("scripts/eDNA ampliseq test/COI/no taxonomy/version2_trunc_ASVlen/BLASToutput99_v2_annotated.xlsx") %>%
   dplyr::select(1,3:4) %>% distinct()
 
-df2 <- data %>% dplyr::select(1,13:21) %>%
+df2 <- data %>% dplyr::select(1,16:23) %>%
   distinct() %>%
   full_join(., names, by = join_by(ASV_ID)) %>%
   mutate(Species = if_else(is.na(Species), "unclassified", Species),
@@ -59,7 +59,7 @@ df2 <- data %>% dplyr::select(1,13:21) %>%
 Plotting
 
 ```{r}
-df2 %>% dplyr::select(-Total, -Species) %>% distinct() %>%
+df2 %>% dplyr::select(-Species) %>% distinct() %>%
   gather(., "sample", "value", 2:9) %>%
   group_by(`Common name`, sample) %>%
   mutate(total = sum(value)) %>% dplyr::select(-ASV_ID, -value) %>% distinct() %>%
@@ -84,13 +84,66 @@ df2 %>% dplyr::select(-Total, -Species) %>% distinct() %>%
 
 ```{r}
 head(
-  df2 %>% dplyr::select(-Total, -Species) %>% distinct() %>%
+  df2 %>% dplyr::select(-Species) %>% distinct() %>%
   gather(., "sample", "value", 2:9) %>%
   group_by(`ASV_ID`) %>%
   mutate(total = sum(value)) %>% dplyr::select(-value, -sample) %>% distinct() %>%
-  subset(`Common name` == "unclassified") 
+  subset(`Common name` == "unclassified") %>% arrange(desc(total))
 )
 ```
+
+**f782b5c934941bc568e67597233f762b**: (313 bp long)  
+- *Neoitamus sp* COI region (flies) = score 189; 86% qcover; 79% ID  (multiple in top 10 hit) 
+- *Hemiarma marina* mtDNA genome (cryptomonads; algae) = 92% qcover; 78% ID  
+- *Cernosvitoviella minor* COI region (annelids) = 82% qcover; 78% ID  
+- *Oligaphorura sp.* COI region (springtail; arthropods) = 94% qcover; 76% ID (multiple in top 10 hit)  
+- *Dolichopodidae sp* COI region (flies) = 83% qcover; 78% ID  
+- Other in top 10-15: *Ommatius sp* (insect), *Elater ferrugineus* (insect), *Asilidae sp* (flies)
+
+**41c6c4e4b8ce8c1b6e5a6fda372db79c**: (313 bp long)  
+- *Mycetophilidae sp* COI region (small flies) = 82% qcover; 80% ID   
+- *Diploria labyrinthiformis* COI region (brain coral) = 78% qcover; 81% ID    
+- *Favia fragum* COI region (stony coral) = 78% qcover; 80% ID (multiple in top 10 hits, e.g., *Favia gravida*, *Favia leptopphylla*)    
+- *Mussismilia hispida* COI region (colonial coral) = 78% qcover; 80% ID  
+- *Colpophyllia natans* mtDNA genome (stony coral) = 78% qcover; 80% ID (multiple hits)  
+- *Diploria strigosa* COI region (brain coral) = 78% qcover; 80% ID  (and *Diploria labyrinthiformis*)  
+- Other: *Hydnophora exesa* mtDNA genome (horn coral), *Echinophyllia aspera* (chalice coral)
+
+**ac2a039ac3fc7780e8e3eb3e58374df1**: (313 bp long)
+- *Phytophthora mekongensis* COI region (tuberous plant) = 95% qcover; 80% ID  
+- *Phytophthora sp* COI region (fungus like organism; parasite to plants) = 95% qcover; 80% ID (20-30+ hits)
+- *Mortierella verticillata* mtDNA genome (fungi) = 94% qcover; 80% ID 
+- *Feldmannia irregularis* COI region (marine algae) = 98% qcover; 78% ID  
+- *Ectocarpus siliculosus* COI region (brown algae) = 98% qcover; 78% ID  
+- *Aglaophenia tubulifera* (hydrozoan; plumed sea fir) = 92% qcover; 79% ID
+
+**4e7b375554fd7ba631d9af95e2ccad5d**: (313 bp long)  
+- *Phytophthora sp* COI region (fungus like organism; parasite to plants) = (20-30+ hits)
+- *Phaeocystis antarctica* COI region (algae) = 98-100% qcover; 91% ID
+- *Pterocladiella capillaceae* COI region (red seaweed) = 95% qcover; 81% ID 
+- *Pythium sp.* COI region (parasitic fungi) = 95% qcover; 80% ID
+
+**c74fe75b309859664502215266b64bad** (313 bp long)  
+- *Minutocellus polymorphus* COI region (marine nanodiatom)  = 97% qcover; 90% ID 
+- *Dimeregramma acutum* COI region (small diatom) = 91% qcover; 83% ID
+- *Nitzschia putrida* mtDNA genome (diatom) = 93% qcover; 82% ID  
+- Others: *Pseudo-nitzschia delicatissima* (diatom), *Cyclostephanos tholiformise* (diatom)
+
+**32ddbf2304602d7d57c12b59a47bc0cd** (313 bp long)  
+- *Oligaphorura sp* COI region (springtail; arthropods) = 94% qcover; 76% ID   
+- *Neoitamus sp* COI region (flies) = 86% qcover; 79% ID  
+- *Hemiarma marina* mtDNA genome (cryptomonads; algae) = 80% qcover; 79% ID  
+- *Cernosvitoviella minor* COI region (annelids) = 82% qcover; 78% ID 
+- *Dolichopodidae sp* COI region (flies) = 83% qcover; 78% ID 
+
+
+
+
+
+
+
+
+
 
 
 

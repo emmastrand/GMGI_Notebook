@@ -248,3 +248,70 @@ https://github.com/nf-core/ampliseq/blob/master/conf/ref_databases.config
 }
 ```
 
+
+# 2. Taxonomic Identification
+
+The following script takes the `ASV_seqs.fasta` file from DADA2 output and uses `blastn` to compare sequences to three databases: Blast nt, Mitofish, and our in-house GMGI database.
+
+Make a directory called `BLASToutput` within the project directory.
+
+`tax_ID.sh`: 
+
+```
+#!/bin/bash
+#SBATCH --error=output_messages/"%x_error.%j" #if your job fails, the error report will be put in this file
+#SBATCH --output=output_messages/"%x_output.%j" #once your job is completed, any final job report comments will be put in this file
+#SBATCH --partition=short
+#SBATCH --nodes=1
+#SBATCH --time=20:00:00
+#SBATCH --job-name=tax_ID
+#SBATCH --mem=80GB
+#SBATCH --ntasks=24
+#SBATCH --cpus-per-task=2
+
+## load modules needed 
+module load ncbi-blast+/2.13.0
+
+# set path to ASV_seqs.fasta
+## needs to be changed for every project
+fasta="/work/gmgi/Fisheries/202402_negatives/results/dada2"
+out="/work/gmgi/Fisheries/202402_negatives/BLASToutput"
+db="/work/gmgi/Fisheries/databases/reference_fasta"
+
+# set parameters for output file 
+params="'6  qseqid   sseqid   sscinames   scomnames   pident   length   mismatch gapopen  qstart   qend  sstart   send  evalue   bitscore staxid'"
+
+## NCBI database 
+blastn -remote -db nt \
+   -query ${fasta}/ASV_seqs.fasta \
+   -out ${out}/BLASTResults_NCBI.txt \
+   -max_target_seqs 10 -perc_identity 99 -qcov_hsp_perc 95 \
+   -outfmt ${params}
+
+## Mitofish database 
+blastn -db ${db}/Mitofish.fasta \
+   -query ${fasta}/ASV_seqs.fasta \
+   -out ${out}/BLASTResults_Mito.txt \
+   -max_target_seqs 10 -perc_identity 99 -qcov_hsp_perc 95 \
+   -outfmt ${params} 
+
+## GMGI database 
+blastn -db ${db}/GMGIVertRef.fasta \
+   -query ${fasta}/ASV_seqs.fasta \
+   -out ${out}/BLASTResults_GMGI.txt \
+   -max_target_seqs 10 -perc_identity 99 -qcov_hsp_perc 95 \
+   -outfmt ${params}
+
+## creating list of staxids from all three files (NCBI = 13th column)
+awk -F $'\t' '{ print $13}' ${out}/BLASTResults_NCBI.txt | sort -u > ${out}/NCBI_sp.txt
+ > ${out}/Mito_sp.txt
+ > ${out}/GMGI_sp.txt
+
+# pasting the three _sp.txt files together and retaining only unique values
+paste ${out}/*_sp.txt | sort -u > All_sp.txt 
+
+## annotating taxid with full taxonomic classification
+
+
+```
+
