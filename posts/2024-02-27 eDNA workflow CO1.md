@@ -57,8 +57,8 @@ nextflow run nf-core/ampliseq -resume \
    --RV_primer "TANACYTCNGGRTGNCCRAARAAYCA" \
    --outdir ./results \
    --trunc_qmin 25 \
-   --trunclenr 200 \
-   --trunclenf 215 \
+   --trunclenr 215 \
+   --trunclenf 220 \
    --max_ee 2 \
    --sample_inference pseudo \
    --dada_ref_taxonomy coidb
