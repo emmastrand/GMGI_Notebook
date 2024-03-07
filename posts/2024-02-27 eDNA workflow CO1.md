@@ -111,6 +111,12 @@ blastn -query ASV_seqs.fasta \
    -out BLASTResults_COIcontamination99_v2.txt \
    -max_target_seqs 10 -perc_identity 99 -qcov_hsp_perc 95 \
    -outfmt "6  qseqid   sseqid   pident   length   mismatch gapopen  qstart   qend  sstart   send  evalue   bitscore staxid   sscinames   scomnames"
+
+blastn -query ASV_seqs.fasta \
+   -db /data/resources/databases/blastdb/nt \
+   -out BLASTResults_COIcontamination99_v3.txt \
+   -max_target_seqs 10 -perc_identity 97 -qcov_hsp_perc 90 \
+   -outfmt "6  qseqid   sseqid   pident   length   mismatch gapopen  qstart   qend  sstart   send  evalue   bitscore staxid   sscinames   scomnames"
 ```
 
 Check usage: `top` or `top -u estrand`. 

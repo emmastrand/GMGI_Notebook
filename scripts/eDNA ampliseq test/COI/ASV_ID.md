@@ -30,18 +30,18 @@ library(naniar)
 Load data
 
 ``` r
-seq <- read.delim2(file="scripts/eDNA ampliseq test/COI/no taxonomy/version2_trunc_ASVlen/BLASTResults_COIcontamination99_v2.txt", header=F) %>%
+seq <- read.delim2(file="scripts/eDNA ampliseq test/COI/no taxonomy/version2_trunc_ASVlen/BLASTResults_COIcontamination99_v3.txt", header=F) %>%
   dplyr::rename(ASV_ID = V1) %>% arrange(ASV_ID)
-length(unique(seq$ASV_ID)) ## 100% = 52; 99% = 121; 99% v2 = 117
+length(unique(seq$ASV_ID)) ## 100% = 52; 99% = 121; 99% v2 = 117; 97% = 146 ASV groups classified
 ```
 
-    ## [1] 117
+    ## [1] 146
 
 ``` r
-counts <- read_tsv(file = "scripts/eDNA ampliseq test/COI/ASV_table.tsv")  
+counts <- read_tsv(file = "scripts/eDNA ampliseq test/COI/no taxonomy/version2_trunc_ASVlen/ASV_table.tsv")  
 ```
 
-    ## Rows: 1175 Columns: 9
+    ## Rows: 1154 Columns: 9
     ## ── Column specification ────────────────────────────────────────────────────────
     ## Delimiter: "\t"
     ## chr (1): ASV_ID
@@ -52,31 +52,25 @@ counts <- read_tsv(file = "scripts/eDNA ampliseq test/COI/ASV_table.tsv")
 
 ``` r
 counts <- counts %>% mutate(Total = rowSums(.[2:9]))
-length(unique(counts$ASV_ID)) ## 1,175
+length(unique(counts$ASV_ID)) ## 1,154
 ```
 
-    ## [1] 1175
+    ## [1] 1154
 
 ``` r
 data <- full_join(seq, counts, by = "ASV_ID")
 
 data_annotated <- data %>% filter(!is.na(V2)) %>% arrange(desc(Total)) 
 
-data_annotated %>% write_xlsx("scripts/eDNA ampliseq test/COI/no taxonomy/version2_trunc_ASVlen/BLASToutput99_v2.xlsx")
+data_annotated %>% write_xlsx("scripts/eDNA ampliseq test/COI/no taxonomy/version2_trunc_ASVlen/BLASToutput99_v3.xlsx")
 ```
 
 Edited with NCBI annotation of species and common names.
 
 ``` r
-names <- read_xlsx("scripts/eDNA ampliseq test/COI/no taxonomy/version2_trunc_ASVlen/BLASToutput99_v2_annotated.xlsx") %>%
+names <- read_xlsx("scripts/eDNA ampliseq test/COI/no taxonomy/version2_trunc_ASVlen/BLASToutput99_v3_annotated.xlsx") %>%
   dplyr::select(1,3:4) %>% distinct()
-```
 
-    ## New names:
-    ## • `` -> `...17`
-    ## • `` -> `...18`
-
-``` r
 df2 <- data %>% dplyr::select(1,16:23) %>%
   distinct() %>%
   full_join(., names, by = join_by(ASV_ID)) %>%
@@ -140,23 +134,25 @@ head(
   df2 %>% dplyr::select(-Species) %>% distinct() %>%
   gather(., "sample", "value", 2:9) %>%
   group_by(`ASV_ID`) %>%
-  mutate(total = sum(value)) %>% dplyr::select(-value, -sample) %>% distinct() %>%
-  subset(`Common name` == "unclassified") %>% arrange(desc(total))
+  mutate(total = sum(value)) %>% ungroup() %>%
+    dplyr::select(-value, -sample) %>% distinct() %>% 
+  subset(`Common name` == "unclassified") %>% 
+    arrange(desc(total))
 )
 ```
 
     ## # A tibble: 6 × 3
-    ## # Groups:   ASV_ID [6]
     ##   ASV_ID                           `Common name` total
     ##   <chr>                            <chr>         <dbl>
-    ## 1 f782b5c934941bc568e67597233f762b unclassified  93335
-    ## 2 41c6c4e4b8ce8c1b6e5a6fda372db79c unclassified  13164
-    ## 3 ac2a039ac3fc7780e8e3eb3e58374df1 unclassified  11327
-    ## 4 4e7b375554fd7ba631d9af95e2ccad5d unclassified   8187
-    ## 5 c74fe75b309859664502215266b64bad unclassified   7198
-    ## 6 32ddbf2304602d7d57c12b59a47bc0cd unclassified   4890
+    ## 1 f782b5c934941bc568e67597233f762b unclassified  92820
+    ## 2 41c6c4e4b8ce8c1b6e5a6fda372db79c unclassified  13099
+    ## 3 ac2a039ac3fc7780e8e3eb3e58374df1 unclassified  11250
+    ## 4 4e7b375554fd7ba631d9af95e2ccad5d unclassified   8118
+    ## 5 c74fe75b309859664502215266b64bad unclassified   7134
+    ## 6 32ddbf2304602d7d57c12b59a47bc0cd unclassified   4845
 
-**f782b5c934941bc568e67597233f762b**: (313 bp long)  
+**f782b5c934941bc568e67597233f762b**: (313 bp long) – 1/3 of total
+reads  
 - *Neoitamus sp* COI region (flies) = score 189; 86% qcover; 79% ID
 (multiple in top 10 hit) - *Hemiarma marina* mtDNA genome (cryptomonads;
 algae) = 92% qcover; 78% ID  
