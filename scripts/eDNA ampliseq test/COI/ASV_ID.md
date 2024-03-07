@@ -111,6 +111,31 @@ df2 %>% dplyr::select(-Species) %>% distinct() %>%
 ![](ASV_ID_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
 ``` r
+df2 %>% dplyr::select(-Species) %>% distinct() %>%
+  gather(., "sample", "value", 2:9) %>%
+  group_by(`Common name`, sample) %>%
+  mutate(total = sum(value)) %>% dplyr::select(-ASV_ID, -value) %>% distinct() %>%
+  subset(!`Common name` == "unclassified") %>%
+  replace_with_na_all(condition = ~.x == 0.000000000) %>%
+  arrange(desc(total)) %>%
+  ggplot(., aes(x=sample, y=`Common name`)) +
+  geom_tile(aes(fill = total), color = "black") +
+  theme_classic() +
+  labs(fill = "Reads") + 
+  xlab("Sample") +
+  scale_fill_distiller(type = "seq", na.value = "white", 
+                       palette = "Reds", direction=1) + 
+  theme(axis.text.x = element_text(angle = 45, size=8, color="black", hjust = 1),
+        legend.text = element_text(size = 8, color="black"),
+        legend.title = element_text(margin = margin(t = 0, r = 0, b = 5, l = 0), size=10, color="black", face="bold"),
+        axis.title.y = element_text(margin = margin(t = 0, r = 10, b = 0, l = 0), size=14, face="bold"),
+        axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0), size=14, face="bold"),
+        axis.text.y = element_text(colour = 'black', size = 8)) 
+```
+
+![](ASV_ID_files/figure-gfm/unnamed-chunk-4-2.png)<!-- -->
+
+``` r
 head(
   df2 %>% dplyr::select(-Species) %>% distinct() %>%
   gather(., "sample", "value", 2:9) %>%

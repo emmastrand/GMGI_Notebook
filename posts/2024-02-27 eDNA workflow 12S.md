@@ -281,6 +281,7 @@ db="/work/gmgi/Fisheries/databases/reference_fasta"
 # set parameters for output file 
 params="'6  qseqid   sseqid   sscinames   scomnames   pident   length   mismatch gapopen  qstart   qend  sstart   send  evalue   bitscore staxid'"
 
+#### DATABASE QUERY ####
 ## NCBI database 
 blastn -remote -db nt \
    -query ${fasta}/ASV_seqs.fasta \
@@ -302,7 +303,10 @@ blastn -db ${db}/GMGIVertRef.fasta \
    -max_target_seqs 10 -perc_identity 99 -qcov_hsp_perc 95 \
    -outfmt ${params}
 
-## creating list of staxids from all three files (NCBI = 13th column)
+############################
+
+#### TAXONOMIC CLASSIFICATION #### 
+## creating list of staxids from all three files (NCBI = 13th column; change this value if headers in blastn command change)
 awk -F $'\t' '{ print $13}' ${out}/BLASTResults_NCBI.txt | sort -u > ${out}/NCBI_sp.txt
  > ${out}/Mito_sp.txt
  > ${out}/GMGI_sp.txt
@@ -315,3 +319,7 @@ paste ${out}/*_sp.txt | sort -u > All_sp.txt
 
 ```
 
+LULU? https://www.nature.com/articles/s41467-017-01312-x 
+
+Collapse by tax ID
+Filter ASVs 
