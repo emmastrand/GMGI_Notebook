@@ -1,8 +1,8 @@
 # Environmental DNA (eDNA) metabarcoding with COI 
 
 Metabarcoding 8 samples to test the Leray Geller COI primer set:  
-- Leray Gellar CO1 amplicon F: GGWACWGGWTGAACWGTWTAYCCYCC  
-- Leray Gellar CO1 amplicon R: TANACYTCNGGRTGNCCRAARAAYCA 
+- Leray Geller CO1 amplicon F: GGWACWGGWTGAACWGTWTAYCCYCC  
+- Leray Geller CO1 amplicon R: TANACYTCNGGRTGNCCRAARAAYCA 
 
 Raw fastqc files were trimmed with CutAdapt to remove adapters (98% of reads passed filters). Quality filtered and ASV interence was conducted with DADA2 and between 32.8% and 79.86% reads per sample (average 56.3%) reads passed all DADA2 steps. The majority of ASV lengths were ~313 bp which is expected for this region of COI with Leray Geller primers.  
 

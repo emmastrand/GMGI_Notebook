@@ -8,8 +8,8 @@ See eDNA workflow 12S for details on ampliseq.
 
 #### CO1 primer sequences (required)
 
-Leray Gellar CO1 amplicon F: GGWACWGGWTGAACWGTWTAYCCYCC  
-Leray Gellar CO1 amplicon R: TANACYTCNGGRTGNCCRAARAAYCA 
+Leray Geller CO1 amplicon F: GGWACWGGWTGAACWGTWTAYCCYCC  
+Leray Geller CO1 amplicon R: TANACYTCNGGRTGNCCRAARAAYCA 
 
 I is replaced with N (https://cutadapt.readthedocs.io/en/stable/guide.html#wildcards). 
 
