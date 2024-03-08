@@ -1,10 +1,48 @@
 # Environmental DNA (eDNA) metabarcoding with COI 
 
-Metabarcoding 8 samples to test the Leray Geller COI primer set:  
+### Water collection 
+
+1L of water was collected from the Gulf of Maine and filtered through a 0.2 uM filter 47 mm MCE filter (Sigma Aldrich Cat No. 1040-6970). 
+
+### Lab steps 
+
+DNA extracted from filter with the Qiagen DNeasy PowerSoil Pro Kit and quantified with Qubit dsDNA Broad Range assay kit. 
+
+PCR1: Target amplication for invertebrates using COI region and Leray Geller primer set:  
 - Leray Geller CO1 amplicon F: GGWACWGGWTGAACWGTWTAYCCYCC  
 - Leray Geller CO1 amplicon R: TANACYTCNGGRTGNCCRAARAAYCA 
 
-Raw fastqc files were trimmed with CutAdapt to remove adapters (98% of reads passed filters). Quality filtered and ASV interence was conducted with DADA2 and between 32.8% and 79.86% reads per sample (average 56.3%) reads passed all DADA2 steps. The majority of ASV lengths were ~313 bp which is expected for this region of COI with Leray Geller primers.  
+PCR1 reaction components for 25 uL reactions:  
+- DNase/RNase free H2O (14.38 uL)  
+- 10X Buffer (2.50 uL)  
+- MgCl2 (2 uL)  
+- dNTPs (0.5 uL)  
+- 10 uM forward primer (1.25 uL)  
+- 10 uM reverse primer (1.25 uL)  
+- Taq enzyme (0.13 uL)  
+- Sample DNA (3 uL)
+
+Samples run in triplicate.
+
+PCR1 cycling conditions:  
+
+| COI Pair 1               | Step                 | Temperature and time                 | Number of cycle |
+|--------------------------|----------------------|--------------------------------------|-----------------|
+|                          | Initial denaturation | 95°C for 10 min                      | 1               |
+| mlCOIintF (Geller et al) | Denaturation         | 95°C for 10 seconds                  | 16              |
+| jgHCO2198 (Leray et al)  | Annealing            | 62°C (-1°C per cycle) for 30 seconds |                 |
+|                          | Extension            | 72°C for 1 min                       |                 |
+| "LERAYGEL"               | Denaturation         | 95°C for 10 seconds                  | 20              |
+| on thermocycler          | Annealing            | 46°C for 30 seconds                  |                 |
+|                          | Extension            | 72°C for 1 min                       |                 |
+|                          | Final extension      | 72°C for 7 min                       | 1               |
+
+
+Sequencing completed with Illumina MiSeq Reagent Nano Kit v2 (500-cycles) MS-103-1003.
+
+### Bioinformatic steps 
+
+Raw fastqc files were trimmed with CutAdapt to remove adapters (98% of reads passed filters). Quality filtered and ASV inference was conducted with DADA2 and between 32.8% and 79.86% reads per sample (average 56.3%) reads passed all DADA2 steps. The majority of ASV lengths were ~313 bp which is expected for this region of COI with Leray Geller primers.  
 
 1,093 ASV groups detected and assigned taxonomy via Blast+ with the follow parameters (97% ID and 90% query cover): 
 
@@ -15,6 +53,8 @@ blastn -query ASV_seqs.fasta \
    -max_target_seqs 10 -perc_identity 97 -qcov_hsp_perc 90 \
    -outfmt "6  qseqid   sseqid   pident   length   mismatch gapopen  qstart   qend  sstart   send  evalue   bitscore staxid   sscinames   scomnames"
 ```
+
+### Results 
 
 146 groups were classified (7.5% of total ASVs).  
 
