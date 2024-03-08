@@ -14,12 +14,12 @@ PCR1: Target amplication for invertebrates using COI region and Leray Geller pri
 
 PCR1 reaction components for 25 uL reactions:  
 - DNase/RNase free H2O (14.38 uL)  
-- 10X Buffer (2.50 uL)  
-- MgCl2 (2 uL)  
-- dNTPs (0.5 uL)  
+- ThermoFisher appliedbiosystems AmpliTaq Gold 10X Buffer (2.50 uL)  
+- ThermoFisher Applied Biosystems 25 mM MgCl2 (2 uL)  
+- NewEngland BioLabs dNTPs (0.5 uL)  
 - 10 uM forward primer (1.25 uL)  
 - 10 uM reverse primer (1.25 uL)  
-- Taq enzyme (0.13 uL)  
+- ThermoFisher appliedbiosystems AmpliTaq Gold 360 DNA polyermase (0.13 uL)  
 - Sample DNA (3 uL)
 
 Samples run in triplicate.
