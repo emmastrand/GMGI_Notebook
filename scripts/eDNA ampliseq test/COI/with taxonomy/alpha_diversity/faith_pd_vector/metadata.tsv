@@ -1,0 +1,10 @@
+id	Personnel	Primer	Site	faith_pd
+#q2:types	categorical	categorical	categorical	numeric
+Neg_ES_S6	Emma	Negative		39.5515977550877
+Neg_TO_S13	Tim	Negative		20.9457647720042
+SeptVW_C1B_ES_S3	Emma	Sample	VW_C1B	61.2227411149068
+SeptVW_C1B_TO_S7	Tim	Sample	VW_C1B	55.9513381554039
+SeptVW_S5B_ES_S4	Emma	Sample	VW_S5B	55.1173366763999
+SeptVW_S5B_TO_S8	Tim	Sample	VW_S5B	47.4220564155279
+SeptVW_S7B_ES_S5	Emma	Sample	VW_S7B	53.330301110177
+SeptVW_S7B_TO_S12	Tim	Sample	VW_S7B	47.0743993529758

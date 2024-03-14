@@ -1,0 +1,9 @@
+index,;,Animalia;,Animalia;Arthropoda,Animalia;Annelida,Animalia;Mollusca,Chromista;Oomycota,Chromista;Myzozoa,Animalia;Chordata,Personnel,Primer,Site
+Neg_ES_S6,5016.0,18213.0,4135.0,112.0,13.0,0.0,0.0,0.0,Emma,Negative,
+Neg_TO_S13,5835.0,29452.0,5362.0,444.0,0.0,0.0,71.0,0.0,Tim,Negative,
+SeptVW_C1B_ES_S3,7336.0,19531.0,4583.0,52.0,0.0,105.0,105.0,0.0,Emma,Sample,VW_C1B
+SeptVW_C1B_TO_S7,8605.0,24819.0,5152.0,0.0,0.0,139.0,81.0,0.0,Tim,Sample,VW_C1B
+SeptVW_S5B_ES_S4,4740.0,23063.0,6634.0,48.0,1746.0,70.0,4.0,0.0,Emma,Sample,VW_S5B
+SeptVW_S5B_TO_S8,4129.0,25643.0,6866.0,31.0,286.0,22.0,0.0,0.0,Tim,Sample,VW_S5B
+SeptVW_S7B_ES_S5,4532.0,14917.0,3697.0,52.0,0.0,5.0,0.0,25.0,Emma,Sample,VW_S7B
+SeptVW_S7B_TO_S12,8161.0,26325.0,6189.0,217.0,0.0,53.0,0.0,0.0,Tim,Sample,VW_S7B

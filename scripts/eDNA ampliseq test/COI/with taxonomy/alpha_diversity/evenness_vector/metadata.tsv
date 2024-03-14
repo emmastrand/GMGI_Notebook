@@ -1,0 +1,10 @@
+id	Personnel	Primer	Site	pielou_evenness
+#q2:types	categorical	categorical	categorical	numeric
+Neg_ES_S6	Emma	Negative		0.589847512140528
+Neg_TO_S13	Tim	Negative		0.609136224386867
+SeptVW_C1B_ES_S3	Emma	Sample	VW_C1B	0.605943814976212
+SeptVW_C1B_TO_S7	Tim	Sample	VW_C1B	0.59021451333524
+SeptVW_S5B_ES_S4	Emma	Sample	VW_S5B	0.573586163921116
+SeptVW_S5B_TO_S8	Tim	Sample	VW_S5B	0.499257110229972
+SeptVW_S7B_ES_S5	Emma	Sample	VW_S7B	0.592834132478599
+SeptVW_S7B_TO_S12	Tim	Sample	VW_S7B	0.590218851932043

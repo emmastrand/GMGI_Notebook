@@ -1,0 +1,129 @@
+taxid	lineage	name	rank	20240313172106_50.238.219.210.fa
+0	null	root	root	1175
+1	root;root;Eukaryota;superkingdom;	Eukaryota	superkingdom	1175
+3	root;root;Eukaryota;superkingdom;Annelida;phylum;	Annelida	phylum	18
+96	root;root;Eukaryota;superkingdom;Annelida;phylum;Polychaeta;class;	Polychaeta	class	18
+280	root;root;Eukaryota;superkingdom;Annelida;phylum;Polychaeta;class;Flabelligerida;order;	Flabelligerida	order	2
+2247	root;root;Eukaryota;superkingdom;Annelida;phylum;Polychaeta;class;Flabelligerida;order;Flabelligeridae;family;	Flabelligeridae	family	2
+34750	root;root;Eukaryota;superkingdom;Annelida;phylum;Polychaeta;class;Flabelligerida;order;Flabelligeridae;family;Pherusa;genus;	Pherusa	genus	2
+211173	root;root;Eukaryota;superkingdom;Annelida;phylum;Polychaeta;class;Flabelligerida;order;Flabelligeridae;family;Pherusa;genus;Pherusa affinis;species;	Pherusa affinis	species	2
+4034	root;root;Eukaryota;superkingdom;Annelida;phylum;Polychaeta;class;Polygordiidae;family;	Polygordiidae	family	6
+36199	root;root;Eukaryota;superkingdom;Annelida;phylum;Polychaeta;class;Polygordiidae;family;Polygordius;genus;	Polygordius	genus	6
+220088	root;root;Eukaryota;superkingdom;Annelida;phylum;Polychaeta;class;Polygordiidae;family;Polygordius;genus;Polygordius jouinae;species;	Polygordius jouinae	species	6
+3557	root;root;Eukaryota;superkingdom;Annelida;phylum;Polychaeta;class;Opheliidae;family;	Opheliidae	family	5
+31754	root;root;Eukaryota;superkingdom;Annelida;phylum;Polychaeta;class;Opheliidae;family;Ophelina;genus;	Ophelina	genus	5
+197865	root;root;Eukaryota;superkingdom;Annelida;phylum;Polychaeta;class;Opheliidae;family;Ophelina;genus;Ophelina acuminata CMC02;species;	Ophelina acuminata CMC02	species	5
+275	root;root;Eukaryota;superkingdom;Annelida;phylum;Polychaeta;class;Eunicida;order;	Eunicida	order	1
+2175	root;root;Eukaryota;superkingdom;Annelida;phylum;Polychaeta;class;Eunicida;order;Eunicidae;family;	Eunicidae	family	1
+19057	root;root;Eukaryota;superkingdom;Annelida;phylum;Polychaeta;class;Eunicida;order;Eunicidae;family;Eunice;genus;	Eunice	genus	1
+125630	root;root;Eukaryota;superkingdom;Annelida;phylum;Polychaeta;class;Eunicida;order;Eunicidae;family;Eunice;genus;Eunice pennata;species;	Eunice pennata	species	1
+556	root;root;Eukaryota;superkingdom;Annelida;phylum;Polychaeta;class;Terebellida;order;	Terebellida	order	3
+4790	root;root;Eukaryota;superkingdom;Annelida;phylum;Polychaeta;class;Terebellida;order;Terebellidae;family;	Terebellidae	family	1
+36172	root;root;Eukaryota;superkingdom;Annelida;phylum;Polychaeta;class;Terebellida;order;Terebellidae;family;Polycirrus;genus;	Polycirrus	genus	1
+219974	root;root;Eukaryota;superkingdom;Annelida;phylum;Polychaeta;class;Terebellida;order;Terebellidae;family;Polycirrus;genus;Polycirrus eximius;species;	Polycirrus eximius	species	1
+4935	root;root;Eukaryota;superkingdom;Annelida;phylum;Polychaeta;class;Terebellida;order;Trichobranchidae;family;	Trichobranchidae	family	2
+43033	root;root;Eukaryota;superkingdom;Annelida;phylum;Polychaeta;class;Terebellida;order;Trichobranchidae;family;Terebellides;genus;	Terebellides	genus	2
+253242	root;root;Eukaryota;superkingdom;Annelida;phylum;Polychaeta;class;Terebellida;order;Trichobranchidae;family;Terebellides;genus;Terebellides stroemii;species;	Terebellides stroemii	species	1
+253243	root;root;Eukaryota;superkingdom;Annelida;phylum;Polychaeta;class;Terebellida;order;Trichobranchidae;family;Terebellides;genus;Terebellides stroemii CMC01;species;	Terebellides stroemii CMC01	species	1
+450	root;root;Eukaryota;superkingdom;Annelida;phylum;Polychaeta;class;Phyllodocida;order;	Phyllodocida	order	1
+3899	root;root;Eukaryota;superkingdom;Annelida;phylum;Polychaeta;class;Phyllodocida;order;Phyllodocidae;family;	Phyllodocidae	family	1
+35157	root;root;Eukaryota;superkingdom;Annelida;phylum;Polychaeta;class;Phyllodocida;order;Phyllodocidae;family;Phyllodoce;genus;	Phyllodoce	genus	1
+213765	root;root;Eukaryota;superkingdom;Annelida;phylum;Polychaeta;class;Phyllodocida;order;Phyllodocidae;family;Phyllodoce;genus;Phyllodoce mucosa;species;	Phyllodoce mucosa	species	1
+18	root;root;Eukaryota;superkingdom;Mollusca;phylum;	Mollusca	phylum	8
+70	root;root;Eukaryota;superkingdom;Mollusca;phylum;Gastropoda;class;	Gastropoda	class	1
+1278	root;root;Eukaryota;superkingdom;Mollusca;phylum;Gastropoda;class;Calyptraeidae;family;	Calyptraeidae	family	1
+14821	root;root;Eukaryota;superkingdom;Mollusca;phylum;Gastropoda;class;Calyptraeidae;family;Crepidula;genus;	Crepidula	genus	1
+100959	root;root;Eukaryota;superkingdom;Mollusca;phylum;Gastropoda;class;Calyptraeidae;family;Crepidula;genus;Crepidula plana;species;	Crepidula plana	species	1
+44	root;root;Eukaryota;superkingdom;Mollusca;phylum;Bivalvia;class;	Bivalvia	class	5
+590	root;root;Eukaryota;superkingdom;Mollusca;phylum;Bivalvia;class;Veneroida;order;	Veneroida	order	5
+933	root;root;Eukaryota;superkingdom;Mollusca;phylum;Bivalvia;class;Veneroida;order;Arcticidae;family;	Arcticidae	family	5
+8315	root;root;Eukaryota;superkingdom;Mollusca;phylum;Bivalvia;class;Veneroida;order;Arcticidae;family;Arctica;genus;	Arctica	genus	5
+63925	root;root;Eukaryota;superkingdom;Mollusca;phylum;Bivalvia;class;Veneroida;order;Arcticidae;family;Arctica;genus;Arctica islandica;species;	Arctica islandica	species	5
+51	root;root;Eukaryota;superkingdom;Mollusca;phylum;Cephalopoda;class;	Cephalopoda	class	2
+562	root;root;Eukaryota;superkingdom;Mollusca;phylum;Cephalopoda;class;Teuthida;order;	Teuthida	order	2
+3538	root;root;Eukaryota;superkingdom;Mollusca;phylum;Cephalopoda;class;Teuthida;order;Ommastrephidae;family;	Ommastrephidae	family	1
+23670	root;root;Eukaryota;superkingdom;Mollusca;phylum;Cephalopoda;class;Teuthida;order;Ommastrephidae;family;Illex;genus;	Illex	genus	1
+151657	root;root;Eukaryota;superkingdom;Mollusca;phylum;Cephalopoda;class;Teuthida;order;Ommastrephidae;family;Illex;genus;Illex illecebrosus;species;	Illex illecebrosus	species	1
+2975	root;root;Eukaryota;superkingdom;Mollusca;phylum;Cephalopoda;class;Teuthida;order;Loliginidae;family;	Loliginidae	family	1
+17095	root;root;Eukaryota;superkingdom;Mollusca;phylum;Cephalopoda;class;Teuthida;order;Loliginidae;family;Doryteuthis;genus;	Doryteuthis	genus	1
+113725	root;root;Eukaryota;superkingdom;Mollusca;phylum;Cephalopoda;class;Teuthida;order;Loliginidae;family;Doryteuthis;genus;Doryteuthis pealeii;species;	Doryteuthis pealeii	species	1
+4	root;root;Eukaryota;superkingdom;Arthropoda;phylum;	Arthropoda	phylum	36
+83	root;root;Eukaryota;superkingdom;Arthropoda;phylum;Maxillopoda;class;	Maxillopoda	class	16
+176	root;root;Eukaryota;superkingdom;Arthropoda;phylum;Maxillopoda;class;Calanoida;order;	Calanoida	order	15
+1565	root;root;Eukaryota;superkingdom;Arthropoda;phylum;Maxillopoda;class;Calanoida;order;Clausocalanidae;family;	Clausocalanidae	family	3
+37351	root;root;Eukaryota;superkingdom;Arthropoda;phylum;Maxillopoda;class;Calanoida;order;Clausocalanidae;family;Pseudocalanus;genus;	Pseudocalanus	genus	2
+225794	root;root;Eukaryota;superkingdom;Arthropoda;phylum;Maxillopoda;class;Calanoida;order;Clausocalanidae;family;Pseudocalanus;genus;Pseudocalanus newmani;species;	Pseudocalanus newmani	species	2
+13618	root;root;Eukaryota;superkingdom;Arthropoda;phylum;Maxillopoda;class;Calanoida;order;Clausocalanidae;family;Clausocalanus;genus;	Clausocalanus	genus	1
+93632	root;root;Eukaryota;superkingdom;Arthropoda;phylum;Maxillopoda;class;Calanoida;order;Clausocalanidae;family;Clausocalanus;genus;Clausocalanus pergens;species;	Clausocalanus pergens	species	1
+1375	root;root;Eukaryota;superkingdom;Arthropoda;phylum;Maxillopoda;class;Calanoida;order;Centropagidae;family;	Centropagidae	family	5
+12202	root;root;Eukaryota;superkingdom;Arthropoda;phylum;Maxillopoda;class;Calanoida;order;Centropagidae;family;Centropages;genus;	Centropages	genus	5
+85240	root;root;Eukaryota;superkingdom;Arthropoda;phylum;Maxillopoda;class;Calanoida;order;Centropagidae;family;Centropages;genus;Centropages hamatus;species;	Centropages hamatus	species	5
+4776	root;root;Eukaryota;superkingdom;Arthropoda;phylum;Maxillopoda;class;Calanoida;order;Temoridae;family;	Temoridae	family	1
+42971	root;root;Eukaryota;superkingdom;Arthropoda;phylum;Maxillopoda;class;Calanoida;order;Temoridae;family;Temora;genus;	Temora	genus	1
+252786	root;root;Eukaryota;superkingdom;Arthropoda;phylum;Maxillopoda;class;Calanoida;order;Temoridae;family;Temora;genus;Temora longicornis;species;	Temora longicornis	species	1
+620	root;root;Eukaryota;superkingdom;Arthropoda;phylum;Maxillopoda;class;Calanoida;order;Acartiidae;family;	Acartiidae	family	3
+5430	root;root;Eukaryota;superkingdom;Arthropoda;phylum;Maxillopoda;class;Calanoida;order;Acartiidae;family;Acartia;genus;	Acartia	genus	3
+47384	root;root;Eukaryota;superkingdom;Arthropoda;phylum;Maxillopoda;class;Calanoida;order;Acartiidae;family;Acartia;genus;Acartia longiremis;species;	Acartia longiremis	species	3
+4902	root;root;Eukaryota;superkingdom;Arthropoda;phylum;Maxillopoda;class;Calanoida;order;Tortanidae;family;	Tortanidae	family	3
+43949	root;root;Eukaryota;superkingdom;Arthropoda;phylum;Maxillopoda;class;Calanoida;order;Tortanidae;family;Tortanus;genus;	Tortanus	genus	3
+257047	root;root;Eukaryota;superkingdom;Arthropoda;phylum;Maxillopoda;class;Calanoida;order;Tortanidae;family;Tortanus;genus;Tortanus discaudatus;species;	Tortanus discaudatus	species	3
+519	root;root;Eukaryota;superkingdom;Arthropoda;phylum;Maxillopoda;class;Sessilia;order;	Sessilia	order	1
+-520	root;root;Eukaryota;superkingdom;Arthropoda;phylum;Maxillopoda;class;Sessilia;order;unclassified_Sessilia;;	unclassified_Sessilia		1
+81	root;root;Eukaryota;superkingdom;Arthropoda;phylum;Malacostraca;class;	Malacostraca	class	3
+237	root;root;Eukaryota;superkingdom;Arthropoda;phylum;Malacostraca;class;Decapoda;order;	Decapoda	order	3
+1294	root;root;Eukaryota;superkingdom;Arthropoda;phylum;Malacostraca;class;Decapoda;order;Cancridae;family;	Cancridae	family	3
+11613	root;root;Eukaryota;superkingdom;Arthropoda;phylum;Malacostraca;class;Decapoda;order;Cancridae;family;Cancer;genus;	Cancer	genus	3
+81506	root;root;Eukaryota;superkingdom;Arthropoda;phylum;Malacostraca;class;Decapoda;order;Cancridae;family;Cancer;genus;Cancer irroratus;species;	Cancer irroratus	species	3
+79	root;root;Eukaryota;superkingdom;Arthropoda;phylum;Insecta;class;	Insecta	class	3
+312	root;root;Eukaryota;superkingdom;Arthropoda;phylum;Insecta;class;Hemiptera;order;	Hemiptera	order	1
+2444	root;root;Eukaryota;superkingdom;Arthropoda;phylum;Insecta;class;Hemiptera;order;Halimococcidae;family;	Halimococcidae	family	1
+14030	root;root;Eukaryota;superkingdom;Arthropoda;phylum;Insecta;class;Hemiptera;order;Halimococcidae;family;Colobopyga;genus;	Colobopyga	genus	1
+96094	root;root;Eukaryota;superkingdom;Arthropoda;phylum;Insecta;class;Hemiptera;order;Halimococcidae;family;Colobopyga;genus;Colobopyga pritchardiae;species;	Colobopyga pritchardiae	species	1
+-80	root;root;Eukaryota;superkingdom;Arthropoda;phylum;Insecta;class;unclassified_Insecta;;	unclassified_Insecta		2
+-5	root;root;Eukaryota;superkingdom;Arthropoda;phylum;unclassified_Arthropoda;;	unclassified_Arthropoda		14
+9	root;root;Eukaryota;superkingdom;Cnidaria;phylum;	Cnidaria	phylum	2
+78	root;root;Eukaryota;superkingdom;Cnidaria;phylum;Hydrozoa;class;	Hydrozoa	class	2
+345	root;root;Eukaryota;superkingdom;Cnidaria;phylum;Hydrozoa;class;Leptothecata;order;	Leptothecata	order	1
+1286	root;root;Eukaryota;superkingdom;Cnidaria;phylum;Hydrozoa;class;Leptothecata;order;Campanulariidae;family;	Campanulariidae	family	1
+31114	root;root;Eukaryota;superkingdom;Cnidaria;phylum;Hydrozoa;class;Leptothecata;order;Campanulariidae;family;Obelia;genus;	Obelia	genus	1
+194508	root;root;Eukaryota;superkingdom;Cnidaria;phylum;Hydrozoa;class;Leptothecata;order;Campanulariidae;family;Obelia;genus;Obelia geniculata;species;	Obelia geniculata	species	1
+133	root;root;Eukaryota;superkingdom;Cnidaria;phylum;Hydrozoa;class;Anthoathecata;order;	Anthoathecata	order	1
+5003	root;root;Eukaryota;superkingdom;Cnidaria;phylum;Hydrozoa;class;Anthoathecata;order;Tubulariidae;family;	Tubulariidae	family	1
+22967	root;root;Eukaryota;superkingdom;Cnidaria;phylum;Hydrozoa;class;Anthoathecata;order;Tubulariidae;family;Hybocodon;genus;	Hybocodon	genus	1
+145202	root;root;Eukaryota;superkingdom;Cnidaria;phylum;Hydrozoa;class;Anthoathecata;order;Tubulariidae;family;Hybocodon;genus;Hybocodon prolifer;species;	Hybocodon prolifer	species	1
+12	root;root;Eukaryota;superkingdom;Echinodermata;phylum;	Echinodermata	phylum	3
+64	root;root;Eukaryota;superkingdom;Echinodermata;phylum;Echinoidea;class;	Echinoidea	class	2
+213	root;root;Eukaryota;superkingdom;Echinodermata;phylum;Echinoidea;class;Clypeasteroida;order;	Clypeasteroida	order	2
+2012	root;root;Eukaryota;superkingdom;Echinodermata;phylum;Echinoidea;class;Clypeasteroida;order;Echinarachniidae;family;	Echinarachniidae	family	2
+17460	root;root;Eukaryota;superkingdom;Echinodermata;phylum;Echinoidea;class;Clypeasteroida;order;Echinarachniidae;family;Echinarachnius;genus;	Echinarachnius	genus	2
+115920	root;root;Eukaryota;superkingdom;Echinodermata;phylum;Echinoidea;class;Clypeasteroida;order;Echinarachniidae;family;Echinarachnius;genus;Echinarachnius parma;species;	Echinarachnius parma	species	2
+8	root;root;Eukaryota;superkingdom;Chordata;phylum;	Chordata	phylum	12
+33	root;root;Eukaryota;superkingdom;Chordata;phylum;Actinopteri;class;	Actinopteri	class	5
+585	root;root;Eukaryota;superkingdom;Chordata;phylum;Actinopteri;class;Uranoscopiformes;order;	Uranoscopiformes	order	2
+760	root;root;Eukaryota;superkingdom;Chordata;phylum;Actinopteri;class;Uranoscopiformes;order;Ammodytidae;family;	Ammodytidae	family	2
+6861	root;root;Eukaryota;superkingdom;Chordata;phylum;Actinopteri;class;Uranoscopiformes;order;Ammodytidae;family;Ammodytes;genus;	Ammodytes	genus	2
+-6862	root;root;Eukaryota;superkingdom;Chordata;phylum;Actinopteri;class;Uranoscopiformes;order;Ammodytidae;family;Ammodytes;genus;unclassified_Ammodytes;;	unclassified_Ammodytes		2
+283	root;root;Eukaryota;superkingdom;Chordata;phylum;Actinopteri;class;Gadiformes;order;	Gadiformes	order	2
+3894	root;root;Eukaryota;superkingdom;Chordata;phylum;Actinopteri;class;Gadiformes;order;Phycidae;family;	Phycidae	family	1
+45087	root;root;Eukaryota;superkingdom;Chordata;phylum;Actinopteri;class;Gadiformes;order;Phycidae;family;Urophycis;genus;	Urophycis	genus	1
+263134	root;root;Eukaryota;superkingdom;Chordata;phylum;Actinopteri;class;Gadiformes;order;Phycidae;family;Urophycis;genus;Urophycis chuss;species;	Urophycis chuss	species	1
+3156	root;root;Eukaryota;superkingdom;Chordata;phylum;Actinopteri;class;Gadiformes;order;Merlucciidae;family;	Merlucciidae	family	1
+27890	root;root;Eukaryota;superkingdom;Chordata;phylum;Actinopteri;class;Gadiformes;order;Merlucciidae;family;Merluccius;genus;	Merluccius	genus	1
+178822	root;root;Eukaryota;superkingdom;Chordata;phylum;Actinopteri;class;Gadiformes;order;Merlucciidae;family;Merluccius;genus;Merluccius bilinearis;species;	Merluccius bilinearis	species	1
+434	root;root;Eukaryota;superkingdom;Chordata;phylum;Actinopteri;class;Perciformes;order;	Perciformes	order	1
+4955	root;root;Eukaryota;superkingdom;Chordata;phylum;Actinopteri;class;Perciformes;order;Triglidae;family;	Triglidae	family	1
+36611	root;root;Eukaryota;superkingdom;Chordata;phylum;Actinopteri;class;Perciformes;order;Triglidae;family;Prionotus;genus;	Prionotus	genus	1
+222508	root;root;Eukaryota;superkingdom;Chordata;phylum;Actinopteri;class;Perciformes;order;Triglidae;family;Prionotus;genus;Prionotus carolinus;species;	Prionotus carolinus	species	1
+-9	root;root;Eukaryota;superkingdom;Chordata;phylum;unclassified_Chordata;;	unclassified_Chordata		7
+29	root;root;Eukaryota;superkingdom;Rotifera;phylum;	Rotifera	phylum	4
+87	root;root;Eukaryota;superkingdom;Rotifera;phylum;Monogononta;class;	Monogononta	class	4
+460	root;root;Eukaryota;superkingdom;Rotifera;phylum;Monogononta;class;Ploima;order;	Ploima	order	4
+-461	root;root;Eukaryota;superkingdom;Rotifera;phylum;Monogononta;class;Ploima;order;unclassified_Ploima;;	unclassified_Ploima		4
+14	root;root;Eukaryota;superkingdom;Gastrotricha;phylum;	Gastrotricha	phylum	1
+197	root;root;Eukaryota;superkingdom;Gastrotricha;phylum;Chaetonotida;order;	Chaetonotida	order	1
+1433	root;root;Eukaryota;superkingdom;Gastrotricha;phylum;Chaetonotida;order;Chaetonotidae;family;	Chaetonotidae	family	1
+-1434	root;root;Eukaryota;superkingdom;Gastrotricha;phylum;Chaetonotida;order;Chaetonotidae;family;unclassified_Chaetonotidae;;	unclassified_Chaetonotidae		1
+25	root;root;Eukaryota;superkingdom;Platyhelminthes;phylum;	Platyhelminthes	phylum	1
+-26	root;root;Eukaryota;superkingdom;Platyhelminthes;phylum;unclassified_Platyhelminthes;;	unclassified_Platyhelminthes		1
+-13	root;root;Eukaryota;superkingdom;Echinodermata;phylum;unclassified_Echinodermata;;	unclassified_Echinodermata		1
+-2	root;root;Eukaryota;superkingdom;unclassified_Eukaryota;;	unclassified_Eukaryota		1090

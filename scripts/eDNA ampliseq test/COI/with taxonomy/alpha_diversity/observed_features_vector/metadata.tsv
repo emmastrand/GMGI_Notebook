@@ -1,0 +1,10 @@
+id	Personnel	Primer	Site	observed_features
+#q2:types	categorical	categorical	categorical	numeric
+Neg_ES_S6	Emma	Negative		241
+Neg_TO_S13	Tim	Negative		145
+SeptVW_C1B_ES_S3	Emma	Sample	VW_C1B	377
+SeptVW_C1B_TO_S7	Tim	Sample	VW_C1B	335
+SeptVW_S5B_ES_S4	Emma	Sample	VW_S5B	350
+SeptVW_S5B_TO_S8	Tim	Sample	VW_S5B	304
+SeptVW_S7B_ES_S5	Emma	Sample	VW_S7B	323
+SeptVW_S7B_TO_S12	Tim	Sample	VW_S7B	281

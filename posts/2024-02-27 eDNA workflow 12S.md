@@ -1,9 +1,9 @@
-# Environmental DNA (eDNA) workflow 
+# Environmental DNA (eDNA) workflow for vertebrate targets with 12S
 
 ### Workflow steps 
 
-1. Nf-core Ampliseq: Implements CutAdapt and DADA2 pipelines (`ampliseq.sh`).   
-2. 
+1. Nf-core Ampliseq: Implements CutAdapt and DADA2 pipelines (`01-ampliseq.sh`).     
+2. Taxonomic identification with blastn and taxonkit (`02-tax_ID.sh`).  
 
 ## 01. Nf-core ampliseq pipeline 
 
@@ -81,7 +81,7 @@ nextflow pull nf-core/ampliseq
 
 Slurm script to run: 
 
-`ampliseq_notax.sh`:
+`01-ampliseq.sh`:
 
 ```
 #!/bin/bash
@@ -251,11 +251,51 @@ https://github.com/nf-core/ampliseq/blob/master/conf/ref_databases.config
 
 # 2. Taxonomic Identification
 
+### Databases 
+
+For 12S, our team uses a curated database (GMGIVertRef.fasta), the Mitofish database (https://mitofish.aori.u-tokyo.ac.jp/download/), and NCBI nt database. To use NCBI's we use the -remote function to connect to the latest NCBI nt databases available. To prepare GMGI and the Mitofish database, 
+
+```
+## cd 
+/work/gmgi/Fisheries/databases/12S/reference_fasta
+
+## load modules needed 
+module load ncbi-blast+/2.13.0
+
+## prepare database 
+makeblastdb -in Mitofish.fasta -dbtype nucl
+makeblastdb -in GMGIVertRef.fasta -dbtype nucl
+```
+
+### TaxonKit 
+
+I downloaded Taxonkit module (https://bioinf.shenwei.me/taxonkit/). This will take NCBI taxID output and include all taxonomic classifications associated with that ID. This modules is in the Fisheries/database repository and the following code is only for set-up. Users do not need to run again.
+
+https://bioinf.shenwei.me/taxonkit/tutorial/
+
+```
+cd /work/gmgi/Fisheries/databases/taxonkit
+
+# login to discovery and go to a compute node
+srun --pty bash
+
+# download the appropriate tar file
+wget https://github.com/shenwei356/taxonkit/releases/download/v0.16.0/taxonkit_linux_amd64.tar.gz
+
+# untar it (may need to navigate to the directory you want it, or move it later)
+tar -xzvf taxonkit_linux_amd64.tar.gz
+
+# test that it runs
+./taxonkit
+```
+
+### Slurm script
+
 The following script takes the `ASV_seqs.fasta` file from DADA2 output and uses `blastn` to compare sequences to three databases: Blast nt, Mitofish, and our in-house GMGI database.
 
 Make a directory called `BLASToutput` within the project directory.
 
-`tax_ID.sh`: 
+`02-tax_ID.sh`: 
 
 ```
 #!/bin/bash
@@ -274,52 +314,53 @@ module load ncbi-blast+/2.13.0
 
 # set path to ASV_seqs.fasta
 ## needs to be changed for every project
-fasta="/work/gmgi/Fisheries/202402_negatives/results/dada2"
-out="/work/gmgi/Fisheries/202402_negatives/BLASToutput"
-db="/work/gmgi/Fisheries/databases/reference_fasta"
-
-# set parameters for output file 
-params="'6  qseqid   sseqid   sscinames   scomnames   pident   length   mismatch gapopen  qstart   qend  sstart   send  evalue   bitscore staxid'"
+fasta="/work/gmgi/Fisheries/ampliseq_tutorial/results_notax/dada2"
+out="/work/gmgi/Fisheries/ampliseq_tutorial/taxonomic_assignment"
+db="/work/gmgi/Fisheries/databases/12S/reference_fasta"
+taxonkit="/work/gmgi/Fisheries/databases/taxonkit"
 
 #### DATABASE QUERY ####
 ## NCBI database 
 blastn -remote -db nt \
    -query ${fasta}/ASV_seqs.fasta \
    -out ${out}/BLASTResults_NCBI.txt \
-   -max_target_seqs 10 -perc_identity 99 -qcov_hsp_perc 95 \
-   -outfmt ${params}
+   -max_target_seqs 10 -perc_identity 100 -qcov_hsp_perc 95 \
+   -outfmt '6  qseqid   sseqid   sscinames   staxid pident   length   mismatch gapopen  qstart   qend  sstart   send  evalue   bitscore'
 
 ## Mitofish database 
 blastn -db ${db}/Mitofish.fasta \
    -query ${fasta}/ASV_seqs.fasta \
    -out ${out}/BLASTResults_Mito.txt \
-   -max_target_seqs 10 -perc_identity 99 -qcov_hsp_perc 95 \
-   -outfmt ${params} 
+   -max_target_seqs 10 -perc_identity 100 -qcov_hsp_perc 95 \
+   -outfmt '6  qseqid   sseqid  pident   length   mismatch gapopen  qstart   qend  sstart   send  evalue   bitscore'
 
 ## GMGI database 
 blastn -db ${db}/GMGIVertRef.fasta \
    -query ${fasta}/ASV_seqs.fasta \
    -out ${out}/BLASTResults_GMGI.txt \
-   -max_target_seqs 10 -perc_identity 99 -qcov_hsp_perc 95 \
-   -outfmt ${params}
+   -max_target_seqs 10 -perc_identity 100 -qcov_hsp_perc 95 \
+   -outfmt '6  qseqid   sseqid   pident   length   mismatch gapopen  qstart   qend  sstart   send  evalue   bitscore'
 
 ############################
 
 #### TAXONOMIC CLASSIFICATION #### 
 ## creating list of staxids from all three files (NCBI = 13th column; change this value if headers in blastn command change)
-awk -F $'\t' '{ print $13}' ${out}/BLASTResults_NCBI.txt | sort -u > ${out}/NCBI_sp.txt
- > ${out}/Mito_sp.txt
- > ${out}/GMGI_sp.txt
-
-# pasting the three _sp.txt files together and retaining only unique values
-paste ${out}/*_sp.txt | sort -u > All_sp.txt 
+awk -F $'\t' '{ print $15}' ${out}/BLASTResults_NCBI.txt | sort -u > ${out}/NCBI_sp.txt
 
 ## annotating taxid with full taxonomic classification
-
-
+cat ${out}/NCBI_sp.txt | ${taxonkit}/taxonkit reformat -I 1 -r "Unassigned" > NCBI_taxassigned.txt
 ```
 
 LULU? https://www.nature.com/articles/s41467-017-01312-x 
 
 Collapse by tax ID
 Filter ASVs 
+
+blastn -remote -db nt -query /work/gmgi/Fisheries/ampliseq_tutorial/results_notax/dada2/ASV_seqs.fasta -out ./BLASTResults_NCBI.txt -max_target_seqs 10 -perc_identity 99 -qcov_hsp_perc 95 -outfmt '6  qseqid   sseqid   sscinames   pident   length   mismatch gapopen  qstart   qend  sstart   send  evalue   bitscore staxid'
+
+blastn -query /work/gmgi/Fisheries/ampliseq_tutorial/results_notax/dada2/ASV_seqs.fasta -db /work/gmgi/Fisheries/databases/12S/reference_fasta/Mitofish.fasta -out ./BLASTResults_MitoFish.txt -max_target_seqs 10 -perc_identity 99 -qcov_hsp_perc 95 -outfmt '6  qseqid   sseqid  pident   length   mismatch gapopen  qstart   qend  sstart   send  evalue   bitscore'
+
+blastn -query /work/gmgi/Fisheries/ampliseq_tutorial/results_notax/dada2/ASV_seqs.fasta -db /work/gmgi/Fisheries/databases/12S/reference_fasta/GMGIVertRef.fasta -out ./BLASTResults_GMGI.txt -max_target_seqs 10 -perc_identity 99 -qcov_hsp_perc 95 -outfmt '6  qseqid   sseqid   pident   length   mismatch gapopen  qstart   qend  sstart   send  evalue   bitscore'
+
+awk -F $'\t' '{ print $15}' BLASTResults_NCBI.txt | sort -u > ${out}/NCBI_sp.txt
+

@@ -50,6 +50,7 @@ module load nextflow/23.10.1
 
 #set paths 
 metadata="/work/gmgi/Fisheries/202402_negatives/metadata" 
+db="/work/gmgi/Fisheries/databases/COI"
 
 cd /work/gmgi/Fisheries/202402_negatives
 
@@ -67,14 +68,22 @@ nextflow run nf-core/ampliseq -resume \
    --sample_inference pseudo \
    --min_len_asv 300 \
    --max_len_asv 340 \
-   --skip_taxonomy TRUE
+   --dada_ref_tax_custom ${db}/bold_clustered.assignTaxonomy.fasta \
+   --dada_ref_tax_custom_sp ${db}/bold_clustered.addSpecies.fasta \
+   --dada_addspecies_allowmultiple TRUE
+
 ```
 
-Flags to complete with taxonomy: 
+Flags to complete without taxonomy: 
 - `--skip_taxonomy TRUE`: only performs CutAdapt and DADA2 workflows.  
 
 Flags to complete taxonomy using DADA2 (vs. QIIME2) for COI:  
-- `--dada_ref_taxonomy coidb`: COIDB - eukaryotic Cytochrome Oxidase I (COI) from The Barcode of Life Data System (BOLD). This takes the most updated version. 
+- `--dada_ref_taxonomy coidb`: COIDB - eukaryotic Cytochrome Oxidase I (COI) from The Barcode of Life Data System (BOLD). This takes the most updated version. My script was stalling at this portion so I downloaded the BOLD database myself to use.
+
+Download custom database:  
+- BOLD: `wget https://figshare.scilifelab.se/ndownloader/files/38787072 -O bold_clustered.assignTaxonomy.fasta.gz` and `wget https://figshare.scilifelab.se/ndownloader/files/38787069 -O bold_clustered.addSpecies.fasta.gz`. Use `gunzip` to decompress these files. see [webpage](https://figshare.scilifelab.se/articles/dataset/COI_reference_sequences_from_BOLD_DB/20514192/2?file=38787072) for all downloads.
+- `--dada_ref_tax_custom`. Must be compatible to DADA2's assignTaxonomy function.  
+- `--dada_ref_tax_custom_sp`. Must be compatible to DADA2's addSpecies function. 
 
 Reverse compliment information:  
 - `--FW_primer "GGWACWGGWTGAACWGTWTAYCCYCC...TGRTTYTTYGGNCAYCCNGARGTNTA`  
@@ -82,16 +91,10 @@ Reverse compliment information:
 
 
 **Notes**  
-- COIDB - eukaryotic Cytochrome Oxidase I (COI) from The Barcode of Life Data System (BOLD) - COI
 - Without taxonomy, this completed in 4 minutes and 30 seconds. 
 - Dereplication is same as denoised.   
-- maxN=0 is the default in the DADA2 trimming so no need to include. 
-
-Flags from Fisheries team pipeline that I need to fold in:
-- trimOverhang=TRUE, minOverlap=106 in merge step as these deviate from the defaults. Asked in the Slack group, if no response then create issue on github. 
-- use separate config to add in
-
-COIDB qiime2 process is stalling? Transfer seqs and tables to RHEL for blastn database that is already downloaded. Just for this answer. 
+- maxN=0 is the default in the DADA2 trimming so no need to include.   
+- I tried to add the reverse compliment of the primers but this then removed all data... Not sure why. Come back to this. 
 
 ### RHEL blastn
 
@@ -126,3 +129,12 @@ Ctrl+B then release and click D to detach out of tmux session
 Output = `BLASTResults_COIcontamination99_v2.txt`. 
 
 `-outfmt`: Creating query sequence ID, subject sequence ID, HSP alignment length, percentage identity of the alignment, subject sequence length, query sequence length, start and end positions in the query and subject, and the E value.
+
+
+Trying blastn on BOLD database: 
+
+blastn -query /work/gmgi/Fisheries/202402_negatives/results/dada2/ASV_seqs.fasta \
+   -db /work/gmgi/Fisheries/databases/COI/bold_clustered_cleaned.fasta \
+   -out BLASTResults_BOLD.txt \
+   -max_target_seqs 10 -perc_identity 97 -qcov_hsp_perc 95 \
+   -outfmt "6  qseqid   sseqid   pident   length   mismatch gapopen  qstart   qend  sstart   send  evalue   bitscore staxid   sscinames   scomnames"
