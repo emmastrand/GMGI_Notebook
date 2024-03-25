@@ -3,7 +3,8 @@
 ### Workflow steps 
 
 1. Nf-core Ampliseq: Implements CutAdapt and DADA2 pipelines (`01-ampliseq.sh`).     
-2. Taxonomic identification with blastn and taxonkit (`02-tax_ID.sh`).  
+2. LULU for distribution based post clustering curation of amplicon data (`02-lulu.sh`)
+3. Taxonomic identification with blastn and taxonkit (`03-tax_ID.sh`).  
 
 ## 01. Nf-core ampliseq pipeline 
 
@@ -63,10 +64,6 @@ nf-core's ampliseq pipeline uses the following steps and programs. All programs 
 #### Container information 
 
 Singularity is the container loaded onto NU's cluster: https://sylabs.io/docs/. 
-
-#### Databases 
-
-Coming soon.
 
 #### Pipeline updates
 
@@ -145,13 +142,17 @@ Parameters included in this script:
 
 ### Output 
 
+The following directories are created within `results`: `barrnap`, `cutadapt`, `dada2`, `fastqc`, `input`, `multiqc`, `pipeline_info`, and `summary report`. First thing to check is the execution report within `pipeline_info` to confirm all steps ran correctly with no errors. Then view the below files with dada2 output.
+
 Quality Reporting files:  
 - MultiQC Report: example; `multiqc/multiqc_report.html`.  
-- Execution Report: example; `path`.  
 - Summary Report: example; `summary_report/summary_report.html`. 
 
 Filtering summary: 
 - CutAdapt and DADA2: `overall_summary.tsv` 
+
+DADA2 output:  
+- `ASV_seqs.fasta`, `ASV_table.tsv`, `DADA2_stats.tsv`, `DADA2_table.rds`, and `DADA2_table.tsv` will contain read counts for each ASV created. .rds is a R-object that be directly downloaded in RStudio and used for further analyses. 
 
 ## Custom config 
 
@@ -171,82 +172,7 @@ To read in the config file, use `-c ./fisheries12.config` within the slurm scrip
 
 ## Custom database 
 
-To use custom databases within DADA2 assignTaxonomy() and assignSpecies() functions (https://benjjneb.github.io/dada2/training.html), 2 different databases are needed: 
-
-For `--dada_ref_tax_custom`, each header needs follow this format: `>Level1;Level2;Level3;Level4;Level5;Level6;`. 
-
-```
-
-```
-
-For `--dada_ref_tax_custom_sp`, each header needs to follow this format: `>ID Genus species`. 
-
-```
-
-```
-
-
-Multiple database comparisons are allowed but only one is forwarded to QIIME2 steps. The default on ampliseq is the SILVA reference taxonomy database.
-
-**Testing** 
-
-I took Mitofish to test this. Each header looked like: `>Genus_sp` which wasn't compatible with QIIME2 so I used `sed 's/_/;/g' Mitofish.fasta > Mitofish_edited.fasta` to change this to `>Genus;sp` format. I then downloaded all fish taxonomic identifiers from fishbaseR (R_fishbase.R) to create a dataframe 
-
-GMGIVertRef.fasta from RHEL to QIIME2 read-able version. There is more commentary in the headers for this file than I realized. Ditching this and going back to Mito.
-
-```
-## Remove all text before species name 
-cut -d_ -f 4-6 GMGIVertRef.fasta > GMGIVertRef_sppID.fasta
-
-## Add > header to every other row 
-sed -i '1~2s/^/>/' GMGIVertRef_sppID.fasta
-
-## Replace _ with a space 
-sed -i 's/_/ /g' GMGIVertRef_sppID.fasta
-
-## Create a list of all headers by grep ">" rows, print content after > and replace > with nothing to create new list
-grep '>' GMGIVertRef_sppID.fasta | sed 's/^.*> //' | sed 's/>//g' > GMGIVertRef_headers.txt
-```
-
-Testing download from MitoFish website download 
-
-Example of header:
-
-> >gb|KY172980|Canthophrys_gongota (["Cypriniformes;"] ["Cobitidae;"])
-
-Order, family, genus_species
-
-cut -d| -f3 
-
-
-**With GMGIVertRef 
-
---dada_ref_tax_custom <path>
---skip_dada_addspecies
---dada_assign_taxlevels Genus,species
---dada_addspecies_multiple TRUE
-
-
-## Contribution to ampliseq 
-
-### converting reference database to DADA2 format
-
-
-
-### ref_database.config
-
-https://github.com/nf-core/ampliseq/blob/master/conf/ref_databases.config
-
-```
-'mitofish' {
-   title = "MitoFish: Mitochondrial Genome Database of Fish from 12S amplicon sequencing"
-   file = [ "https://mitofish.aori.u-tokyo.ac.jp/species/detail/download/?filename=download%2F/complete_partial_mitogenomes.zip" ]
-   citation = "Zhu T, Sato Y, Sado T, Miya M, and Iwasaki W. 2023. MitoFish, MitoAnnotator, and MiFish Pipeline: Updates in ten years. Mol Biol Evol, 40:msad035. doi:10.1093/molbev/msad035"
-   fmtscript = "taxref_reformat_mitofish.sh"
-   dbversion = "unversioned"
-   taxlevels = "Order,Family,Genus,Species"
-}
-```
+To use custom databases within DADA2 assignTaxonomy() and assignSpecies() functions (https://benjjneb.github.io/dada2/training.html), 2 different databases are needed. For `--dada_ref_tax_custom`, the .fasta reference file needs to have each header needs follow this format: `>Level1;Level2;Level3;Level4;Level5;Level6;` (e.g., `>Animalia;Chordata;Mammalia;Primates;Hominidae;Homo;Homo neanderthalensis;`). For `--dada_ref_tax_custom_sp`, each header needs to follow this format: `>ID Genus species` (`>GBGC16357-19 Homo neanderthalensis`). Multiple database comparisons are allowed but only one is forwarded to QIIME2 steps. The default on ampliseq is the SILVA reference taxonomy database.
 
 
 # 2. Taxonomic Identification
@@ -305,7 +231,7 @@ Make a directory called `BLASToutput` within the project directory.
 #SBATCH --nodes=1
 #SBATCH --time=20:00:00
 #SBATCH --job-name=tax_ID
-#SBATCH --mem=80GB
+#SBATCH --mem=30GB
 #SBATCH --ntasks=24
 #SBATCH --cpus-per-task=2
 
@@ -344,23 +270,106 @@ blastn -db ${db}/GMGIVertRef.fasta \
 ############################
 
 #### TAXONOMIC CLASSIFICATION #### 
-## creating list of staxids from all three files (NCBI = 13th column; change this value if headers in blastn command change)
-awk -F $'\t' '{ print $15}' ${out}/BLASTResults_NCBI.txt | sort -u > ${out}/NCBI_sp.txt
+## creating list of staxids from all three files 
+awk -F $'\t' '{ print $4}' ${out}/BLASTResults_NCBI.txt | sort -u > ${out}/NCBI_sp.txt
 
 ## annotating taxid with full taxonomic classification
 cat ${out}/NCBI_sp.txt | ${taxonkit}/taxonkit reformat -I 1 -r "Unassigned" > NCBI_taxassigned.txt
 ```
 
-LULU? https://www.nature.com/articles/s41467-017-01312-x 
+### Output 
 
-Collapse by tax ID
-Filter ASVs 
+- `BLASTResults_GMGI.txt`: GMGI's curated database results    
+- `BLASTResults_Mito.txt`: MitoFish database results    
+- `BLASTResults_NCBI.txt`: NCBI results    
+- `NCBI_taxassigned.txt`: full taxonomic classification for all staxids found in NCBI output. 
 
-blastn -remote -db nt -query /work/gmgi/Fisheries/ampliseq_tutorial/results_notax/dada2/ASV_seqs.fasta -out ./BLASTResults_NCBI.txt -max_target_seqs 10 -perc_identity 99 -qcov_hsp_perc 95 -outfmt '6  qseqid   sseqid   sscinames   pident   length   mismatch gapopen  qstart   qend  sstart   send  evalue   bitscore staxid'
 
-blastn -query /work/gmgi/Fisheries/ampliseq_tutorial/results_notax/dada2/ASV_seqs.fasta -db /work/gmgi/Fisheries/databases/12S/reference_fasta/Mitofish.fasta -out ./BLASTResults_MitoFish.txt -max_target_seqs 10 -perc_identity 99 -qcov_hsp_perc 95 -outfmt '6  qseqid   sseqid  pident   length   mismatch gapopen  qstart   qend  sstart   send  evalue   bitscore'
+# 3. Post-clustering curation with LULU algorithm 
 
-blastn -query /work/gmgi/Fisheries/ampliseq_tutorial/results_notax/dada2/ASV_seqs.fasta -db /work/gmgi/Fisheries/databases/12S/reference_fasta/GMGIVertRef.fasta -out ./BLASTResults_GMGI.txt -max_target_seqs 10 -perc_identity 99 -qcov_hsp_perc 95 -outfmt '6  qseqid   sseqid   pident   length   mismatch gapopen  qstart   qend  sstart   send  evalue   bitscore'
+LULU https://www.nature.com/articles/s41467-017-01312-x. LULU identifies errors by combining sequence similarity and co-occurrence patterns to remove erroneous ASVs. https://github.com/tobiasgf/lulu. I used this script within RStudio on NU cluster. 
 
-awk -F $'\t' '{ print $15}' BLASTResults_NCBI.txt | sort -u > ${out}/NCBI_sp.txt
+### Input 
 
+a. ASV (or OTU) table (`dada2/ASV_table.tsv`)
+
+| OTUid | Sample1 | Sample2 | Sample3 | Sample4 | ...  |
+|-------|---------|---------|---------|---------|------|
+| OTU1  | 11      | 204     | 100     | 299     | ...  |
+| OTU2  | 3       | 2201    | 100     | 388     | ...  |
+| OTU3  | 0       | 20      | 130     | 10      | ...  |
+| OTU4  | 147     | 0       | 0       | 9       | ...  |
+| ...   | ...     | ...     | ...     | ...     |      |
+
+b. ASV sequences fasta file (`dada2/ASV_seqs.fasta`)
+
+```
+OTU1
+AGCGTGGTGSA...
+OTU2
+GGCGTATGCATGGTA...
+OTU2
+ATGGTAGGCGTATGC...
+OTU4
+GCGATGCGAT...
+...
+```
+
+c. Match list created with blastn
+
+This command is usually pretty quick so no need for a slurm script. 
+
+Load ncbi-blast module: `module load ncbi-blast+/2.13.0`  
+Make a blast formatted db from ASV seqs fasta file: `makeblastdb -in ASV_seqs.fasta -parse_seqids -dbtype nucl`  
+Blastn to blast ASV seqs fasta against itself: `blastn -db ASV_seqs.fasta -outfmt '6 qseqid sseqid pident' -out match_list.txt -qcov_hsp_perc 90 -perc_identity 95 -query ASV_seqs.fasta`
+
+The goal is to create a file that matches the format below: 
+
+```
+## file has no header but would be: OTU1  OTU2  pident
+6a9c2d5770b6e78ca3450f62d67b08fc        6a9c2d5770b6e78ca3450f62d67b08fc        100.000
+6a9c2d5770b6e78ca3450f62d67b08fc        8b8c58598b9195c46b3d8c5633ee4004        100.000
+6a9c2d5770b6e78ca3450f62d67b08fc        ac3d4acf02381190b2e965d9581d94de        100.000
+6a9c2d5770b6e78ca3450f62d67b08fc        6a126c48d6a97b60f15dc82c1c520270        100.000
+6a9c2d5770b6e78ca3450f62d67b08fc        5a0bb678334b0e4217c228f2d8501644        100.000
+6a9c2d5770b6e78ca3450f62d67b08fc        9682be6fbd648d7d3795747d603f3f65        99.057
+6a9c2d5770b6e78ca3450f62d67b08fc        df173b369dc421debeb7bf75520533a5        99.057
+6a9c2d5770b6e78ca3450f62d67b08fc        5fdc1adf1bf8cdaed504f5d29ce04a92        99.057
+6a9c2d5770b6e78ca3450f62d67b08fc        64532675ee94b3e98fb68133e1a75984        99.057
+6a9c2d5770b6e78ca3450f62d67b08fc        750f0840309a9989e3921313b36081a5        99.057
+```
+
+### R script
+
+`03-lulu.R`: 
+
+```
+#library(devtools)
+#install_github("tobiasgf/lulu")  
+library(lulu)
+library(ggplot2)
+library(tidyr)
+
+## read in data
+otutab <- read.table("../../work/gmgi/Fisheries/eDNA/ampliseq_tutorial/results_notax/dada2/ASV_table.tsv", header=T, sep='\t', row.names = 1)
+matchlist <- read.table("../../work/gmgi/Fisheries/eDNA/ampliseq_tutorial/results_notax/dada2/match_list.txt", header=FALSE,as.is=TRUE, stringsAsFactors=FALSE)
+
+## run lulu 
+curated_result <- lulu(otutab, matchlist, minimum_ratio_type = "min", minimum_ratio = 1, minimum_match = 99, minimum_relative_cooccurence = 0.95)
+
+curated_table <- curated_result$curated_table
+original_table <- curated_result$original_table
+
+curated_result$curated_count
+curated_result$discarded_count
+
+otu_map <- curated_result$otu_map
+
+## spot check those merged
+gmgiblast <- read.table("../../work/gmgi/Fisheries/eDNA/ampliseq_tutorial/taxonomic_assignment/BLASTResults_GMGI.txt", header=F, sep='\t')
+mitoblast <- read.table("../../work/gmgi/Fisheries/eDNA/ampliseq_tutorial/taxonomic_assignment/BLASTResults_Mito.txt", header=F, sep='\t')
+```
+
+Next steps: 
+- `-remote` option within shell script for blast. Waiting on NU response then take 3 outputs and create R script to collapse and conduct filtering  
+- LULU: why are there some ASVs with the same exact sequence?  
